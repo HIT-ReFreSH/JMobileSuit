@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>JMobileSuitLite</name>
+    <groupId>Plastic-Metal</groupId>
+    <artifactId>JMobileSuitLite</artifactId>
+    <version>0.1.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <organization>
+        <name>PlasticMetal</name>
+        <url>https://github.com/Plastic-Metal/</url>
+    </organization>
+    <url>https://github.com/Plastic-Metal/MobileSuitJundam</url>
+    <inceptionYear>2020</inceptionYear>
+    <developers>
+        <developer>
+            <name>Ferdinand Sukhoi</name>
+            <email>ferdinandsukhoi@outlook.com</email>
+            <url>ferdinandsukhoi.github.io</url>
+        </developer>
+    </developers>
+    <description>Light weight Mobile Suit for Java. Migrated from .NET Core.</description>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://www.mit.edu/~amini/LICENSE.md</url>
+            <distribution>
+                actable
+            </distribution>
+        </license>
+    </licenses>
+    <build>
+        <finalName>${project.organization.name}.${project.name}.${project.version}</finalName>
+        <defaultGoal>Package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+
+</project>
