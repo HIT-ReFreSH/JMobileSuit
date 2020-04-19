@@ -1,6 +1,7 @@
 package PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces;
 
 
+import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 
 import java.lang.reflect.InvocationTargetException;
@@ -8,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Represents an entity which can be executed.
  */
-@SuppressWarnings("ALL")
 public interface Executable
 {
     /**
@@ -16,5 +16,5 @@ public interface Executable
      * @param args The arguments for execution.
      * @return TraceBack result of this object.
      */
-    TraceBack Execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException;
+    Tuple<TraceBack,Object>  Execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException;
 }

@@ -1,6 +1,5 @@
 package PlasticMetal.JMobileSuitLite;
 
-@SuppressWarnings("ALL")
 public class Lang
 {
     public static final String Bic="Built-In Commands:";
@@ -15,4 +14,5 @@ public class Lang
     public static final String Unknown="Unknown";
     public static final String ViewBic="To View Built-In Commands, use Command '";
     public static final String WorkInstance="Work Instance:";
+    public static final String ReturnValue="Return Value>";
 }

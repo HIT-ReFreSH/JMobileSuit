@@ -67,24 +67,24 @@ private static final Set<String> IgnoreMethods=new HashSet<>(Arrays.asList("wait
      * @throws InstantiationException ignore.
      * @throws InvocationTargetException ignore.
      */
-    public TraceBack Execute(String[] args) throws IllegalAccessException, InstantiationException, InvocationTargetException
+    public Tuple<TraceBack, Object> Execute(String[] args) throws IllegalAccessException, InstantiationException, InvocationTargetException
     {
 
 
-        if (args.length == 0) return TraceBack.ObjectNotFound;
+        if (args.length == 0) return new Tuple<>(TraceBack.ObjectNotFound,null);
         args[0] = args[0].toLowerCase();
 
-        if (!_members.containsKey(args[0])) return TraceBack.ObjectNotFound;
+        if (!_members.containsKey(args[0])) return new Tuple<>(TraceBack.ObjectNotFound,null);
 
         for(Tuple<String,SuitObjectMember> t : _members.get(args[0]))
         {
 
-            TraceBack r = t.Second.Execute(Arrays.copyOfRange(args,1,args.length));
-            if (r == TraceBack.ObjectNotFound) continue;
+            Tuple<TraceBack,Object> r = t.Second.Execute(Arrays.copyOfRange(args,1,args.length));
+            if (r.First == TraceBack.ObjectNotFound) continue;
             return r;
         }
 
-        return TraceBack.ObjectNotFound;
+        return new Tuple<>(TraceBack.ObjectNotFound,null);
     }
 
     private void TryAddMember(SuitObjectMember objMember)

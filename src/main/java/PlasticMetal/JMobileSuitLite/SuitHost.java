@@ -6,12 +6,10 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.IOInteractive;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.InfoProvider;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
+import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Stack;
+import java.util.*;
 
 import static PlasticMetal.JMobileSuitLite.TraceBack.*;
 
@@ -278,16 +276,22 @@ public class SuitHost
     }
 
 
-    private TraceBack RunBuildInCommand(String cmd) throws IllegalAccessException, InvocationTargetException, InstantiationException
+    private TraceBack RunBuildInCommand(String[] cmdList) throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
-        String[] cmdList = SplitCommandLine(cmd);
         if (cmdList == null) return InvalidCommand;
-        return BicServer.Execute(cmdList);
+        return BicServer.Execute(cmdList).First;
     }
 
     private TraceBack RunObject(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
-        return Current.Execute(args);
+        Tuple<TraceBack,Object>t=Current.Execute(args);
+        if(t.First.equals(AllOk)){
+            IO.WriteLine(Arrays.asList(
+                    new Tuple<>(Lang.ReturnValue,IO.ColorSetting.PromptColor),
+                    new Tuple<>(t.Second.toString(),null)
+            ));
+        }
+        return t.First;
     }
 
 
@@ -343,11 +347,11 @@ public class SuitHost
             if (cmd.charAt(0) == '@')
             {
                 args[0] = args[0].substring(1);
-                traceBack = BicServer.Execute(args);
+                traceBack = RunBuildInCommand(args);
             }
 
             traceBack = RunObject(args);
-            if (traceBack == ObjectNotFound) traceBack = RunBuildInCommand(cmd);
+            if (traceBack == ObjectNotFound) traceBack = RunBuildInCommand(args);
         }
         catch (Exception e)
         {

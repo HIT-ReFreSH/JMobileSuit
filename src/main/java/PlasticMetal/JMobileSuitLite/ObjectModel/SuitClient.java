@@ -13,7 +13,7 @@ public abstract class SuitClient implements InfoProvider, IOInteractive
 {
 
     private IOServer _io;
-    protected String _text;
+    protected String _text="";
 
     /**
      * The IOServer for current SuitHost.

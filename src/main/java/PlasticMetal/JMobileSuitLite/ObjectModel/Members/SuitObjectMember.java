@@ -4,6 +4,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.*;
 
 import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.DynamicParameter;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.Executable;
+import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 
 import java.lang.reflect.InvocationTargetException;
@@ -46,16 +47,22 @@ public class SuitObjectMember implements Executable
         _absoluteName = method.getName();
         SuitAliases aliases = method.getAnnotation(SuitAliases.class);
         SuitAlias alias = method.getAnnotation(SuitAlias.class);
-        if (alias!=null){
-            _aliases= new String[]{alias.value()};
-        }else if(aliases!=null){
-            List<String> aliasesList=new ArrayList<>();
-            for (SuitAlias aliasClass:aliases.value()){
+        if (alias != null)
+        {
+            _aliases = new String[]{alias.value()};
+        }
+        else if (aliases != null)
+        {
+            List<String> aliasesList = new ArrayList<>();
+            for (SuitAlias aliasClass : aliases.value())
+            {
                 aliasesList.add(aliasClass.value());
             }
-            _aliases= aliasesList.toArray(new String[0]);
-        }else {
-            _aliases=new String[0];
+            _aliases = aliasesList.toArray(new String[0]);
+        }
+        else
+        {
+            _aliases = new String[0];
         }
         _instance = instance;
         _method = method;
@@ -214,20 +221,35 @@ public class SuitObjectMember implements Executable
                 && argumentCount <= _maxParameterCount;
     }
 
+    private Tuple<TraceBack, Object> Execute(Object[] args) throws InvocationTargetException, IllegalAccessException
+    {
+        if (args.length == 0)
+        {
+            Object t = _method.invoke(_instance);
+
+            return new Tuple<>(t instanceof TraceBack ? (TraceBack) t : TraceBack.AllOk, t);
+        }
+        else
+        {
+            Object t = _method.invoke(_instance, args);
+
+            return new Tuple<>(t instanceof TraceBack ? (TraceBack) t : TraceBack.AllOk, t);
+        }
+    }
+
     /**
      * Execute this object.
      *
      * @param args The arguments for execution.
      * @return TraceBack result of this object.
      */
-    public TraceBack Execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException
+    public Tuple<TraceBack, Object> Execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException
     {
 
-        if (!CanFitTo(args.length)) return TraceBack.ObjectNotFound;
+        if (!CanFitTo(args.length)) return new Tuple<>(TraceBack.ObjectNotFound, null);
         if (_tailParameterType == TailParameterType.NoParameter)
         {
-            _method.invoke(_instance);
-            return TraceBack.AllOk;
+            return Execute(new Object[0]);
         }
         int length = _parameters.length;
         Object[] pass = new Object[length];
@@ -238,8 +260,7 @@ public class SuitObjectMember implements Executable
 
         if (_tailParameterType == TailParameterType.Normal)
         {
-            _method.invoke(_instance, pass);
-            return TraceBack.AllOk;
+            return Execute(pass);
         }
 
         if (_tailParameterType == TailParameterType.DynamicParameter)
@@ -250,11 +271,10 @@ public class SuitObjectMember implements Executable
             if (dynamicParameter.Parse(i < args.length ? Arrays.copyOfRange(args, i, args.length) : null))
             {
                 pass[i] = dynamicParameter;
-                _method.invoke(_instance, pass);
-                return TraceBack.AllOk;
+                return Execute(pass);
             }
 
-            return TraceBack.InvalidCommand;
+            return new Tuple<>(TraceBack.InvalidCommand, null);
         }
 
         if (i < args.length)
@@ -267,8 +287,7 @@ public class SuitObjectMember implements Executable
             pass[i] = new String[0];
         }
 
-        _method.invoke(_instance, pass);
-        return TraceBack.AllOk;
+        return Execute(pass);
 
     }
 

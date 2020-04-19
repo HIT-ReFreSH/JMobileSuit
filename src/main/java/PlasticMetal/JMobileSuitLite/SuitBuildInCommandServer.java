@@ -75,7 +75,7 @@ public class SuitBuildInCommandServer
     @SuitInfo("Exit MobileSuit")
     public TraceBack Exit(String[] args)
     {
-        return TraceBack.OnExit;
+         return TraceBack.OnExit;
     }
 
     /**
