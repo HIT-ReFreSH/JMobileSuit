@@ -1,5 +1,13 @@
 JMobileSuitLite is a Light weight MobileSuit for Java. Migrated from .NET Core.
 
+![maven](https://img.shields.io/maven-central/v/io.github.plastic-metal/JMobileSuitLite/0.1.1)
+
+[View in maven-central](https://search.maven.org/artifact/io.github.plastic-metal/JMobileSuitLite/0.1.1/jar)
+
+[View English Documentation ](https://ferdinandsukhoi.github.io/docs/en-US/JMobileSuitLite/) in my Blog
+
+在我的博客[查看中文文档](https://ferdinandsukhoi.github.io/docs/zh-CN/JMobileSuitLite/)
+
 PlasticMetal.MobileSuit is a Powerful tool to quickly build a ConsoleApp, written in C#, mapping command to a specific method in your code.
 
 For details of MobileSuit, see: https://github.com/Plastic-Metal/MobileSuit
