@@ -6,7 +6,7 @@
     <name>JMobileSuitLite</name>
     <groupId>io.github.plastic-metal</groupId>
     <artifactId>JMobileSuitLite</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.1.1</version>
     <packaging>jar</packaging>
     <organization>
         <name>PlasticMetal</name>
@@ -32,54 +32,54 @@
     <build>
         <finalName>${project.organization.name}.${project.name}.${project.version}</finalName>
         <defaultGoal>Package</defaultGoal>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <!--指定编码为UTF-8-->
-                    <encoding>UTF-8</encoding>
-                    <charset>UTF-8</charset>
-                    <docencoding>UTF-8</docencoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!--配置生成源码包-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <charset>UTF-8</charset>
+                        <docencoding>UTF-8</docencoding>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
 
 
 
 
-        </plugins>
+            </plugins>
+        </pluginManagement>
 
     </build>
     <profiles>
@@ -140,6 +140,15 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>3.0.0-M1</version>
+                        <configuration>
+                            <tagNameFormat>v@{project.version}</tagNameFormat>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

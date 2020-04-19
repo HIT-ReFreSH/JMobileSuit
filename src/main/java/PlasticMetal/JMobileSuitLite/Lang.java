@@ -1,6 +1,6 @@
 package PlasticMetal.JMobileSuitLite;
 
-public class Lang
+class Lang
 {
     public static final String Bic="Built-In Commands:";
     public static final String BicExp1="All of the Built-In Commands Can be used as default with the starting'";
