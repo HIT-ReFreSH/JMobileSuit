@@ -1,3 +1,5 @@
+package PlasticMetal.JMobileSuit.Demo;
+
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.DynamicParameter;

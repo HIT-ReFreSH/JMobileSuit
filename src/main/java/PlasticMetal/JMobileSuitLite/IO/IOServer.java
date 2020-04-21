@@ -36,16 +36,34 @@ public class IOServer
     public IOServer()
     {
         ColorSetting = DefaultColorSetting();
-        Input = System.in;
+        _input = System.in;
         Output = System.out;
         Error = System.err;
+        _inputScanner=new Scanner(_input);
 
     }
 
     /**
      * Input stream (default stdin)
      */
-    public InputStream Input;
+    private InputStream _input;
+
+    private Scanner _inputScanner;
+
+    /**
+     * get Input stream (default stdin)
+     * @return Input stream
+     */
+    public InputStream GetInput(){return _input;}
+
+    /**
+     * set Input stream (default stdin)
+     * @param value new input stream
+     */
+    public void SetInput(InputStream value){
+        _input=value;
+        _inputScanner=new Scanner(_input);
+    }
 
     /**
      * Checks if this IOServer's input stream is redirected (NOT stdin)
@@ -54,7 +72,7 @@ public class IOServer
      */
     public boolean IsInputRedirected()
     {
-        return !System.in.equals(Input);
+        return !System.in.equals(_input);
     }
 
     /**
@@ -62,13 +80,9 @@ public class IOServer
      */
     public void ResetInput()
     {
-        Input = System.in;
+        _input = System.in;
     }
 
-    private Scanner inputScanner()
-    {
-        return new Scanner(Input);
-    }
 
     /**
      * Reads a line from input stream, with prompt.
@@ -181,7 +195,7 @@ public class IOServer
                 Write(prompt + '>', OutputType.Prompt, customPromptColor);
         }
 
-        Scanner sc = inputScanner();
+        Scanner sc = _inputScanner;
         String r = sc.hasNextLine() ? sc.nextLine() : null;
         return r == null ? null : (r.equals("") ? defaultValue : r);
     }
@@ -194,8 +208,9 @@ public class IOServer
      */
     public int Read() throws IOException
     {
-        return Input.read();
+        return _input.read();
     }
+
 
     /**
      * Check if this IOServer's error stream is redirected (NOT stderr)
