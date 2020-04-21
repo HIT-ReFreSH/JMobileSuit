@@ -284,11 +284,12 @@ public class SuitHost
 
     private TraceBack RunObject(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
-        Tuple<TraceBack,Object>t=Current.Execute(args);
-        if(t.Second!=null && t.First.equals(AllOk) ){
+        Tuple<TraceBack, Object> t = Current.Execute(args);
+        if (t.Second != null && t.First.equals(AllOk))
+        {
             IO.WriteLine(Arrays.asList(
-                    new Tuple<>(Lang.ReturnValue,IO.ColorSetting.PromptColor),
-                    new Tuple<>(t.Second.toString(),null)
+                    new Tuple<>(Lang.ReturnValue, IO.ColorSetting.PromptColor),
+                    new Tuple<>(t.Second.toString(), null)
             ));
         }
         return t.First;
@@ -336,8 +337,9 @@ public class SuitHost
      */
     public TraceBack RunCommand(String cmd)
     {
-        return RunCommand("",cmd);
+        return RunCommand("", cmd);
     }
+
     /**
      * Run a Mobile Suit command with Prompt.
      *
@@ -358,14 +360,19 @@ public class SuitHost
         if (args == null) return InvalidCommand;
         try
         {
+            if (cmd.charAt(0) == '#') return TraceBack.AllOk;//Comment
             if (cmd.charAt(0) == '@')
             {
                 args[0] = args[0].substring(1);
                 traceBack = RunBuildInCommand(args);
             }
+            else
+            {
+                traceBack = RunObject(args);
+                if (traceBack == ObjectNotFound) traceBack = RunBuildInCommand(args);
+            }
 
-            traceBack = RunObject(args);
-            if (traceBack == ObjectNotFound) traceBack = RunBuildInCommand(args);
+
         }
         catch (Exception e)
         {

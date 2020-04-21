@@ -6,7 +6,7 @@
     <name>JMobileSuitLite</name>
     <groupId>io.github.plastic-metal</groupId>
     <artifactId>JMobileSuitLite</artifactId>
-    <version>0.1.2.1</version>
+    <version>0.1.2.2</version>
 
     <packaging>jar</packaging>
     <organization>
