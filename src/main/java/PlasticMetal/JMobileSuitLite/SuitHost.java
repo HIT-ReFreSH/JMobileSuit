@@ -307,7 +307,7 @@ public class SuitHost
         UpdatePrompt(prompt);
         for (; ; )
         {
-            if (!IO.IsInputRedirected()) IO.Write(Prompt + '>', OutputType.Prompt);
+            if (!IO.IsInputRedirected()) IO.Write(Prompt + '>'+' ', OutputType.Prompt);
             TraceBack traceBack = RunCommand(prompt, IO.ReadLine());
             switch (traceBack)
             {

@@ -170,6 +170,7 @@ public class SuitBuildInCommandServer
 
                     new Tuple<>(name, null),
                     new Tuple<>(aliasesExpression.toString(), ConsoleColor.DarkYellow),
+                    new Tuple<>(" ", null),
                     new Tuple<>(lChar + member.Information() + rChar, infoColor)
             ));
         }
