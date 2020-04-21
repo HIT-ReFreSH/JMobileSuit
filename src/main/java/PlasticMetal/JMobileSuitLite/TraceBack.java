@@ -9,25 +9,55 @@ public enum TraceBack
     /**
      * The Progress is Exiting
      */
-    OnExit,
+    OnExit{
+        @Override
+        public String toString()
+        {
+            return "OnExit";
+        }
+    },
 
     /**
      * Everything is OK
      */
-    AllOk,
+    AllOk{
+        @Override
+        public String toString()
+        {
+            return "AllOK";
+        }
+    },
 
     /**
      * This is not a command
      */
-    InvalidCommand,
+    InvalidCommand{
+        @Override
+        public String toString()
+        {
+            return "InvalidCommand";
+        }
+    },
 
     /**
      * Cannot find the object referring to.
      */
-    ObjectNotFound,
+    ObjectNotFound{
+        @Override
+        public String toString()
+        {
+            return "ObjectNotFound";
+        }
+    },
 
     /**
      * Cannot find the member in the object referring to.
      */
-    MemberNotFound
+    MemberNotFound{
+        @Override
+        public String toString()
+        {
+            return "MemberNotFound";
+        }
+    }
 }

@@ -285,7 +285,7 @@ public class SuitHost
     private TraceBack RunObject(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
         Tuple<TraceBack,Object>t=Current.Execute(args);
-        if(t.First.equals(AllOk)){
+        if(t.Second!=null && t.First.equals(AllOk) ){
             IO.WriteLine(Arrays.asList(
                     new Tuple<>(Lang.ReturnValue,IO.ColorSetting.PromptColor),
                     new Tuple<>(t.Second.toString(),null)
@@ -329,8 +329,22 @@ public class SuitHost
         }
     }
 
-
-    private TraceBack RunCommand(String prompt, String cmd)
+    /**
+     * Run a Mobile Suit command with Prompt="".
+     *
+     * @return AllOK, is All ok.
+     */
+    public TraceBack RunCommand(String cmd)
+    {
+        return RunCommand("",cmd);
+    }
+    /**
+     * Run a Mobile Suit command with Prompt.
+     *
+     * @param prompt The prompt.
+     * @return AllOK, is All ok.
+     */
+    public TraceBack RunCommand(String prompt, String cmd)
     {
         if ((cmd == null || cmd.equals("")) && IO.IsInputRedirected() && ShellMode)
         {

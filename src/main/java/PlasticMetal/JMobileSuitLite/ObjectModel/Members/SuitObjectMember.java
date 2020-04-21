@@ -83,7 +83,7 @@ public class SuitObjectMember implements Executable
             if (_parameters[length - 1].getType().isArray())
                 _tailParameterType = TailParameterType.Array;
             else if (Arrays.asList(_parameters[length - 1].
-                    getClass().getInterfaces()).contains(DynamicParameter.class))
+                    getType().getInterfaces()).contains(DynamicParameter.class))
                 _tailParameterType = TailParameterType.DynamicParameter;
             else
                 _tailParameterType = TailParameterType.Normal;
@@ -246,7 +246,8 @@ public class SuitObjectMember implements Executable
     public Tuple<TraceBack, Object> Execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException
     {
 
-        if (!CanFitTo(args.length)) return new Tuple<>(TraceBack.ObjectNotFound, null);
+        if (!CanFitTo(args.length)) {
+            return new Tuple<>(TraceBack.ObjectNotFound, null);}
         if (_tailParameterType == TailParameterType.NoParameter)
         {
             return Execute(new Object[0]);
@@ -268,7 +269,7 @@ public class SuitObjectMember implements Executable
 
             DynamicParameter dynamicParameter = (DynamicParameter) _parameters[length - 1].getType().newInstance();
 
-            if (dynamicParameter.Parse(i < args.length ? Arrays.copyOfRange(args, i, args.length) : null))
+            if (dynamicParameter.Parse(i < args.length ? Arrays.copyOfRange(args, i, args.length) : new String[0]))
             {
                 pass[i] = dynamicParameter;
                 return Execute(pass);
