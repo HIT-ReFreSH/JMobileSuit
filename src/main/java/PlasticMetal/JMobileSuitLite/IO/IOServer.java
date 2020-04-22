@@ -104,7 +104,7 @@ public class IOServer
      * @param customPromptColor Prompt's Color, ColorSetting.PromptColor as default.
      * @return Content from input stream, null if EOF.
      */
-    public String ReadLine(String prompt, boolean newLine, String customPromptColor)
+    public String ReadLine(String prompt, boolean newLine, ConsoleColor customPromptColor)
     {
         return ReadLineBase(prompt, null, newLine, customPromptColor);
     }
@@ -118,7 +118,7 @@ public class IOServer
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
     public String ReadLine(String prompt, String defaultValue,
-                           String customPromptColor)
+                           ConsoleColor customPromptColor)
     {
         return ReadLineBase(prompt, defaultValue, false, customPromptColor);
     }
@@ -144,6 +144,18 @@ public class IOServer
         return ReadLineBase(prompt, null, false, null);
     }
 
+
+    /**
+     * Reads a line from input stream, with prompt. Return something default if user input "".
+     *
+     * @param prompt            The prompt display (output to output stream) before user input.
+     * @param customPromptColor Prompt's Color, ColorSetting.PromptColor as default.
+     * @return Content from input stream, null if EOF, if user input "", return defaultValue.
+     */
+    public String ReadLine(String prompt,  ConsoleColor customPromptColor)
+    {
+        return ReadLineBase(prompt, null, false, customPromptColor);
+    }
 
     /**
      * Reads a line from input stream, with prompt. Return something default if user input "".
@@ -180,12 +192,12 @@ public class IOServer
      * @param customPromptColor Prompt's Color, ColorSetting.PromptColor as default.
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
-    public String ReadLine(String prompt, String defaultValue, boolean newLine, String customPromptColor)
+    public String ReadLine(String prompt, String defaultValue, boolean newLine, ConsoleColor customPromptColor)
     {
         return ReadLineBase(prompt, defaultValue, newLine, customPromptColor);
     }
 
-    private String ReadLineBase(String prompt, String defaultValue, boolean newLine, String customPromptColor)
+    private String ReadLineBase(String prompt, String defaultValue, boolean newLine, ConsoleColor customPromptColor)
     {
         if (prompt != null && prompt.equals(""))
         {
@@ -267,9 +279,9 @@ public class IOServer
 
     private final Stack<Integer> PrefixLengthStack = new Stack<>();
 
-    private String SelectColor(OutputType type, String customColor)
+    private ConsoleColor SelectColor(OutputType type, ConsoleColor customColor)
     {
-        if (customColor == null || customColor.equals(""))
+        if (customColor == null||customColor==ConsoleColor.Null)
         {
             switch (type)
             {
@@ -382,7 +394,7 @@ public class IOServer
      * @param content     Content to output .
      * @param customColor Customized color in console
      */
-    public void Write(String content, String customColor)
+    public void Write(String content, ConsoleColor customColor)
     {
         WriteBase(content, OutputType.Default, customColor);
     }
@@ -415,16 +427,16 @@ public class IOServer
      * @param type        Type of this content,this decides how will it be like.
      * @param customColor Customized color in console
      */
-    public void Write(String content, OutputType type, String customColor)
+    public void Write(String content, OutputType type, ConsoleColor customColor)
     {
         WriteBase(content, type, customColor);
     }
 
-    private void WriteBase(String content, OutputType type, String customColor)
+    private void WriteBase(String content, OutputType type, ConsoleColor customColor)
     {
         if (!IsOutputRedirected())
         {
-            String color = SelectColor(type, customColor);
+            ConsoleColor color = SelectColor(type, customColor);
             Output.print(color + content + ClearEffect);
         }
         else
@@ -449,7 +461,7 @@ public class IOServer
      * @param content     Content to output
      * @param customColor Customized color in console.
      */
-    public void WriteLine(String content, String customColor)
+    public void WriteLine(String content, ConsoleColor customColor)
     {
         WriteLineBase(content, OutputType.Default, customColor);
     }
@@ -482,16 +494,16 @@ public class IOServer
      * @param type        Type of this content,this decides how will it be like(color in Console, label in file).
      * @param customColor Customized color in console.
      */
-    public void WriteLine(String content, OutputType type, String customColor)
+    public void WriteLine(String content, OutputType type, ConsoleColor customColor)
     {
         WriteLineBase(content, type, customColor);
     }
 
-    private void WriteLineBase(String content, OutputType type, String customColor)
+    private void WriteLineBase(String content, OutputType type, ConsoleColor customColor)
     {
         if (!IsOutputRedirected())
         {
-            String color = SelectColor(type, customColor);
+            ConsoleColor color = SelectColor(type, customColor);
             Output.println(color + Prefix() + content + ClearEffect);
 
         }
@@ -512,7 +524,7 @@ public class IOServer
      *                     first is a part of content second is optional,
      *                     the color of output(in console)
      */
-    public void WriteLine(Iterable<Tuple<String, String>> contentArray)
+    public void WriteLine(Iterable<Tuple<String, ConsoleColor>> contentArray)
     {
         WriteLine(contentArray, OutputType.Default);
     }
@@ -525,14 +537,14 @@ public class IOServer
      *                     the color of output(in console)
      * @param type         Type of this content,this decides how will it be like(color in Console, label in file).
      */
-    public void WriteLine(Iterable<Tuple<String, String>> contentArray, OutputType type)
+    public void WriteLine(Iterable<Tuple<String, ConsoleColor>> contentArray, OutputType type)
 
     {
         if (!IsOutputRedirected())
         {
-            String defaultColor = SelectColor(type, null);
+            ConsoleColor defaultColor = SelectColor(type, null);
             Output.print(defaultColor + Prefix() + ClearEffect);
-            for (Tuple<String, String> t : contentArray)
+            for (Tuple<String, ConsoleColor> t : contentArray)
             {
                 if (t.Second==null)t.Second=defaultColor;
                 Output.print(t.Second + t.First + ClearEffect);
@@ -541,7 +553,7 @@ public class IOServer
         }
         else
         {
-            for (Tuple<String, String> t : contentArray)
+            for (Tuple<String, ConsoleColor> t : contentArray)
             {
                 Output.print(t.First);
             }
@@ -563,31 +575,31 @@ public class IOServer
         /**
          * Default color. For OutputType.Default
          */
-        public final String DefaultColor = ConsoleColor.White;
+        public final ConsoleColor DefaultColor = ConsoleColor.White;
         /**
          * Prompt Color. For OutputType.Prompt
          */
-        public final String PromptColor = ConsoleColor.Magenta;
+        public final ConsoleColor PromptColor = ConsoleColor.Magenta;
         /**
-         * Prompt Color. For OutputType.Error
+         * Error Color. For OutputType.Error
          */
-        public final String ErrorColor = ConsoleColor.Red;
+        public final ConsoleColor ErrorColor = ConsoleColor.Red;
         /**
-         * Prompt Color. For OutputType.AllOK
+         * AllOK Color. For OutputType.AllOK
          */
-        public final String AllOkColor = ConsoleColor.Green;
+        public final ConsoleColor AllOkColor = ConsoleColor.Green;
         /**
-         * Prompt Color. For OutputType.ListTitle
+         * ListTitle Color. For OutputType.ListTitle
          */
-        public final String ListTitleColor = ConsoleColor.Yellow;
+        public final ConsoleColor ListTitleColor = ConsoleColor.Yellow;
         /**
-         * Prompt Color. For OutputType.CustomInformation
+         * CustomInformation Color. For OutputType.CustomInformation
          */
-        public final String CustomInformationColor = ConsoleColor.DarkCyan;
+        public final ConsoleColor CustomInformationColor = ConsoleColor.DarkCyan;
         /**
-         * Prompt Color. For OutputType.Information
+         * Information Color. For OutputType.Information
          */
-        public final String InformationColor = ConsoleColor.DarkBlue;
+        public final ConsoleColor InformationColor = ConsoleColor.DarkBlue;
 
 
     }

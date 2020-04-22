@@ -160,7 +160,7 @@ public class SuitBuildInCommandServer
         {
             String name = t.First;
             SuitObjectMember member = t.Second;
-            String infoColor = member.Type().equals(MemberType.MethodWithInfo) ? ConsoleColor.Blue : ConsoleColor.DarkBlue;
+            ConsoleColor infoColor = member.Type().equals(MemberType.MethodWithInfo) ? ConsoleColor.Blue : ConsoleColor.DarkBlue;
             char lChar = member.Type().equals(MemberType.MethodWithInfo) ? '[' : '(';
             char rChar = member.Type().equals(MemberType.MethodWithInfo) ? ']' : ')';
 
