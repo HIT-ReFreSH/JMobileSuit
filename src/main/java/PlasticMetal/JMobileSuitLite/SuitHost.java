@@ -92,7 +92,22 @@ public class SuitHost
     /**
      * If the prompt contains the reference (For example, System.Console.Title) of current instance.
      */
-    public final boolean ShowReference = true;
+    private boolean _showReference = true;
+    /**
+     * set If the prompt contains the reference (For example, System.Console.Title) of current instance.
+     * @param value If the prompt contains the reference (For example, System.Console.Title) of current instance.
+     */
+    public void SetShowReference(boolean value){
+        _showReference=value;
+    }
+    /**
+     * get If the prompt contains the reference (For example, System.Console.Title) of current instance.
+     * @return if the prompt contains the reference (For example, System.Console.Title) of current instance.
+     */
+    public boolean GetShowReference(){
+        return  _showReference;
+    }
+
     /**
      * The IOServer for this SuitHost
      */
@@ -133,20 +148,53 @@ public class SuitHost
     {
         return Current.Instance().getClass();
     }
+    /**
+     * get Use TraceBack, or just throw Exceptions.
+     * @return Use TraceBack, or just throw Exceptions.
+     */
+    public boolean GetUseTraceBack()
+    {
+        return _useTraceBack;
+    }
+    /**
+     * set Use TraceBack, or just throw Exceptions.
+     * @param _useTraceBack Use TraceBack, or just throw Exceptions.
+     */
+    public void SetUseTraceBack(boolean _useTraceBack)
+    {
+        this._useTraceBack = _useTraceBack;
+    }
 
     /**
      * Use TraceBack, or just throw Exceptions.
      */
-    public final boolean UseTraceBack = true;
+    private boolean _useTraceBack = true;
+
     /**
-     * If show that a command has been executed.
+     * get If show that a command has been executed.
+     * @return If show that a command has been executed.
      */
-    public final boolean ShowDone = false;
+    public boolean GetShowDone()
+    {
+        return _showDone;
+    }
+
+    /**
+     * set If show that a command has been executed.
+     * @param _showDone If show that a command has been executed.
+     */
+    public void SetShowDone(boolean _showDone)
+    {
+        this._showDone = _showDone;
+    }
+
+
+    private boolean _showDone = false;
 
     /**
      * If this SuitHost runs like a shell that will not exit UNLESS user input exit command.
      */
-    public final boolean ShellMode = false;
+    private final boolean ShellMode = false;
 
     private static String[] SplitCommandLine(String commandLine)
     {
@@ -224,13 +272,13 @@ public class SuitHost
     @SuppressWarnings("ConstantConditions")
     private void NotifyAllOk()
     {
-        if (UseTraceBack && ShowDone) IO.WriteLine(Lang.Done, OutputType.AllOk);
+        if (_useTraceBack && _showDone) IO.WriteLine(Lang.Done, OutputType.AllOk);
     }
 
 
     private void NotifyError(String errorDescription) throws Exception
     {
-        if (UseTraceBack) IO.WriteLine(errorDescription, OutputType.Error);
+        if (_useTraceBack) IO.WriteLine(errorDescription, OutputType.Error);
         else throw new Exception(errorDescription);
     }
 
@@ -263,7 +311,7 @@ public class SuitHost
             IO.WriteLine("B4");//DEBUG
         }
 
-        if (!ShowReference || InstanceNameString.size() <= 0) return;
+        if (!_showReference || InstanceNameString.size() <= 0) return;
         StringBuilder sb = new StringBuilder();
         sb.append(Prompt);
         sb.append('[');
