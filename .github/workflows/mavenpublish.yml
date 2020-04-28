@@ -25,7 +25,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy
+      run: mvn deploy -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/Plastic-Metal/JMobileSuitLite
       env:
         GITHUB_TOKEN: ${{ github.token }} # GITHUB_TOKEN is the default env for the password
 
