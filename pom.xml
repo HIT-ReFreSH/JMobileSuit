@@ -77,8 +77,6 @@
                 </plugin>
 
 
-
-
             </plugins>
         </pluginManagement>
 
@@ -157,7 +155,7 @@
                 <repository>
                     <id>github</id>
                     <name>GitHub Plastic-Metal Apache Maven Packages</name>
-                    <url>https://github.com/Plastic-Metal/JMobileSuitLite</url>
+                    <url>https://maven.pkg.github.com/Plastic-Metal/JMobileSuitLite</url>
                 </repository>
             </distributionManagement>
         </profile>
