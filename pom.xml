@@ -154,12 +154,9 @@
                 </plugins>
             </build>
             <distributionManagement>
-                <snapshotRepository>
-                    <id>github</id>
-                    <url>https://github.com/Plastic-Metal/JMobileSuitLite</url>
-                </snapshotRepository>
                 <repository>
                     <id>github</id>
+                    <name>GitHub Plastic-Metal Apache Maven Packages</name>
                     <url>https://github.com/Plastic-Metal/JMobileSuitLite</url>
                 </repository>
             </distributionManagement>
