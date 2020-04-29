@@ -58,7 +58,7 @@ public class Client extends SuitClient
          * @return Whether the parsing is successful
          */
         @Override
-        public Boolean Parse(String[] options)
+        public boolean Parse(String[] options)
         {
             if(options.length==1){
                 name=options[0];
