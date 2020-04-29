@@ -10,5 +10,5 @@ public interface DynamicParameter
      * @param options String[] to parse from.
      * @return Whether the parsing is successful
      */
-    Boolean Parse(String[] options);
+    boolean Parse(String[] options);
 }
