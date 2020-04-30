@@ -39,7 +39,7 @@ public class IOServer
         _input = System.in;
         Output = System.out;
         Error = System.err;
-        _inputScanner=new Scanner(_input);
+        _inputScanner = new Scanner(_input);
 
     }
 
@@ -52,17 +52,23 @@ public class IOServer
 
     /**
      * get Input stream (default stdin)
+     *
      * @return Input stream
      */
-    public InputStream GetInput(){return _input;}
+    public InputStream GetInput()
+    {
+        return _input;
+    }
 
     /**
      * set Input stream (default stdin)
+     *
      * @param value new input stream
      */
-    public void SetInput(InputStream value){
-        _input=value;
-        _inputScanner=new Scanner(_input);
+    public void SetInput(InputStream value)
+    {
+        _input = value;
+        _inputScanner = new Scanner(_input);
     }
 
     /**
@@ -152,7 +158,7 @@ public class IOServer
      * @param customPromptColor Prompt's Color, ColorSetting.PromptColor as default.
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
-    public String ReadLine(String prompt,  ConsoleColor customPromptColor)
+    public String ReadLine(String prompt, ConsoleColor customPromptColor)
     {
         return ReadLineBase(prompt, null, false, customPromptColor);
     }
@@ -208,8 +214,16 @@ public class IOServer
         }
 
         Scanner sc = _inputScanner;
-        String r = sc.hasNextLine() ? sc.nextLine() : null;
-        return r == null ? null : (r.equals("") ? defaultValue : r);
+        if (!sc.hasNextLine()) return null;
+        StringBuilder stringBuilder = new StringBuilder(sc.nextLine());
+        while (stringBuilder.charAt(stringBuilder.length() - 1) == '%')
+        {
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            if (!sc.hasNextLine()) break;
+            stringBuilder.append(sc.nextLine());
+
+        }
+        return (stringBuilder.length() == 0 ? defaultValue : stringBuilder.toString());
     }
 
     /**
@@ -281,7 +295,7 @@ public class IOServer
 
     private ConsoleColor SelectColor(OutputType type, ConsoleColor customColor)
     {
-        if (customColor == null||customColor==ConsoleColor.Null)
+        if (customColor == null || customColor == ConsoleColor.Null)
         {
             switch (type)
             {
@@ -546,7 +560,7 @@ public class IOServer
             Output.print(defaultColor + Prefix() + ClearEffect);
             for (Tuple<String, ConsoleColor> t : contentArray)
             {
-                if (t.Second==null)t.Second=defaultColor;
+                if (t.Second == null) t.Second = defaultColor;
                 Output.print(t.Second + t.First + ClearEffect);
             }
             Output.print("\n");
@@ -564,7 +578,6 @@ public class IOServer
             Output.print(sb);
         }
     }
-
 
 
     /**
