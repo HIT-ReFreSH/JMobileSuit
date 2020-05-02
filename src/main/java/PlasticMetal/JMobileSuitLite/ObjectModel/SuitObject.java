@@ -1,6 +1,5 @@
 package PlasticMetal.JMobileSuitLite.ObjectModel;
 
-import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.Executable;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Members.MemberAccess;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Members.SuitObjectMember;
 import PlasticMetal.JMobileSuitLite.TraceBack;

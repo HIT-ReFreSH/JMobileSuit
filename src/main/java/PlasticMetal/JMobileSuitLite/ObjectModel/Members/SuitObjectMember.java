@@ -2,8 +2,8 @@ package PlasticMetal.JMobileSuitLite.ObjectModel.Members;
 
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.*;
 
-import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.DynamicParameter;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.Executable;
+import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
+import PlasticMetal.JMobileSuitLite.ObjectModel.Executable;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 

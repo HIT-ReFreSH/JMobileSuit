@@ -1,4 +1,4 @@
-package PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces;
+package PlasticMetal.JMobileSuitLite.ObjectModel;
 
 /**
  * Represents an object which can provide information to Mobile Suit.

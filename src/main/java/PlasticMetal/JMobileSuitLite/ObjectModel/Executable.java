@@ -1,4 +1,4 @@
-package PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces;
+package PlasticMetal.JMobileSuitLite.ObjectModel;
 
 
 import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;

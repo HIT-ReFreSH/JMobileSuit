@@ -2,9 +2,10 @@ package PlasticMetal.JMobileSuitLite;
 
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.OutputType;
+import PlasticMetal.JMobileSuitLite.IO.PromptServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.IOInteractive;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.InfoProvider;
+import PlasticMetal.JMobileSuitLite.ObjectModel.IOInteractive;
+import PlasticMetal.JMobileSuitLite.ObjectModel.InfoProvider;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
 
@@ -26,11 +27,10 @@ public class SuitHost
      *
      * @param instance The instance for Mobile Suit to drive.
      */
-    public SuitHost(Object instance)
+    public SuitHost(Object instance) throws Exception
 
     {
-        IO = GeneralIO;
-        BicServer = new SuitObject(new SuitBuildInCommandServer(this));
+        this(instance,SuitConfiguration.getInstance());
         Current = new SuitObject(instance);
         WorkInstanceInit();
     }
@@ -42,11 +42,16 @@ public class SuitHost
      * @param io        An IOServer, GeneralIO as default.
      * @param bicServer An BicServer, new MobileSuit.SuitBicServer as default.
      */
-    public SuitHost(Object instance, IOServer io, SuitBuildInCommandServer bicServer)
+    public SuitHost(Object instance, SuitConfiguration configuration) throws Exception
 
     {
-        IO = io == null ? GeneralIO : io;
-        BicServer = new SuitObject(bicServer == null ? new SuitBuildInCommandServer(this) : bicServer);
+        IO = configuration.IO() == null ? IOServer.GeneralIO : configuration.IO();
+        configuration.InitializeBuildInCommandServer(this);
+        BicServer = new SuitObject(configuration.BuildInCommandServer() == null ?
+                new BuildInCommandServer(this) : configuration.BuildInCommandServer());
+        Prompt=configuration.Prompt();
+        IO.ColorSetting=configuration.ColorSetting();
+        IO.Prompt=configuration.Prompt();
         Current = new SuitObject(instance);
         WorkInstanceInit();
 
@@ -57,7 +62,7 @@ public class SuitHost
      *
      * @param type The type for Mobile Suit to drive.
      */
-    public SuitHost(Class<?> type) throws IllegalAccessException, InstantiationException
+    public SuitHost(Class<?> type) throws Exception
 
     {
 
@@ -71,10 +76,10 @@ public class SuitHost
      * @param io        An IOServer, GeneralIO as default.
      * @param bicServer An BicServer, new MobileSuit.SuitBicServer as default.
      */
-    public SuitHost(Class<?> type, IOServer io, SuitBuildInCommandServer bicServer) throws IllegalAccessException, InstantiationException
+    public SuitHost(Class<?> type, SuitConfiguration configuration) throws Exception
 
     {
-        this(type.newInstance(), io, bicServer);
+        this(type.newInstance(), configuration);
     }
 
     /**
@@ -93,19 +98,25 @@ public class SuitHost
      * If the prompt contains the reference (For example, System.Console.Title) of current instance.
      */
     private boolean _showReference = true;
+
     /**
      * set If the prompt contains the reference (For example, System.Console.Title) of current instance.
+     *
      * @param value If the prompt contains the reference (For example, System.Console.Title) of current instance.
      */
-    public void SetShowReference(boolean value){
-        _showReference=value;
+    public void SetShowReference(boolean value)
+    {
+        _showReference = value;
     }
+
     /**
      * get If the prompt contains the reference (For example, System.Console.Title) of current instance.
+     *
      * @return if the prompt contains the reference (For example, System.Console.Title) of current instance.
      */
-    public boolean GetShowReference(){
-        return  _showReference;
+    public boolean GetShowReference()
+    {
+        return _showReference;
     }
 
     /**
@@ -113,15 +124,6 @@ public class SuitHost
      */
     public final IOServer IO;
 
-    /**
-     * Default IOServer, using stdin, stdout, stderr.
-     */
-    public static final IOServer GeneralIO = new IOServer();
-
-    /**
-     * The prompt in Console.
-     */
-    public String Prompt;
 
     /**
      * Current Instance's SuitObject Container.
@@ -148,16 +150,20 @@ public class SuitHost
     {
         return Current.Instance().getClass();
     }
+
     /**
      * get Use TraceBack, or just throw Exceptions.
+     *
      * @return Use TraceBack, or just throw Exceptions.
      */
     public boolean GetUseTraceBack()
     {
         return _useTraceBack;
     }
+
     /**
      * set Use TraceBack, or just throw Exceptions.
+     *
      * @param _useTraceBack Use TraceBack, or just throw Exceptions.
      */
     public void SetUseTraceBack(boolean _useTraceBack)
@@ -172,6 +178,7 @@ public class SuitHost
 
     /**
      * get If show that a command has been executed.
+     *
      * @return If show that a command has been executed.
      */
     public boolean GetShowDone()
@@ -181,6 +188,7 @@ public class SuitHost
 
     /**
      * set If show that a command has been executed.
+     *
      * @param _showDone If show that a command has been executed.
      */
     public void SetShowDone(boolean _showDone)
@@ -278,28 +286,28 @@ public class SuitHost
 
     private void NotifyError(String errorDescription) throws Exception
     {
-        if (_useTraceBack) IO.WriteLine(errorDescription, OutputType.Error);
+        if (_useTraceBack) IO.WriteLine(errorDescription + "!", OutputType.Error);
         else throw new Exception(errorDescription);
     }
 
-    private void UpdatePrompt(String prompt)
+    private String UpdatePrompt(String prompt)
     {
-
+        String prompt_;
         if (Objects.equals(prompt, "") && WorkInstance() != null)
         {
             if (WorkType().getAnnotation(SuitInfo.class) != null)
             {
-                Prompt = WorkType().getAnnotation(SuitInfo.class).value();
+                prompt_ = WorkType().getAnnotation(SuitInfo.class).value();
             }
             else
             {
                 if (WorkInstance() instanceof InfoProvider)
                 {
-                    Prompt = ((InfoProvider) WorkInstance()).Text();
+                    prompt_ = ((InfoProvider) WorkInstance()).Text();
                 }
                 else
                 {
-                    Prompt = WorkType().getName();
+                    prompt_ = WorkType().getName();
                 }
 
             }
@@ -307,22 +315,29 @@ public class SuitHost
         }
         else
         {
-            Prompt = prompt;
-            IO.WriteLine("B4");//DEBUG
+            prompt_ = prompt;
         }
 
-        if (!_showReference || InstanceNameString.size() <= 0) return;
+        if (!_showReference || InstanceNameString.size() <= 0) return prompt_;
         StringBuilder sb = new StringBuilder();
-        sb.append(Prompt);
+        sb.append(prompt_);
         sb.append('[');
         sb.append(InstanceNameString.get(0));
         if (InstanceNameString.size() > 1)
             for (int i = 1; i < InstanceNameString.size(); i++)
                 sb.append(".").append(InstanceNameString.get(i));
         sb.append(']');
-        Prompt = sb.toString();
+        return sb.toString();
     }
 
+    /**
+     * The prompt server for mobile suit
+     */
+    public PromptServer Prompt;
+
+    private String _returnValue;
+
+    public boolean ShowReturnValue;
 
     private TraceBack RunBuildInCommand(String[] cmdList) throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
@@ -335,10 +350,13 @@ public class SuitHost
         Tuple<TraceBack, Object> t = Current.Execute(args);
         if (t.Second != null && t.First.equals(AllOk))
         {
-            IO.WriteLine(Arrays.asList(
-                    new Tuple<>(Lang.ReturnValue, IO.ColorSetting.PromptColor),
+            String retVal = t.Second.toString();
+            if (!retVal.equals("")) _returnValue = retVal;
+            if (ShowReturnValue) IO.WriteLine(Arrays.asList(
+                    new Tuple<>(Lang.ReturnValue + " > ", IO.ColorSetting.PromptColor),
                     new Tuple<>(t.Second.toString(), null)
             ));
+
         }
         return t.First;
     }
@@ -352,10 +370,10 @@ public class SuitHost
      */
     public int Run(String prompt) throws Exception
     {
-        UpdatePrompt(prompt);
+        Prompt.Update("", UpdatePrompt(prompt), AllOk);
         for (; ; )
         {
-            if (!IO.IsInputRedirected()) IO.Write(Prompt + '>'+' ', OutputType.Prompt);
+            if (!IO.IsInputRedirected()) Prompt.Print();
             TraceBack traceBack = RunCommand(prompt, IO.ReadLine());
             switch (traceBack)
             {
@@ -427,8 +445,7 @@ public class SuitHost
             IO.Error.println(e.toString());
             traceBack = InvalidCommand;
         }
-
-        UpdatePrompt(prompt);
+        Prompt.Update(_returnValue, UpdatePrompt(prompt), traceBack);
         return traceBack;
     }
 

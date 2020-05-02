@@ -1,4 +1,4 @@
-package PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces;
+package PlasticMetal.JMobileSuitLite.ObjectModel;
 
 /**
  * Represents a Parameter which can be parsed from a String[].

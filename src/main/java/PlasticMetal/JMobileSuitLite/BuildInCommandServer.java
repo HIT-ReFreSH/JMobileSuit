@@ -19,7 +19,7 @@ import java.util.Arrays;
  * Built-In-Command Server. May be Override if necessary.
  */
 @SuppressWarnings("unused")
-public class SuitBuildInCommandServer
+public class BuildInCommandServer
 {
     /**
      * Initialize a BicServer with the given SuitHost.
@@ -27,7 +27,7 @@ public class SuitBuildInCommandServer
      * @param host The given SuitHost.
      */
 
-    public SuitBuildInCommandServer(SuitHost host)
+    public BuildInCommandServer(SuitHost host)
     {
         _host = host;
     }

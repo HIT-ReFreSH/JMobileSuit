@@ -7,9 +7,13 @@ package PlasticMetal.JMobileSuitLite;
 public enum TraceBack
 {
     /**
+     * a prompt
+     */
+    Prompt(2),
+    /**
      * The Progress is Exiting
      */
-    OnExit{
+    OnExit(1){
         @Override
         public String toString()
         {
@@ -20,7 +24,7 @@ public enum TraceBack
     /**
      * Everything is OK
      */
-    AllOk{
+    AllOk(0){
         @Override
         public String toString()
         {
@@ -31,7 +35,7 @@ public enum TraceBack
     /**
      * This is not a command
      */
-    InvalidCommand{
+    InvalidCommand(-1){
         @Override
         public String toString()
         {
@@ -42,7 +46,7 @@ public enum TraceBack
     /**
      * Cannot find the object referring to.
      */
-    ObjectNotFound{
+    ObjectNotFound(-2){
         @Override
         public String toString()
         {
@@ -53,11 +57,15 @@ public enum TraceBack
     /**
      * Cannot find the member in the object referring to.
      */
-    MemberNotFound{
+    MemberNotFound(-3){
         @Override
         public String toString()
         {
             return "MemberNotFound";
         }
+    };
+    TraceBack(int code){
+        Value=code;
     }
+    public final int Value;
 }

@@ -2,8 +2,6 @@ package PlasticMetal.JMobileSuitLite.ObjectModel;
 
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitIgnore;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.IOInteractive;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.InfoProvider;
 
 /// <summary>
 /// An Standard mobile suit client driver-class.

@@ -1,6 +1,9 @@
 package PlasticMetal.JMobileSuitLite.IO;
 
+import PlasticMetal.JMobileSuitLite.Lang;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
+import PlasticMetal.JMobileSuitLite.SuitConfiguration;
+import PlasticMetal.JMobileSuitLite.TraceBack;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -13,29 +16,39 @@ import java.util.Stack;
 @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "unused"})
 public class IOServer
 {
+    /**
+     * Default IOServer, using stdin, stdout, stderr.
+     */
+    public static final IOServer GeneralIO = new IOServer();
     private static final String ClearEffect = "\033[0m";
 
     /**
-     * Default color settings for IOServer.
-     *
-     * @return Default color settings for IOServer.
+     * Color settings for this IOServer. (default getInstance)
      */
-    public static IOServerColorSetting DefaultColorSetting()
-    {
-        return new IOServerColorSetting();
-    }
-
-    /**
-     * Color settings for this IOServer. (default DefaultColorSetting)
-     */
-    public final IOServerColorSetting ColorSetting;
+    public PlasticMetal.JMobileSuitLite.IO.ColorSetting ColorSetting;
+    public PromptServer Prompt;
 
     /**
      * Initialize a IOServer.
      */
     public IOServer()
     {
-        ColorSetting = DefaultColorSetting();
+        Prompt = PromptServer.getInstance();
+        ColorSetting = PlasticMetal.JMobileSuitLite.IO.ColorSetting.getInstance();
+        _input = System.in;
+        Output = System.out;
+        Error = System.err;
+        _inputScanner = new Scanner(_input);
+
+    }
+
+    /**
+     * Initialize a IOServer.
+     */
+    public IOServer(SuitConfiguration configuration)
+    {
+        Prompt = configuration.Prompt();
+        ColorSetting = configuration.ColorSetting();
         _input = System.in;
         Output = System.out;
         Error = System.err;
@@ -107,7 +120,7 @@ public class IOServer
      *
      * @param prompt            The prompt display (output to output stream) before user input.
      * @param newLine           If the prompt will display in a single line.
-     * @param customPromptColor Prompt's Color, ColorSetting.PromptColor as default.
+     * @param customPromptColor Prompt's Color, Color.PromptColor as default.
      * @return Content from input stream, null if EOF.
      */
     public String ReadLine(String prompt, boolean newLine, ConsoleColor customPromptColor)
@@ -120,7 +133,7 @@ public class IOServer
      *
      * @param prompt            The prompt display (output to output stream) before user input.
      * @param defaultValue      Default return value if user input "".
-     * @param customPromptColor Prompt's Color, ColorSetting.PromptColor as default.
+     * @param customPromptColor Prompt's Color, Color.PromptColor as default.
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
     public String ReadLine(String prompt, String defaultValue,
@@ -155,7 +168,7 @@ public class IOServer
      * Reads a line from input stream, with prompt. Return something default if user input "".
      *
      * @param prompt            The prompt display (output to output stream) before user input.
-     * @param customPromptColor Prompt's Color, ColorSetting.PromptColor as default.
+     * @param customPromptColor Prompt's Color, Color.PromptColor as default.
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
     public String ReadLine(String prompt, ConsoleColor customPromptColor)
@@ -195,7 +208,7 @@ public class IOServer
      * @param prompt            The prompt display (output to output stream) before user input.
      * @param defaultValue      Default return value if user input "".
      * @param newLine           If the prompt will display in a single line.
-     * @param customPromptColor Prompt's Color, ColorSetting.PromptColor as default.
+     * @param customPromptColor Prompt's Color, Color.PromptColor as default.
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
     public String ReadLine(String prompt, String defaultValue, boolean newLine, ConsoleColor customPromptColor)
@@ -207,16 +220,21 @@ public class IOServer
     {
         if (prompt != null && prompt.equals(""))
         {
-            if (newLine)
-                WriteLine(prompt + '>', OutputType.Prompt, customPromptColor);
+            if (defaultValue != null && !defaultValue.equals(""))
+                Prompt.Update("", prompt, TraceBack.Prompt);
             else
-                Write(prompt + '>', OutputType.Prompt, customPromptColor);
+                Prompt.Update("", prompt, TraceBack.Prompt,
+                        Lang.Default + ": " + defaultValue);
+            Prompt.Print();
+
+            if (newLine)
+                WriteLine();
         }
 
         Scanner sc = _inputScanner;
         if (!sc.hasNextLine()) return null;
         StringBuilder stringBuilder = new StringBuilder(sc.nextLine());
-        while (stringBuilder.charAt(stringBuilder.length() - 1) == '%')
+        while (stringBuilder.length() > 0 && stringBuilder.charAt(stringBuilder.length() - 1) == '%')
         {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
             if (!sc.hasNextLine()) break;
@@ -406,11 +424,31 @@ public class IOServer
      * Writes some content to output stream. With certain color in console.
      *
      * @param content     Content to output .
-     * @param customColor Customized color in console
+     * @param customColor Customized foreground color in console
      */
     public void Write(String content, ConsoleColor customColor)
     {
         WriteBase(content, OutputType.Default, customColor);
+    }
+
+    /**
+     * Writes some content to output stream. With certain color in console.
+     *
+     * @param content         Content to output .
+     * @param foreGroundColor foreground color
+     * @param backGroundColor background color
+     */
+    public void Write(String content, ConsoleColor foreGroundColor, ConsoleColor backGroundColor)
+    {
+        if (!IsOutputRedirected())
+        {
+
+            Output.print(ConsoleColor.getColor(foreGroundColor, backGroundColor) + content + ClearEffect);
+        }
+        else
+        {
+            Output.print(content);
+        }
     }
 
     /**
@@ -580,40 +618,4 @@ public class IOServer
     }
 
 
-    /**
-     * Color settings of a IOServer.
-     */
-    public static class IOServerColorSetting
-    {
-        /**
-         * Default color. For OutputType.Default
-         */
-        public final ConsoleColor DefaultColor = ConsoleColor.White;
-        /**
-         * Prompt Color. For OutputType.Prompt
-         */
-        public final ConsoleColor PromptColor = ConsoleColor.Magenta;
-        /**
-         * Error Color. For OutputType.Error
-         */
-        public final ConsoleColor ErrorColor = ConsoleColor.Red;
-        /**
-         * AllOK Color. For OutputType.AllOK
-         */
-        public final ConsoleColor AllOkColor = ConsoleColor.Green;
-        /**
-         * ListTitle Color. For OutputType.ListTitle
-         */
-        public final ConsoleColor ListTitleColor = ConsoleColor.Yellow;
-        /**
-         * CustomInformation Color. For OutputType.CustomInformation
-         */
-        public final ConsoleColor CustomInformationColor = ConsoleColor.DarkCyan;
-        /**
-         * Information Color. For OutputType.Information
-         */
-        public final ConsoleColor InformationColor = ConsoleColor.DarkBlue;
-
-
-    }
 }

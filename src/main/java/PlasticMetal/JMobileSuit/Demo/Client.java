@@ -1,8 +1,9 @@
 package PlasticMetal.JMobileSuit.Demo;
 
+import PlasticMetal.JMobileSuitLite.NeuesProjekt.PowerLineThemedPromptServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.DynamicParameter;
+import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient;
 import PlasticMetal.JMobileSuitLite.SuitHost;
 
@@ -24,7 +25,7 @@ public class Client extends SuitClient
 
     public static void main(String[] args) throws Exception
     {
-        new SuitHost(Client.class).Run();
+        new SuitHost(Client.class, PowerLineThemedPromptServer.getPowerLineThemeConfiguration()).Run();
     }
     @SuitAlias("GM")
     public void GoodMorning(GoodMorningParameter arg){
