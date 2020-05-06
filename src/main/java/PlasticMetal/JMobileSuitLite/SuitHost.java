@@ -345,7 +345,7 @@ public class SuitHost
         return BicServer.Execute(cmdList).First;
     }
 
-    private TraceBack RunObject(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException
+    private Tuple<TraceBack, Object> RunObject(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
         Tuple<TraceBack, Object> t = Current.Execute(args);
         if (t.Second != null && t.First.equals(AllOk))
@@ -358,7 +358,7 @@ public class SuitHost
             ));
 
         }
-        return t.First;
+        return t;
     }
 
 
@@ -434,8 +434,10 @@ public class SuitHost
             }
             else
             {
-                traceBack = RunObject(args);
-                if (traceBack == ObjectNotFound) traceBack = RunBuildInCommand(args);
+                Tuple<TraceBack,Object> t=RunObject(args);
+                traceBack = t.First;
+                if (traceBack == ObjectNotFound &&!(t.Second instanceof TraceBack))
+                    traceBack = RunBuildInCommand(args);
             }
 
 
