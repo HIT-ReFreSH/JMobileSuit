@@ -598,7 +598,7 @@ public class IOServer
             Output.print(defaultColor + Prefix() + ClearEffect);
             for (Tuple<String, ConsoleColor> t : contentArray)
             {
-                if (t.Second == null) t.Second = defaultColor;
+                if (t.Second == null || t.Second==ConsoleColor.Null) t.Second = defaultColor;
                 Output.print(t.Second + t.First + ClearEffect);
             }
             Output.print("\n");
