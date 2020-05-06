@@ -1,7 +1,7 @@
 package PlasticMetal.JMobileSuitLite.IO;
 
 import PlasticMetal.JMobileSuitLite.Lang;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
+import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 

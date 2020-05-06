@@ -4,7 +4,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.*;
 
 import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Executable;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
+import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 
 import java.lang.reflect.InvocationTargetException;

@@ -7,7 +7,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
 import PlasticMetal.JMobileSuitLite.ObjectModel.IOInteractive;
 import PlasticMetal.JMobileSuitLite.ObjectModel.InfoProvider;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
+import PlasticMetal.Jarvis.ObjectModel.Tuple;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;

@@ -7,7 +7,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Members.MemberType;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Members.SuitObjectMember;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Tuple;
+import PlasticMetal.Jarvis.ObjectModel.Tuple;
 
 import java.io.BufferedReader;
 import java.io.File;

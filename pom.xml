@@ -4,9 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>JMobileSuitLite</name>
+    <dependencies>
+        <dependency>
+            <groupId>io.github.plastic-metal</groupId>
+            <artifactId>Jarvis</artifactId>
+            <version>0.1.1</version>
+        </dependency>
+    </dependencies>
     <groupId>io.github.plastic-metal</groupId>
     <artifactId>JMobileSuitLite</artifactId>
-    <version>0.1.4</version>
+    <version>0.1.4.1</version>
 
     <packaging>jar</packaging>
     <organization>
@@ -30,6 +37,16 @@
             <url>https://www.mit.edu/~amini/LICENSE.md</url>
         </license>
     </licenses>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.plastic-metal</groupId>
+                <artifactId>Jarvis</artifactId>
+                <version>0.1.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <finalName>${project.organization.name}.${project.name}.${project.version}</finalName>
         <defaultGoal>Package</defaultGoal>

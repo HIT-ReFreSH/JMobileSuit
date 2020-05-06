@@ -3,6 +3,7 @@ package PlasticMetal.JMobileSuitLite.ObjectModel;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Members.MemberAccess;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Members.SuitObjectMember;
 import PlasticMetal.JMobileSuitLite.TraceBack;
+import PlasticMetal.Jarvis.ObjectModel.Tuple;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

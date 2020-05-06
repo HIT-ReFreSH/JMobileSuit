@@ -2,6 +2,7 @@ package PlasticMetal.JMobileSuit.Demo;
 
 import PlasticMetal.JMobileSuitLite.NeuesProjekt.PowerLineThemedPromptServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
+import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitIgnore;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
 import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient;
@@ -25,7 +26,8 @@ public class Client extends SuitClient
 
     public static void main(String[] args) throws Exception
     {
-        new SuitHost(Client.class, PowerLineThemedPromptServer.getPowerLineThemeConfiguration()).Run();
+        new SuitHost(Client.class,
+                PowerLineThemedPromptServer.getPowerLineThemeConfiguration()).Run();
     }
     @SuitAlias("GM")
     public void GoodMorning(GoodMorningParameter arg){
@@ -42,6 +44,7 @@ public class Client extends SuitClient
 
         IO().WriteLine("Good Evening, "+(arg.length>=1?arg[0]:""));
     }
+
 
     @SuitAlias("GE2")
     public void GoodEvening2(String arg0,String[] arg){
