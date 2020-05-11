@@ -1,9 +1,15 @@
-JMobileSuitLite is a Light weight MobileSuit for Java. Migrated from .NET Core.
+<div  align=center>
+    <img src="Plastic-Metal.png" width = 30% height = 30%  />
+</div>
+
+# PlasticMetal.JMobileSuitLite
 
 ![maven](https://img.shields.io/maven-central/v/io.github.plastic-metal/JMobileSuitLite?style=flat-square)
 ![license](https://img.shields.io/github/license/Plastic-Metal/JMobileSuitLite?style=flat-square)
 
 [View in maven-central](https://search.maven.org/artifact/io.github.plastic-metal/JMobileSuitLite/)
+
+JMobileSuitLite is a Light weight MobileSuit for Java. Migrated from .NET Core.
 
 [View English Documentation](https://plastic-metal.github.io/en-US/JMobileSuitLite/index.html)
 
