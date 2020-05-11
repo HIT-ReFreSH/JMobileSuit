@@ -13,7 +13,7 @@
     </dependencies>
     <groupId>io.github.plastic-metal</groupId>
     <artifactId>JMobileSuitLite</artifactId>
-    <version>0.1.5</version>
+    <version>0.1.5.1</version>
 
 
     <packaging>jar</packaging>
@@ -48,11 +48,24 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <build>
+
         <finalName>${project.organization.name}.${project.name}.${project.version}</finalName>
         <defaultGoal>Package</defaultGoal>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -113,6 +126,14 @@
             <id>release</id>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <configuration>
+                            <encoding>UTF-8</encoding>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>

@@ -39,9 +39,7 @@ public class SuitHost
     /**
      * Initialize a SuitHost with given BicServer, IOServer, an instance.
      *
-     * @param instance  The instance for Mobile Suit to drive.
-     * @param io        An IOServer, GeneralIO as default.
-     * @param bicServer An BicServer, new MobileSuit.SuitBicServer as default.
+     * @param configuration Configuration
      */
     public SuitHost(Object instance, SuitConfiguration configuration) throws Exception
 
@@ -74,8 +72,7 @@ public class SuitHost
      * Initialize a SuitHost with given BicServer, IOServer, a type.
      *
      * @param type      The type for Mobile Suit to drive.
-     * @param io        An IOServer, GeneralIO as default.
-     * @param bicServer An BicServer, new MobileSuit.SuitBicServer as default.
+     * @param configuration Configuration
      */
     public SuitHost(Class<?> type, SuitConfiguration configuration) throws Exception
 
