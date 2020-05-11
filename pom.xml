@@ -15,6 +15,7 @@
     <artifactId>JMobileSuitLite</artifactId>
     <version>0.1.4.3</version>
 
+
     <packaging>jar</packaging>
     <organization>
         <name>PlasticMetal</name>
