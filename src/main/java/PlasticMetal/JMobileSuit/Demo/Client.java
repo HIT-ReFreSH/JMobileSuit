@@ -8,6 +8,10 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient;
 import PlasticMetal.JMobileSuitLite.SuitHost;
 
+import java.nio.charset.Charset;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 @SuitInfo("Demo")
 public class Client extends SuitClient
 {
@@ -15,6 +19,7 @@ public class Client extends SuitClient
     @SuitInfo("hello command")
     public void Hello()
     {
+
         IO().WriteLine("Hello! MobileSuit!");
     }
 
@@ -26,6 +31,9 @@ public class Client extends SuitClient
 
     public static void main(String[] args) throws Exception
     {
+        Locale lc=Locale.getDefault();
+        ResourceBundle rb=ResourceBundle.getBundle("BicInfo",lc);
+        System.out.println(rb.getString("List"));
         new SuitHost(Client.class,
                 PowerLineThemedPromptServer.getPowerLineThemeConfiguration()).Run();
     }

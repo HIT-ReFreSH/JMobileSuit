@@ -2,6 +2,7 @@ package PlasticMetal.JMobileSuitLite.NeuesProjekt;
 
 import PlasticMetal.JMobileSuitLite.*;
 import PlasticMetal.JMobileSuitLite.IO.*;
+import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
 /// <summary>
 /// a power line themed prompt server for mobile suit

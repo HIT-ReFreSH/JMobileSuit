@@ -19,7 +19,7 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
     private final Object _instance;
     private final Map<String, List<Tuple<String, SuitObjectMember>>> _members = new HashMap<>();
     private final Map<String, List<Tuple<String, SuitObjectMember>>> _membersAbs = new HashMap<>();
-private static final Set<String> IgnoreMethods=new HashSet<>(Arrays.asList("wait","getclass","equals","hashcode","notifyall","tostring","notify")) ;
+    private static final Set<String> IgnoreMethods=new HashSet<>(Arrays.asList("wait","getclass","equals","hashcode","notifyall","tostring","notify")) ;
 
     /**
      * Initialize a SuitObject with an instance.

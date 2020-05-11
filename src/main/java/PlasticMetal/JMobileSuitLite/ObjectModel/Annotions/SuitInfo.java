@@ -4,6 +4,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.ResourceBundle;
 
 /**
  * Stores the information of a member to be displayed.
@@ -19,4 +20,10 @@ public @interface SuitInfo
      * @return The information.
      */
     String value();
+
+    /**
+     * Name of resource bundle
+     * @return Name of resource bundle
+     */
+    String ResourceBundleName() default "";
 }

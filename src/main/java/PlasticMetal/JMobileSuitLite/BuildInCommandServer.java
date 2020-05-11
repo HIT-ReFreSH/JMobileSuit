@@ -8,6 +8,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Members.MemberType;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Members.SuitObjectMember;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
+import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -51,7 +52,7 @@ public class BuildInCommandServer
      * @return Command status
      */
     @SuitAlias("Ls")
-    @SuitInfo("Show Members of the Current SuitObject")
+    @SuitInfo(ResourceBundleName = "BicInfo",value = "List")
     public TraceBack List(String[] args)
     {
         if (_host.Current == null) return TraceBack.InvalidCommand;
@@ -75,7 +76,7 @@ public class BuildInCommandServer
      * @return Command status
      */
     @SuitAlias("Rs")
-    @SuitInfo("Run scripts in the given file")
+    @SuitInfo(ResourceBundleName = "BicInfo",value = "RunScript")
     public TraceBack RunScript(String[] args)
     {
         if (_host.Current == null||args.length==0) return TraceBack.InvalidCommand;
@@ -118,7 +119,7 @@ public class BuildInCommandServer
      * @return Command status
      */
 
-    @SuitInfo("Exit MobileSuit")
+    @SuitInfo(ResourceBundleName = "BicInfo",value = "Exit")
     public TraceBack Exit(String[] args)
     {
         return TraceBack.OnExit;
@@ -131,7 +132,7 @@ public class BuildInCommandServer
      * @return Command status
      */
 
-    @SuitInfo("Show Help of MobileSuit")
+    @SuitInfo(ResourceBundleName = "BicInfo",value = "Help")
     public TraceBack Help(String[] args)
     {
         _host.IO.WriteLine(Lang.Bic, OutputType.ListTitle);

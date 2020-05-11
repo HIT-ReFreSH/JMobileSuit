@@ -10,9 +10,7 @@ import PlasticMetal.JMobileSuitLite.TraceBack;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * A SuitObject's member.
@@ -140,7 +138,14 @@ public class SuitObjectMember implements Executable
         else
         {
             _type = MemberType.MethodWithInfo;
-            _information = info.value();
+            if(info.ResourceBundleName().equals("")){
+                _information = info.value();
+            }else {
+                _information= ResourceBundle.getBundle(info.ResourceBundleName(),Locale.getDefault())
+                        .getString(info.value());
+            }
+
+
         }
 
     }

@@ -13,13 +13,13 @@
     </dependencies>
     <groupId>io.github.plastic-metal</groupId>
     <artifactId>JMobileSuitLite</artifactId>
-    <version>0.1.4.3</version>
+    <version>0.1.5</version>
 
 
     <packaging>jar</packaging>
     <organization>
         <name>PlasticMetal</name>
-        <url>https://github.com/Plastic-Metal/</url>
+        <url>https://plastic-metal.github.io/</url>
     </organization>
     <url>https://github.com/Plastic-Metal/JMobileSuitLite</url>
     <inceptionYear>2020</inceptionYear>
@@ -27,7 +27,7 @@
         <developer>
             <name>Ferdinand Sukhoi</name>
             <email>ferdinandsukhoi@outlook.com</email>
-            <url>ferdinandsukhoi.github.io</url>
+            <url>https://ferdinandsukhoi.github.io</url>
         </developer>
     </developers>
     <description>Light weight Mobile Suit for Java. Migrated from .NET Core.</description>
@@ -97,7 +97,16 @@
 
             </plugins>
         </pluginManagement>
-
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
     <profiles>
         <profile>
@@ -168,6 +177,18 @@
                         </configuration>
                     </plugin>
                 </plugins>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <include>**/*.properties</include>
+                            <include>**/*.xml</include>
+                        </includes>
+                    </resource>
+                </resources>
+
+
             </build>
 
             <distributionManagement>
