@@ -386,6 +386,11 @@ public class SuitHost
                 case MemberNotFound:
                     NotifyError(Lang.MemberNotFound);
                     break;
+                case AppException:
+                    NotifyError(Lang.ApplicationException);
+                    break;
+                case Prompt:
+                    continue;
                 case InvalidCommand:
                 default:
                     NotifyError(Lang.InvalidCommand);

@@ -63,9 +63,22 @@ public enum TraceBack
         {
             return "MemberNotFound";
         }
+    },
+
+    /**
+     * Cannot find the member in the object referring to.
+     */
+    AppException(-4){
+        @Override
+        public String toString()
+        {
+            return "ApplicationException";
+        }
     };
+
     TraceBack(int code){
         Value=code;
     }
     public final int Value;
+
 }

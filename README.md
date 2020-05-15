@@ -6,6 +6,9 @@
 
 ![maven](https://img.shields.io/maven-central/v/io.github.plastic-metal/JMobileSuitLite?style=flat-square)
 ![license](https://img.shields.io/github/license/Plastic-Metal/JMobileSuitLite?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/Plastic-Metal/JMobileSuitLite?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/Plastic-Metal/JMobileSuitLite?style=flat-square)
+![GitHub code size](https://img.shields.io/github/languages/code-size/Plastic-Metal/JMobileSuitLite?style=flat-square)
 
 [View in maven-central](https://search.maven.org/artifact/io.github.plastic-metal/JMobileSuitLite/)
 

@@ -31,9 +31,8 @@ public class Client extends SuitClient
 
     public static void main(String[] args) throws Exception
     {
-        Locale lc=Locale.getDefault();
-        ResourceBundle rb=ResourceBundle.getBundle("BicInfo",lc);
-        System.out.println(rb.getString("List"));
+
+
         new SuitHost(Client.class,
                 PowerLineThemedPromptServer.getPowerLineThemeConfiguration()).Run();
     }
