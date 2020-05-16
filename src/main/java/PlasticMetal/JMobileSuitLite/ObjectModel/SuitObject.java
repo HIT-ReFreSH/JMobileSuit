@@ -19,33 +19,36 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
     private final Object _instance;
     private final Map<String, List<Tuple<String, SuitObjectMember>>> _members = new HashMap<>();
     private final Map<String, List<Tuple<String, SuitObjectMember>>> _membersAbs = new HashMap<>();
-    private static final Set<String> IgnoreMethods=new HashSet<>(Arrays.asList("wait","getclass","equals","hashcode","notifyall","tostring","notify")) ;
+    private static final Set<String> IgnoreMethods = new HashSet<>(Arrays.asList("wait", "getclass", "equals", "hashcode", "notifyall", "tostring", "notify"));
 
     /**
      * Initialize a SuitObject with an instance.
+     *
      * @param instance The instance that this SuitObject represents.
      */
     public SuitObject(Object instance)
     {
         _instance = instance;
         Class<?> type = instance.getClass();
-        if (type == null)return;
-        for(Method member : type.getMethods()){
-            if((member.getModifiers() & Modifier.PUBLIC)!=0&&(member.getModifiers() & Modifier.STATIC)==0&&!IgnoreMethods.contains(member.getName().toLowerCase())){
-                TryAddMember(new SuitObjectMember(instance,member));
+        if (type == null) return;
+        for (Method member : type.getMethods())
+        {
+            if ((member.getModifiers() & Modifier.PUBLIC) != 0 && (member.getModifiers() & Modifier.STATIC) == 0 && !IgnoreMethods.contains(member.getName().toLowerCase()))
+            {
+                TryAddMember(new SuitObjectMember(instance, member));
             }
         }
     }
 
     /**
      * The instance that this SuitObject represents.
+     *
      * @return The instance that this SuitObject represents.
      */
     public Object Instance()
     {
         return _instance;
     }
-
 
 
     /**
@@ -60,31 +63,35 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
 
 
     /**
-     *
      * @param args The arguments for execution.
      * @return Execute this Object.
-     * @throws IllegalAccessException ignore.
-     * @throws InstantiationException ignore.
-     * @throws InvocationTargetException ignore.
      */
-    public Tuple<TraceBack, Object> Execute(String[] args) throws IllegalAccessException, InstantiationException, InvocationTargetException
+    public Tuple<TraceBack, Object> Execute(String[] args)
     {
 
 
-        if (args.length == 0) return new Tuple<>(TraceBack.ObjectNotFound,null);
+        if (args.length == 0) return new Tuple<>(TraceBack.ObjectNotFound, null);
         args[0] = args[0].toLowerCase();
 
-        if (!_members.containsKey(args[0])) return new Tuple<>(TraceBack.ObjectNotFound,null);
+        if (!_members.containsKey(args[0])) return new Tuple<>(TraceBack.ObjectNotFound, null);
 
-        for(Tuple<String,SuitObjectMember> t : _members.get(args[0]))
+        for (Tuple<String, SuitObjectMember> t : _members.get(args[0]))
         {
+            Tuple<TraceBack, Object> r;
+            try
+            {
+                r = t.Second.Execute(Arrays.copyOfRange(args, 1, args.length));
+            }
+            catch (Exception e)
+            {
+                r = new Tuple<>(TraceBack.InvalidCommand, e);
+            }
 
-            Tuple<TraceBack,Object> r = t.Second.Execute(Arrays.copyOfRange(args,1,args.length));
             if (r.First == TraceBack.ObjectNotFound) continue;
             return r;
         }
 
-        return new Tuple<>(TraceBack.ObjectNotFound,null);
+        return new Tuple<>(TraceBack.ObjectNotFound, null);
     }
 
     private void TryAddMember(SuitObjectMember objMember)

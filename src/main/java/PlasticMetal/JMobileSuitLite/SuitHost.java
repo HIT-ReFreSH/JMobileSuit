@@ -339,13 +339,13 @@ public class SuitHost
 
     public boolean ShowReturnValue;
 
-    private TraceBack RunBuildInCommand(String[] cmdList) throws IllegalAccessException, InvocationTargetException, InstantiationException
+    private TraceBack RunBuildInCommand(String[] cmdList) //throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
         if (cmdList == null) return InvalidCommand;
         return BicServer.Execute(cmdList).First;
     }
 
-    private Tuple<TraceBack, Object> RunObject(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException
+    private Tuple<TraceBack, Object> RunObject(String[] args) //throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
         Tuple<TraceBack, Object> t = Current.Execute(args);
         if (t.Second != null && t.First.equals(AllOk))
