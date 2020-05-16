@@ -21,8 +21,10 @@ import static PlasticMetal.JMobileSuitLite.TraceBack.*;
 @SuppressWarnings("ALL")
 public class SuitHost
 {
-
-
+    /**
+     * Disable I18N, so that all language pack will be disabled.
+     */
+    public static boolean DisableI18N=false;
     /**
      * Initialize a SuitHost with general BicServer, IOServer, an instance.
      *

@@ -27,7 +27,7 @@ public class LangResourceBundle
     public final String AllOK;
     public final String ApplicationException;
     public LangResourceBundle(){
-        ResourceBundle bundle= ResourceBundle.getBundle("Lang", Locale.getDefault());
+        ResourceBundle bundle= ResourceBundle.getBundle("Lang", SuitHost.DisableI18N?Locale.ENGLISH: Locale.getDefault());
 
         Bic=bundle.getString("Bic");
         BicExp1=bundle.getString("BicExp1");

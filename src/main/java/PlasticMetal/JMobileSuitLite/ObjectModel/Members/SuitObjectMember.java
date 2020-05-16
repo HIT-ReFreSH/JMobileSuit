@@ -4,6 +4,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.*;
 
 import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Executable;
+import PlasticMetal.JMobileSuitLite.SuitHost;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 
@@ -141,7 +142,7 @@ public class SuitObjectMember implements Executable
             if(info.ResourceBundleName().equals("")){
                 _information = info.value();
             }else {
-                _information= ResourceBundle.getBundle(info.ResourceBundleName(),Locale.getDefault())
+                _information= ResourceBundle.getBundle(info.ResourceBundleName(), SuitHost.DisableI18N?Locale.ENGLISH: Locale.getDefault())
                         .getString(info.value());
             }
 
