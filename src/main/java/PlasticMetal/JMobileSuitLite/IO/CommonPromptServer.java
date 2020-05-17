@@ -1,43 +1,51 @@
 package PlasticMetal.JMobileSuitLite.IO;
 
-import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
+import PlasticMetal.JMobileSuitLite.LangResourceBundle;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 
+/**
+ * A common implement of PromptServer
+ */
 public class CommonPromptServer implements PromptServer
 {
-    /// <summary>
-    /// IO server of this prompt server
-    /// </summary>
+    protected final LangResourceBundle Lang;
+    /**
+     * IO server of this prompt server
+     */
     protected final IOServer IO;
-    /// <summary>
-    /// Color setting of this prompt server
-    /// </summary>
+    /**
+     * Color setting of this prompt server
+     */
     protected final ColorSetting Color;
 
-    /// <summary>
-    /// Initialize a prompt with GeneralIO
-    /// </summary>
+    /**
+     * Initialize a prompt with GeneralIO
+     */
     public CommonPromptServer()
     {
         this(IOServer.GeneralIO, ColorSetting.getInstance());
     }
 
-    /// <summary>
-    /// Initialize a prompt with IO and color setting.
-    /// </summary>
-    /// <param name="io">io</param>
-    /// <param name="colorSetting">color setting</param>
+    /**
+     * Initialize a prompt with IO and color setting.
+     *
+     * @param colorSetting given color setting
+     * @param io           given io server
+     */
+
     protected CommonPromptServer(IOServer io, ColorSetting colorSetting)
     {
         IO = io;
         Color = colorSetting;
+        Lang = new LangResourceBundle();
     }
 
-    /// <summary>
-    /// Initialize a prompt Server with given configuration
-    /// </summary>
-    /// <param name="configuration"></param>
+    /**
+     * Initialize a prompt Server with given configuration
+     *
+     * @param configuration given configuration
+     */
     public CommonPromptServer(SuitConfiguration configuration)
 
     {
@@ -46,27 +54,26 @@ public class CommonPromptServer implements PromptServer
 
     }
 
-    /// <summary>
-    /// return value from last update
-    /// </summary>
+    /**
+     * return value from last update
+     */
     protected String LastReturnValue = "";
 
-    /// <summary>
-    /// Information from last update
-    /// </summary>
+    /**
+     * Information from last update
+     */
     protected String LastInformation = "";
 
-    /// <summary>
-    ///TraceBack from last update
-    /// </summary>
+    /**
+     * TraceBack from last update
+     */
     protected TraceBack LastTraceBack;
 
-    /// <summary>
-    ///Information shows when TraceBack==Prompt from last update
-    /// </summary>
+    /**
+     * Information shows when TraceBack==Prompt from last update
+     */
     protected String LastPromptInformation = "";
 
-    ///<inheritdoc/>
     public void Update(String returnValue, String information, TraceBack traceBack)
     {
         LastReturnValue = returnValue;
@@ -74,7 +81,12 @@ public class CommonPromptServer implements PromptServer
         LastTraceBack = traceBack;
     }
 
-    /// <inheritdoc />
+    /**
+     * @param returnValue       return value of last command
+     * @param information       information of current instance
+     * @param traceBack         traceBack of last command
+     * @param promptInformation information shows when traceBack==TraceBack.Prompt
+     */
     public void Update(String returnValue, String information, TraceBack traceBack, String promptInformation)
     {
         Update(returnValue, information, traceBack);
@@ -82,13 +94,15 @@ public class CommonPromptServer implements PromptServer
 
     }
 
-    /// <inheritdoc />
+    /**
+     * print out the prompt
+     */
     public void Print()
     {
-        IO.Write(" "+LastInformation, OutputType.Prompt);
+        IO.Write(" " + LastInformation, OutputType.Prompt);
         if (LastTraceBack == TraceBack.Prompt)
         {
-            IO.Write("["+LastPromptInformation+"]", OutputType.Prompt);
+            IO.Write("[" + LastPromptInformation + "]", OutputType.Prompt);
         }
 
         IO.Write(" > ", OutputType.Prompt);

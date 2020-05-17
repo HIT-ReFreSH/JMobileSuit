@@ -1,5 +1,5 @@
-<div  align=center>
-    <img src="Plastic-Metal.png" width = 30% height = 30%  />
+<div align=center>
+    <img src="Plastic-Metal.png" width = 30% height = 30%   alt=""/>
 </div>
 
 # PlasticMetal.JMobileSuitLite
@@ -12,7 +12,7 @@
 
 [View in maven-central](https://search.maven.org/artifact/io.github.plastic-metal/JMobileSuitLite/)
 
-JMobileSuitLite is a Light weight MobileSuit for Java. Migrated from .NET Core.
+JMobileSuitLite is a Light-weight MobileSuit for Java. Migrated from .NET Core.
 
 [View English Documentation](https://plastic-metal.github.io/en-US/JMobileSuitLite/index.html)
 
@@ -26,7 +26,6 @@ For details of MobileSuit, see: https://github.com/Plastic-Metal/MobileSuit
 
 As I'm new to Java, and limited by the JVM, some functions of MobileSuit are not supported in JMobileSuitLite, Including but not limited to:
 
-1. String, String[], DynamicParameter type for arguments only
-2. Method Members only
-3. Instance Mode Only
-4. No Async Support
+1. Method Members only
+2. Instance Mode Only
+3. No Async Support

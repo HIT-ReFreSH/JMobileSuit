@@ -2,15 +2,11 @@ package PlasticMetal.JMobileSuit.Demo;
 
 import PlasticMetal.JMobileSuitLite.NeuesProjekt.PowerLineThemedPromptServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitIgnore;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
 import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
+import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.*;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient;
 import PlasticMetal.JMobileSuitLite.SuitHost;
-
-import java.nio.charset.Charset;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 @SuitInfo("Demo")
 public class Client extends SuitClient
@@ -31,8 +27,6 @@ public class Client extends SuitClient
 
     public static void main(String[] args) throws Exception
     {
-
-
         new SuitHost(Client.class,
                 PowerLineThemedPromptServer.getPowerLineThemeConfiguration()).Run();
     }
@@ -43,7 +37,7 @@ public class Client extends SuitClient
 
     @SuitAlias("GM2")
     public void GoodMorning2(String arg, GoodMorningParameter arg1){
-        IO().WriteLine("Good moring, "+arg+" and "+ arg1.name);
+        IO().WriteLine("Good morning, "+arg+" and "+ arg1.name);
     }
 
     @SuitAlias("GE")
@@ -52,11 +46,44 @@ public class Client extends SuitClient
         IO().WriteLine("Good Evening, "+(arg.length>=1?arg[0]:""));
     }
 
+    @SuitAlias("Sn")
+    public void ShowNumber(
+            @SuitParser(ParserClass = Integer.class, MethodName = "parseInt")
+            int i,
+            @SuitParser(ParserClass = Integer.class, MethodName = "parseInt")
+            int[] j
+    ){
+        IO().WriteLine(String.valueOf(i));
+        IO().WriteLine(j.length>=1?String.valueOf(j[0]):"");
+    }
 
     @SuitAlias("GE2")
     public void GoodEvening2(String arg0,String[] arg){
 
         IO().WriteLine("Good Evening, "+arg0+(arg.length>=1?" and "+arg[0]:""));
+    }
+
+    @SuitAlias("Sl")
+    @SuitInfo("Sleep {-n name (, -t hours, -s)}")
+    public void Sleep(SleepArgument argument){
+        if(argument.isSleeping){
+            IO().WriteLine(argument.Name+" has been sleeping for "+ argument.SleepTime +" hour(s)." );
+        }else {
+            IO().WriteLine(argument.Name+" is not sleeping." );
+        }
+    }
+
+    public static class SleepArgument extends AutoDynamicParameter{
+        @Option("n")
+        public String Name;
+
+        @SuppressWarnings("CanBeFinal")
+        @Option("t")
+        @SuitParser(ParserClass = Integer.class, MethodName = "parseInt")
+        @WithDefault
+        public int SleepTime=0;
+        @Switch("s")
+        public boolean isSleeping;
     }
 
     public static class GoodMorningParameter implements DynamicParameter{

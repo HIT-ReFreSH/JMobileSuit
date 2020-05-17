@@ -2,28 +2,46 @@ package PlasticMetal.JMobileSuitLite.NeuesProjekt;
 
 import PlasticMetal.JMobileSuitLite.*;
 import PlasticMetal.JMobileSuitLite.IO.*;
-import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
-/// <summary>
-/// a power line themed prompt server for mobile suit
-/// </summary>
+/**
+ * a power line themed prompt server for mobile suit
+ */
 public class PowerLineThemedPromptServer extends CommonPromptServer
 
 {
 
 
-    /// <inheritdoc />
-        public PowerLineThemedPromptServer(){super();}
+    /**
+     * Initialize a prompt default.
+     */
+    public PowerLineThemedPromptServer()
+    {
+        super();
+    }
 
-    /// <inheritdoc />
-        private PowerLineThemedPromptServer(IOServer io) { super(io, ColorSetting.getInstance());}
+    /**
+     * Initialize a prompt with IO and color setting.
+     *
+     * @param io given io server
+     */
+    private PowerLineThemedPromptServer(IOServer io)
+    {
+        super(io, ColorSetting.getInstance());
+    }
 
-    /// <inheritdoc />
-        public PowerLineThemedPromptServer(SuitConfiguration configuration) {super(configuration); }
-    /// <summary>
-    /// Create a mobile suit configuration with power line theme
-    /// </summary>
-    /// <returns></returns>
+    /**
+     * Initialize a prompt Server with given configuration
+     *
+     * @param configuration given configuration
+     */
+    public PowerLineThemedPromptServer(SuitConfiguration configuration)
+    {
+        super(configuration);
+    }
+
+    /**
+     * Create a mobile suit configuration with power line theme
+     */
     public static SuitConfiguration getPowerLineThemeConfiguration()
     {
         IOServer io = new IOServer();
@@ -33,72 +51,73 @@ public class PowerLineThemedPromptServer extends CommonPromptServer
         return r;
     }
 
-    /// <summary>
-    /// a lightning ⚡ char
-    /// </summary>
+    /**
+     * a lightning ⚡ char
+     */
     protected static final char Lightning = '⚡';
 
-    /// <summary>
-    /// a right arrow  char
-    /// </summary>
+    /**
+     * a right arrow  char
+     */
     protected static final char RightArrow = '';
 
-    /// <summary>
-    /// a right triangle  char
-    /// </summary>
+    /**
+     * a right triangle  char
+     */
     protected static final char RightTriangle = '';
-    /// <summary>
-    /// a cross ⨯ char
-    /// </summary>
+    /**
+     * a cross ⨯ char
+     */
     protected static final char Cross = '⨯';
 
     @Override
     public void Print()
     {
-        ConsoleColor tbColor = ColorSetting.SelectColor( LastTraceBack.Value > 0 ?
-                OutputType.Prompt : (LastTraceBack == TraceBack.AllOk? OutputType.AllOk : OutputType.Error),null,Color);
+        ConsoleColor tbColor = ColorSetting.SelectColor(LastTraceBack.Value > 0 ?
+                OutputType.Prompt : (LastTraceBack == TraceBack.AllOk ? OutputType.AllOk : OutputType.Error), null, Color);
 
-        ConsoleColor lastColor=LastTraceBack== TraceBack.Prompt? Color.ListTitleColor : Color.InformationColor;
+        ConsoleColor lastColor = LastTraceBack == TraceBack.Prompt ? Color.ListTitleColor : Color.InformationColor;
 
-        IO.Write(' '+ LastInformation+' ', Color.DefaultColor, lastColor);
+        IO.Write(' ' + LastInformation + ' ', Color.DefaultColor, lastColor);
 
-        if (LastReturnValue!=null&&!LastReturnValue.equals(""))
+        if (LastReturnValue != null && !LastReturnValue.equals(""))
         {
             IO.Write(String.valueOf(RightTriangle),
                     lastColor, Color.CustomInformationColor);
-            IO.Write(" "+ Lang.ReturnValue+" "+RightArrow+" "+LastReturnValue+" ",
+            IO.Write(" " + Lang.ReturnValue + " " + RightArrow + " " + LastReturnValue + " ",
                     Color.DefaultColor, Color.CustomInformationColor);
             lastColor = Color.CustomInformationColor;
         }
 
-        String tbExpression="";
-        switch (LastTraceBack){
+        String tbExpression = "";
+        switch (LastTraceBack)
+        {
 
             case Prompt:
-                tbExpression=LastPromptInformation;
+                tbExpression = LastPromptInformation;
                 break;
             case OnExit:
-                tbExpression="";
+                tbExpression = "";
                 break;
             case AllOk:
-                tbExpression=Lang.AllOK;
+                tbExpression = Lang.AllOK;
                 break;
             case InvalidCommand:
-                tbExpression=Lang.InvalidCommand;
+                tbExpression = Lang.InvalidCommand;
                 break;
             case ObjectNotFound:
-                tbExpression=Lang.ObjectNotFound;
+                tbExpression = Lang.ObjectNotFound;
                 break;
             case MemberNotFound:
-                tbExpression=Lang.MemberNotFound;
+                tbExpression = Lang.MemberNotFound;
                 break;
         }
 
 
         IO.Write(String.valueOf(RightTriangle),
                 lastColor, tbColor);
-        IO.Write(" "+tbExpression+" ", Color.DefaultColor, tbColor);
-        IO.Write(RightTriangle + " " , tbColor);
+        IO.Write(" " + tbExpression + " ", Color.DefaultColor, tbColor);
+        IO.Write(RightTriangle + " ", tbColor);
 
     }
 }

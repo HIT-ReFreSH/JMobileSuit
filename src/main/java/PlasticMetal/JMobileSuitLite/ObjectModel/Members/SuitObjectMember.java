@@ -4,10 +4,12 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.*;
 
 import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Executable;
-import PlasticMetal.JMobileSuitLite.SuitHost;
+import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.ParsingAPIs;
+import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.SuitParser;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -79,13 +81,22 @@ public class SuitObjectMember implements Executable
         }
         else
         {
-            if (_parameters[length - 1].getType().isArray())
+            Class<?> tailParameterType=_parameters[length - 1].getType();
+            if (tailParameterType.isArray())
                 _tailParameterType = TailParameterType.Array;
-            else if (Arrays.asList(_parameters[length - 1].
-                    getType().getInterfaces()).contains(DynamicParameter.class))
-                _tailParameterType = TailParameterType.DynamicParameter;
-            else
-                _tailParameterType = TailParameterType.Normal;
+            else {
+                boolean flag=false;
+                while (!tailParameterType.equals(Object.class)){
+                    if(Arrays.asList(tailParameterType.getInterfaces()).contains(DynamicParameter.class) ){
+                        flag=true;
+                        break;
+                    }else {
+                        tailParameterType=tailParameterType.getSuperclass();
+                    }
+                }
+                _tailParameterType = flag?TailParameterType.DynamicParameter :TailParameterType.Normal;
+            }
+
 
 
             _maxParameterCount =
@@ -139,10 +150,13 @@ public class SuitObjectMember implements Executable
         else
         {
             _type = MemberType.MethodWithInfo;
-            if(info.ResourceBundleName().equals("")){
+            if (info.ResourceBundleName().equals(""))
+            {
                 _information = info.value();
-            }else {
-                _information= ResourceBundle.getBundle(info.ResourceBundleName(), SuitHost.DisableI18N?Locale.ENGLISH: Locale.getDefault())
+            }
+            else
+            {
+                _information = ResourceBundle.getBundle(info.ResourceBundleName(), Locale.getDefault())
                         .getString(info.value());
             }
 
@@ -251,9 +265,12 @@ public class SuitObjectMember implements Executable
      */
     public Tuple<TraceBack, Object> Execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException
     {
-
-        if (!CanFitTo(args.length)) {
-            return new Tuple<>(TraceBack.ObjectNotFound, null);}
+        String parseSrc;
+        Method m;
+        if (!CanFitTo(args.length))
+        {
+            return new Tuple<>(TraceBack.ObjectNotFound, null);
+        }
         if (_tailParameterType == TailParameterType.NoParameter)
         {
             return Execute(new Object[0]);
@@ -262,8 +279,30 @@ public class SuitObjectMember implements Executable
         Object[] pass = new Object[length];
         int i = 0;
         for (; i < _nonArrayParameterCount; i++)
-            pass[i] = i < args.length ? args[i]
+        {
+            parseSrc = i < args.length ? (args[i])
                     : _parameters[i].getAnnotation(SuitDefaultArgument.class).value();
+            m = ParsingAPIs.getParser(_parameters[i].getAnnotation(SuitParser.class));
+
+            if (m != null)
+            {
+                try
+                {
+                    pass[i] = m.invoke(null, parseSrc);
+                }
+                catch (Exception e)
+                {
+
+                    return new Tuple<>(TraceBack.InvalidCommand, e);
+                }
+            }
+            else
+            {
+                pass[i] = parseSrc;
+            }
+
+        }
+
 
         if (_tailParameterType == TailParameterType.Normal)
         {
@@ -286,12 +325,34 @@ public class SuitObjectMember implements Executable
 
         if (i < args.length)
         {
-            String[] argArray = Arrays.copyOfRange(args, i, args.length);
-            pass[i] = argArray;
+
+            m= ParsingAPIs.getParser(_parameters[i].getAnnotation(SuitParser.class));
+            if(m!=null){
+                try
+                {
+
+                    Object argArray=Array.newInstance(_parameters[length - 1].getType().getComponentType(),args.length-i);
+                    int k=i;
+                    for(int j=0;k<args.length;k++){
+                        Array.set(argArray,j,m.invoke(null,args[i]));
+                        j++;
+                    }
+                    pass[i]=argArray;
+                }
+                catch (Exception e)
+                {
+                    return new Tuple<>(TraceBack.InvalidCommand, e);
+                }
+
+            }else {
+                pass[i] = Arrays.copyOfRange(args, i, args.length);
+            }
+
         }
         else
         {
-            pass[i] = new String[0];
+            pass[i]= Array.newInstance(_parameters[length - 1].getType().getComponentType(),0);
+            //pass[i] = new String[0];
         }
 
         return Execute(pass);

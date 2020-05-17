@@ -5,7 +5,6 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Members.SuitObjectMember;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
@@ -90,7 +89,6 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
             if (r.First == TraceBack.ObjectNotFound) continue;
             return r;
         }
-
         return new Tuple<>(TraceBack.ObjectNotFound, null);
     }
 

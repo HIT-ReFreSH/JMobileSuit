@@ -1,15 +1,11 @@
 package PlasticMetal.JMobileSuitLite;
 
-import java.lang.reflect.Field;
-import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 public class LangResourceBundle
 {
-    public static final LangResourceBundle Lang=new LangResourceBundle();
+    public final static LangResourceBundle Lang=new LangResourceBundle();
     public final String Bic;
     public final String BicExp1;
     public final String BicExp2;
@@ -27,7 +23,7 @@ public class LangResourceBundle
     public final String AllOK;
     public final String ApplicationException;
     public LangResourceBundle(){
-        ResourceBundle bundle= ResourceBundle.getBundle("Lang", SuitHost.DisableI18N?Locale.ENGLISH: Locale.getDefault());
+        ResourceBundle bundle= ResourceBundle.getBundle("Lang",  Locale.getDefault());
 
         Bic=bundle.getString("Bic");
         BicExp1=bundle.getString("BicExp1");

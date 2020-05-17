@@ -10,7 +10,6 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import static PlasticMetal.JMobileSuitLite.TraceBack.*;
@@ -21,10 +20,6 @@ import static PlasticMetal.JMobileSuitLite.TraceBack.*;
 @SuppressWarnings("ALL")
 public class SuitHost
 {
-    /**
-     * Disable I18N, so that all language pack will be disabled.
-     */
-    public static boolean DisableI18N=false;
     /**
      * Initialize a SuitHost with general BicServer, IOServer, an instance.
      *
