@@ -8,6 +8,9 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.*;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient;
 import PlasticMetal.JMobileSuitLite.SuitHost;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuitInfo("Demo")
 public class Client extends SuitClient
 {
@@ -67,15 +70,16 @@ public class Client extends SuitClient
     @SuitInfo("Sleep {-n name (, -t hours, -s)}")
     public void Sleep(SleepArgument argument){
         if(argument.isSleeping){
-            IO().WriteLine(argument.Name+" has been sleeping for "+ argument.SleepTime +" hour(s)." );
+            IO().WriteLine(argument.Name.get(0)+" has been sleeping for "+ argument.SleepTime +" hour(s)." );
         }else {
-            IO().WriteLine(argument.Name+" is not sleeping." );
+            IO().WriteLine(argument.Name.get(0)+" is not sleeping." );
         }
     }
 
     public static class SleepArgument extends AutoDynamicParameter{
         @Option("n")
-        public String Name;
+        @AsCollection
+        public List<String> Name=new ArrayList<>();
 
         @SuppressWarnings("CanBeFinal")
         @Option("t")
