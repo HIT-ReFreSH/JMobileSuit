@@ -4,6 +4,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.*;
 
 import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Executable;
+import PlasticMetal.JMobileSuitLite.ObjectModel.InfoProvider;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.ParsingAPIs;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.SuitParser;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
@@ -150,15 +151,7 @@ public class SuitObjectMember implements Executable
         else
         {
             _type = MemberType.MethodWithInfo;
-            if (info.ResourceBundleName().equals(""))
-            {
-                _information = info.value();
-            }
-            else
-            {
-                _information = ResourceBundle.getBundle(info.ResourceBundleName(), Locale.getDefault())
-                        .getString(info.value());
-            }
+            _information= InfoProvider.getInfo(method.getAnnotation(SuitInfo.class));
 
 
         }
@@ -319,7 +312,6 @@ public class SuitObjectMember implements Executable
                 pass[i] = dynamicParameter;
                 return Execute(pass);
             }
-
             return new Tuple<>(TraceBack.InvalidCommand, null);
         }
 

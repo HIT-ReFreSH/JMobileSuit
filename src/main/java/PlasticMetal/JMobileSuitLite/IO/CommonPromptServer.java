@@ -13,7 +13,7 @@ public class CommonPromptServer implements PromptServer
     /**
      * IO server of this prompt server
      */
-    protected final IOServer IO;
+    protected IOServer IO;
     /**
      * Color setting of this prompt server
      */
@@ -106,5 +106,16 @@ public class CommonPromptServer implements PromptServer
         }
 
         IO.Write(" > ", OutputType.Prompt);
+    }
+
+    /**
+     * Provides Interface for SuitHost to set ioServer
+     *
+     * @param io SuitHost's IOServer.
+     */
+    @Override
+    public void SetIO(IOServer io)
+    {
+        IO=io;
     }
 }

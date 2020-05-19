@@ -96,15 +96,21 @@ public abstract class AutoDynamicParameter implements DynamicParameter
             for (int i = 0; i < options.length; )
             {
                 if (!ParseMemberRegex.matcher(options[i]).find())
+                {
                     return false;
+                }
                 String name = options[i].substring(1);
-                if (!Members.containsKey(name))
+                if (!Members.containsKey(name)){
                     return false;
+                }
+
                 ParsingMember parseMember = Members.get(name);
                 i++;
                 int j = i + parseMember.ParseLength;
                 if (j > options.length)
+                {
                     return false;
+                }
                 String[] parseArg =Arrays.copyOfRange(options,i,j);
                 parseMember.Set(this,
                         ConnectStringArray(parseArg));
@@ -113,7 +119,6 @@ public abstract class AutoDynamicParameter implements DynamicParameter
         }
         for (String m:Members.keySet()){
             if(!Members.get(m).Assigned){
-
                 return false;}
         }
         return true;

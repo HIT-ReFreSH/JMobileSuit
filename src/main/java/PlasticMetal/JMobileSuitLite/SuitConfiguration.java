@@ -1,8 +1,11 @@
 package PlasticMetal.JMobileSuitLite;
 
+import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.IO.ColorSetting;
+import PlasticMetal.JMobileSuitLite.IO.CommonPromptServer;
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.PromptServer;
+import PlasticMetal.JMobileSuitLite.ObjectModel.SuitConfigurator;
 
 
 import java.lang.reflect.InvocationTargetException;
@@ -49,14 +52,17 @@ public interface SuitConfiguration
     ColorSetting ColorSetting();
 
     /**
+     * Logger of current mobile suit
+     * @return The logger
+     */
+    SuitLogger Logger();
+
+    /**
      *get a default configuration of Mobile Suit
      */
 
     static SuitConfiguration getInstance(){
-        return new CommonSuitConfiguration((BuildInCommandServer.class),
-                new IOServer(),
-                PromptServer.getInstance(),
-                ColorSetting.getInstance());
+        return SuitConfigurator.ofDefault().getConfiguration();
     }
 
 }

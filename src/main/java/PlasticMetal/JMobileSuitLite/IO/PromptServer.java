@@ -1,11 +1,12 @@
 package PlasticMetal.JMobileSuitLite.IO;
 
+import PlasticMetal.JMobileSuitLite.ObjectModel.IOInteractive;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 
 /**
  * represents a server provides prompt output.
  */
-public interface PromptServer
+public interface PromptServer extends IOInteractive
 {
 
 

@@ -1,7 +1,9 @@
 package PlasticMetal.JMobileSuitLite.NeuesProjekt;
 
 import PlasticMetal.JMobileSuitLite.*;
+import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.IO.*;
+import PlasticMetal.JMobileSuitLite.ObjectModel.SuitConfigurator;
 
 /**
  * a power line themed prompt server for mobile suit
@@ -44,11 +46,7 @@ public class PowerLineThemedPromptServer extends CommonPromptServer
      */
     public static SuitConfiguration getPowerLineThemeConfiguration()
     {
-        IOServer io = new IOServer();
-        SuitConfiguration r = new CommonSuitConfiguration(BuildInCommandServer.class, io,
-                new PowerLineThemedPromptServer(io), ColorSetting.getInstance());
-        io.Prompt = r.Prompt();
-        return r;
+        return SuitConfigurator.ofDefault().Use(PowerLineThemedPromptServer.class).getConfiguration();
     }
 
     /**
@@ -111,6 +109,8 @@ public class PowerLineThemedPromptServer extends CommonPromptServer
             case MemberNotFound:
                 tbExpression = Lang.MemberNotFound;
                 break;
+            case AppException:
+                tbExpression=Lang.ApplicationException;
         }
 
 

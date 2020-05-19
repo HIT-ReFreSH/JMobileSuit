@@ -1,6 +1,8 @@
 package PlasticMetal.JMobileSuitLite.IO;
 
 import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
+
+import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
 import PlasticMetal.JMobileSuitLite.TraceBack;
@@ -22,11 +24,37 @@ public class IOServer
     public static final IOServer GeneralIO = new IOServer();
     private static final String ClearEffect = "\033[0m";
 
+    private final SuitLogger Logger;
+
     /**
      * Color settings for this IOServer. (default getInstance)
      */
     public PlasticMetal.JMobileSuitLite.IO.ColorSetting ColorSetting;
     public PromptServer Prompt;
+
+    /**
+     * Write debug info to log file
+     * @param content debug info
+     */
+    public void WriteDebug(String content){
+        Logger.LogDebug(content);
+    }
+
+    /**
+     * Write exception info to log file
+     * @param content exception
+     */
+    public void WriteException(Exception content){
+        Logger.LogException(content);
+    }
+
+    /**
+     * Write exception info to log file
+     * @param content exception info
+     */
+    public void WriteException(String content){
+        Logger.LogException(content);
+    }
 
     /**
      * Initialize a IOServer.
@@ -38,6 +66,23 @@ public class IOServer
         _input = System.in;
         Output = System.out;
         Error = System.err;
+        Logger=SuitLogger.ofTemp();
+        _inputScanner = new Scanner(_input);
+
+    }
+
+
+    /**
+     * Initialize a IOServer.
+     */
+    public IOServer(PromptServer promptServer,SuitLogger logger,ColorSetting colorSetting)
+    {
+        Prompt = promptServer;
+        ColorSetting = colorSetting;
+        _input = System.in;
+        Output = System.out;
+        Error = System.err;
+        Logger=logger;
         _inputScanner = new Scanner(_input);
 
     }
@@ -52,6 +97,7 @@ public class IOServer
         _input = System.in;
         Output = System.out;
         Error = System.err;
+        Logger=configuration.Logger();
         _inputScanner = new Scanner(_input);
 
     }
@@ -417,7 +463,7 @@ public class IOServer
     {
         if (PrefixLengthStack.size() == 0) return;
         int l = PrefixLengthStack.pop();
-        PrefixBuilder.delete(PrefixBuilder.length() - l, l);
+        PrefixBuilder.delete(PrefixBuilder.length() - l, PrefixBuilder.length());
     }
 
     /**
@@ -581,6 +627,8 @@ public class IOServer
         WriteLine(contentArray, OutputType.Default);
     }
 
+
+
     /**
      * Writes some content to output stream, with line break. With certain color for each part of content in console.
      *
@@ -616,6 +664,16 @@ public class IOServer
             Output.print(sb);
         }
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="contentArray">TupleArray.
+    /// FOR EACH Tuple, first is a part of content;
+    /// second is optional, the foreground color of output (in console),
+    /// third is optional, the background color of output.
+    /// </param>
+    /// <param name="type">Optional. Type of this content, this decides how will it be like (color in Console, label in file).</param>
 
 
 }

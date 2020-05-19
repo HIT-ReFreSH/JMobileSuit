@@ -1,5 +1,6 @@
 package PlasticMetal.JMobileSuitLite;
 
+import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.OutputType;
 import PlasticMetal.JMobileSuitLite.IO.PromptServer;
@@ -8,6 +9,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.IOInteractive;
 import PlasticMetal.JMobileSuitLite.ObjectModel.InfoProvider;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
+
 import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
 import java.util.*;
@@ -28,7 +30,7 @@ public class SuitHost
     public SuitHost(Object instance) throws Exception
 
     {
-        this(instance,SuitConfiguration.getInstance());
+        this(instance, SuitConfiguration.getInstance());
         Current = new SuitObject(instance);
         WorkInstanceInit();
     }
@@ -42,16 +44,20 @@ public class SuitHost
 
     {
         IO = configuration.IO() == null ? IOServer.GeneralIO : configuration.IO();
+        Configuration=configuration;
         configuration.InitializeBuildInCommandServer(this);
         BicServer = new SuitObject(configuration.BuildInCommandServer() == null ?
                 new BuildInCommandServer(this) : configuration.BuildInCommandServer());
-        Prompt=configuration.Prompt();
-        IO.ColorSetting=configuration.ColorSetting();
-        IO.Prompt=configuration.Prompt();
+        Prompt = configuration.Prompt();
+        Logger = configuration.Logger();
         Current = new SuitObject(instance);
         WorkInstanceInit();
 
     }
+
+    public final SuitConfiguration Configuration;
+
+    public final SuitLogger Logger;
 
     /**
      * Initialize a SuitHost with general BicServer, IOServer, a type.
@@ -68,7 +74,7 @@ public class SuitHost
     /**
      * Initialize a SuitHost with given BicServer, IOServer, a type.
      *
-     * @param type      The type for Mobile Suit to drive.
+     * @param type          The type for Mobile Suit to drive.
      * @param configuration Configuration
      */
     public SuitHost(Class<?> type, SuitConfiguration configuration) throws Exception
@@ -292,7 +298,7 @@ public class SuitHost
         {
             if (WorkType().getAnnotation(SuitInfo.class) != null)
             {
-                prompt_ = WorkType().getAnnotation(SuitInfo.class).value();
+                prompt_ = InfoProvider.getInfo(WorkType().getAnnotation(SuitInfo.class));
             }
             else
             {
@@ -336,8 +342,14 @@ public class SuitHost
 
     private TraceBack RunBuildInCommand(String[] cmdList) //throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
-        if (cmdList == null) return InvalidCommand;
-        return BicServer.Execute(cmdList).First;
+        if (cmdList == null)
+        {
+            Logger.LogTraceBack(InvalidCommand);
+            return InvalidCommand;
+        }
+        TraceBack tb = BicServer.Execute(cmdList).First;
+        Logger.LogTraceBack(tb);
+        return tb;
     }
 
     private Tuple<TraceBack, Object> RunObject(String[] args) //throws IllegalAccessException, InvocationTargetException, InstantiationException
@@ -353,6 +365,8 @@ public class SuitHost
             ));
 
         }
+        if (t.Second == null) Logger.LogTraceBack(t.First);
+        else Logger.LogTraceBack(t.First, t.Second);
         return t;
     }
 
@@ -414,6 +428,7 @@ public class SuitHost
      */
     public TraceBack RunCommand(String prompt, String cmd)
     {
+
         if ((cmd == null || cmd.equals("")) && IO.IsInputRedirected() && ShellMode)
         {
             IO.ResetInput();
@@ -421,6 +436,7 @@ public class SuitHost
         }
 
         if (cmd == null || cmd.equals("")) return AllOk;
+        Logger.LogCommand(cmd);
         TraceBack traceBack;
         String[] args = SplitCommandLine(cmd);
         if (args == null) return InvalidCommand;
@@ -434,9 +450,9 @@ public class SuitHost
             }
             else
             {
-                Tuple<TraceBack,Object> t=RunObject(args);
+                Tuple<TraceBack, Object> t = RunObject(args);
                 traceBack = t.First;
-                if (traceBack == ObjectNotFound &&!(t.Second instanceof TraceBack))
+                if (traceBack == ObjectNotFound && !(t.Second instanceof TraceBack))
                     traceBack = RunBuildInCommand(args);
             }
 
@@ -445,6 +461,7 @@ public class SuitHost
         catch (Exception e)
         {
             IO.Error.println(e.toString());
+            Logger.LogException(e);
             traceBack = InvalidCommand;
         }
         Prompt.Update(_returnValue, UpdatePrompt(prompt), traceBack);
