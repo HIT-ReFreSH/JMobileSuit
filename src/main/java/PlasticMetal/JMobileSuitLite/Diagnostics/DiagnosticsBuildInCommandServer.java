@@ -20,7 +20,7 @@ public class DiagnosticsBuildInCommandServer extends BuildInCommandServer
     }
 
 
-    @SuitInfo(ResourceBundleName = "LogDriver",value = "Server")
+    @SuitInfo(resourceBundleName = "LogDriver",value = "Server")
     public TraceBack Log(String[] args){
         try
         {

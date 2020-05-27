@@ -118,13 +118,13 @@ public class Client extends SuitClient
         public String name = "foo";
 
         /**
-         * Parse this Parameter from String[].
+         * parse this Parameter from String[].
          *
          * @param options String[] to parse from.
          * @return Whether the parsing is successful
          */
         @Override
-        public boolean Parse(String[] options)
+        public boolean parse(String[] options)
         {
             if (options.length == 1)
             {

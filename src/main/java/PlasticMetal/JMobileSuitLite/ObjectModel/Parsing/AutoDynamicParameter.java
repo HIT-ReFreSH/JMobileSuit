@@ -83,13 +83,13 @@ public abstract class AutoDynamicParameter implements DynamicParameter
     }
 
     /**
-     * Parse this Parameter from String[].
+     * parse this Parameter from String[].
      *
      * @param options String[] to parse from.
      * @return Whether the parsing is successful
      */
     @Override
-    public boolean Parse(String[] options)
+    public boolean parse(String[] options)
     {
         if (options != null && options.length > 0)
         {

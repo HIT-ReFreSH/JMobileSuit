@@ -9,9 +9,9 @@ import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.PromptServer;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
+@SuppressWarnings("unchecked")
 public class SuitConfigurator
 {
     private SuitConfigurator(){
@@ -47,7 +47,7 @@ public class SuitConfigurator
     public Class<? extends IOServer> IOServerType = IOServer.class;
     public Class<? extends SuitConfiguration> ConfigurationType = CommonSuitConfiguration.class;
 
-    public SuitConfigurator Use(Class<?> s)
+    public SuitConfigurator use(Class<?> s)
     {
         if (hasBaseClass(s, IOServer.class))
             this.IOServerType = (Class<? extends IOServer>) s;
@@ -62,13 +62,13 @@ public class SuitConfigurator
         return this;
     }
 
-    public SuitConfigurator Use(SuitLogger s)
+    public SuitConfigurator use(SuitLogger s)
     {
         this.Logger = s;
         return this;
     }
 
-    public SuitConfigurator Use(ColorSetting s)
+    public SuitConfigurator use(ColorSetting s)
     {
         this.ColorSetting = s;
         return this;
@@ -78,10 +78,10 @@ public class SuitConfigurator
     {
         try
         {
-            PromptServer promptServer = PromptServerType.newInstance();
+            PromptServer promptServer = PromptServerType.getConstructor().newInstance();
             IOServer ioServer = IOServerType.getConstructor(PromptServer.class, SuitLogger.class, ColorSetting.class)
                     .newInstance(promptServer, Logger, ColorSetting);
-            promptServer.SetIO(ioServer);
+            promptServer.setIO(ioServer);
             return ConfigurationType.getConstructor(Class.class, IOServer.class, PromptServer.class, ColorSetting.class, SuitLogger.class).newInstance(
                     BuildInCommandServerType,
                     ioServer,

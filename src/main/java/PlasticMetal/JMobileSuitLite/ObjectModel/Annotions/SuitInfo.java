@@ -24,5 +24,5 @@ public @interface SuitInfo
      * Name of resource bundle
      * @return Name of resource bundle
      */
-    String ResourceBundleName() default "";
+    String resourceBundleName() default "";
 }

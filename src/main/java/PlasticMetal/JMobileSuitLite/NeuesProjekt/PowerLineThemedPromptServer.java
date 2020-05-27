@@ -1,7 +1,6 @@
 package PlasticMetal.JMobileSuitLite.NeuesProjekt;
 
 import PlasticMetal.JMobileSuitLite.*;
-import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.IO.*;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitConfigurator;
 
@@ -46,7 +45,7 @@ public class PowerLineThemedPromptServer extends CommonPromptServer
      */
     public static SuitConfiguration getPowerLineThemeConfiguration()
     {
-        return SuitConfigurator.ofDefault().Use(PowerLineThemedPromptServer.class).getConfiguration();
+        return SuitConfigurator.ofDefault().use(PowerLineThemedPromptServer.class).getConfiguration();
     }
 
     /**
@@ -71,7 +70,7 @@ public class PowerLineThemedPromptServer extends CommonPromptServer
     @Override
     public void Print()
     {
-        ConsoleColor tbColor = ColorSetting.SelectColor(LastTraceBack.Value > 0 ?
+        ConsoleColor tbColor = ColorSetting.selectColor(LastTraceBack.Value > 0 ?
                 OutputType.Prompt : (LastTraceBack == TraceBack.AllOk ? OutputType.AllOk : OutputType.Error), null, Color);
 
         ConsoleColor lastColor = LastTraceBack == TraceBack.Prompt ? Color.ListTitleColor : Color.InformationColor;
@@ -87,31 +86,16 @@ public class PowerLineThemedPromptServer extends CommonPromptServer
             lastColor = Color.CustomInformationColor;
         }
 
-        String tbExpression = "";
-        switch (LastTraceBack)
-        {
-
-            case Prompt:
-                tbExpression = LastPromptInformation;
-                break;
-            case OnExit:
-                tbExpression = "";
-                break;
-            case AllOk:
-                tbExpression = Lang.AllOK;
-                break;
-            case InvalidCommand:
-                tbExpression = Lang.InvalidCommand;
-                break;
-            case ObjectNotFound:
-                tbExpression = Lang.ObjectNotFound;
-                break;
-            case MemberNotFound:
-                tbExpression = Lang.MemberNotFound;
-                break;
-            case AppException:
-                tbExpression=Lang.ApplicationException;
-        }
+        String tbExpression = switch (LastTraceBack)
+                {
+                    case Prompt -> LastPromptInformation;
+                    case OnExit -> "";
+                    case AllOk -> Lang.AllOK;
+                    case InvalidCommand -> Lang.InvalidCommand;
+                    case ObjectNotFound -> Lang.ObjectNotFound;
+                    case MemberNotFound -> Lang.MemberNotFound;
+                    case AppException -> Lang.ApplicationException;
+                };
 
 
         IO.Write(String.valueOf(RightTriangle),

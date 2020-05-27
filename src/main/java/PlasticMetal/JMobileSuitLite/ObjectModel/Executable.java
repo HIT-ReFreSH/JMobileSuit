@@ -12,9 +12,9 @@ import java.lang.reflect.InvocationTargetException;
 public interface Executable
 {
     /**
-     * Execute this object.
+     * execute this object.
      * @param args The arguments for execution.
      * @return TraceBack result of this object.
      */
-    Tuple<TraceBack,Object>  Execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException;
+    Tuple<TraceBack,Object> execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException;
 }

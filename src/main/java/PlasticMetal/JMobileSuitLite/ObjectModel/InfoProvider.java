@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 public interface InfoProvider
 {
     static String getInfo(SuitInfo suitInfo){
-        return getInfo(suitInfo.ResourceBundleName(),suitInfo.value());
+        return getInfo(suitInfo.resourceBundleName(),suitInfo.value());
     }
 
     static String getInfo(String bundleName,String key){
@@ -23,5 +23,5 @@ public interface InfoProvider
     /// <summary>
     /// The information provided.
     /// </summary>
-    String Text();
+    String text();
 }

@@ -47,29 +47,20 @@ public class ColorSetting
         return new ColorSetting();
     }
 
-    public static ConsoleColor SelectColor(OutputType type, ConsoleColor customColor, ColorSetting colorSetting)
+    public static ConsoleColor selectColor(OutputType type, ConsoleColor customColor, ColorSetting colorSetting)
     {
         if (customColor == null || customColor == ConsoleColor.Null)
         {
-            switch (type)
-            {
-
-
-                case Default:
-                    return colorSetting.DefaultColor;
-                case Prompt:
-                    return colorSetting.PromptColor;
-                case Error:
-                    return colorSetting.ErrorColor;
-                case AllOk:
-                    return colorSetting.AllOkColor;
-                case ListTitle:
-                    return colorSetting.ListTitleColor;
-                case CustomInfo:
-                    return colorSetting.CustomInformationColor;
-                case MobileSuitInfo:
-                    return colorSetting.InformationColor;
-            }
+            return switch (type)
+                    {
+                        case Default -> colorSetting.DefaultColor;
+                        case Prompt -> colorSetting.PromptColor;
+                        case Error -> colorSetting.ErrorColor;
+                        case AllOk -> colorSetting.AllOkColor;
+                        case ListTitle -> colorSetting.ListTitleColor;
+                        case CustomInfo -> colorSetting.CustomInformationColor;
+                        case MobileSuitInfo -> colorSetting.InformationColor;
+                    };
 
         }
 

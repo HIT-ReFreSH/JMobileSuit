@@ -6,9 +6,9 @@ package PlasticMetal.JMobileSuitLite.ObjectModel;
 public interface DynamicParameter
 {
     /**
-     * Parse this Parameter from String[].
+     * parse this Parameter from String[].
      * @param options String[] to parse from.
      * @return Whether the parsing is successful
      */
-    boolean Parse(String[] options);
+    boolean parse(String[] options);
 }

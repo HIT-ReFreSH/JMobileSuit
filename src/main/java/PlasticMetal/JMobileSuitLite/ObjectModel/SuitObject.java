@@ -5,6 +5,7 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Members.SuitObjectMember;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
@@ -34,7 +35,7 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
         {
             if ((member.getModifiers() & Modifier.PUBLIC) != 0 && (member.getModifiers() & Modifier.STATIC) == 0 && !IgnoreMethods.contains(member.getName().toLowerCase()))
             {
-                TryAddMember(new SuitObjectMember(instance, member));
+                tryAddMember(new SuitObjectMember(instance, member));
             }
         }
     }
@@ -63,9 +64,9 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
 
     /**
      * @param args The arguments for execution.
-     * @return Execute this Object.
+     * @return execute this Object.
      */
-    public Tuple<TraceBack, Object> Execute(String[] args)
+    public Tuple<TraceBack, Object> execute(String[] args)
     {
 
 
@@ -79,11 +80,18 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
             Tuple<TraceBack, Object> r;
             try
             {
-                r = t.Second.Execute(Arrays.copyOfRange(args, 1, args.length));
+                r = t.Second.execute(Arrays.copyOfRange(args, 1, args.length));
+            }
+            catch (IllegalAccessException  | InstantiationException e)
+            {
+                r = new Tuple<>(TraceBack.InvalidCommand, e);
+            }
+            catch (InvocationTargetException e){
+                r = new Tuple<>(TraceBack.AppException, e.getTargetException());
             }
             catch (Exception e)
             {
-                r = new Tuple<>(TraceBack.InvalidCommand, e);
+                r = new Tuple<>(TraceBack.AppException, e);
             }
 
             if (r.First == TraceBack.ObjectNotFound) continue;
@@ -92,7 +100,7 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
         return new Tuple<>(TraceBack.ObjectNotFound, null);
     }
 
-    private void TryAddMember(SuitObjectMember objMember)
+    private void tryAddMember(SuitObjectMember objMember)
     {
         if (objMember.Access() != MemberAccess.VisibleToUser)
             return;

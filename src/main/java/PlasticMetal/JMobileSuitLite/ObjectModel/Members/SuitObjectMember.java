@@ -251,12 +251,12 @@ public class SuitObjectMember implements Executable
     }
 
     /**
-     * Execute this object.
+     * execute this object.
      *
      * @param args The arguments for execution.
      * @return TraceBack result of this object.
      */
-    public Tuple<TraceBack, Object> Execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException
+    public Tuple<TraceBack, Object> execute(String[] args) throws InvocationTargetException, IllegalAccessException, InstantiationException
     {
         String parseSrc;
         Method m;
@@ -305,9 +305,17 @@ public class SuitObjectMember implements Executable
         if (_tailParameterType == TailParameterType.DynamicParameter)
         {
 
-            DynamicParameter dynamicParameter = (DynamicParameter) _parameters[length - 1].getType().newInstance();
+            DynamicParameter dynamicParameter = null;
+            try
+            {
+                dynamicParameter = (DynamicParameter) _parameters[length - 1].getType().getConstructor().newInstance();
+            }
+            catch (NoSuchMethodException e)
+            {
+                return new Tuple<>(TraceBack.InvalidCommand, e);
+            }
 
-            if (dynamicParameter.Parse(i < args.length ? Arrays.copyOfRange(args, i, args.length) : new String[0]))
+            if (dynamicParameter.parse(i < args.length ? Arrays.copyOfRange(args, i, args.length) : new String[0]))
             {
                 pass[i] = dynamicParameter;
                 return Execute(pass);

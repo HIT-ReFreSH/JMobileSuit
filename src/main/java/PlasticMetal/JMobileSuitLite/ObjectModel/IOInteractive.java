@@ -11,5 +11,5 @@ public interface IOInteractive
      * Provides Interface for SuitHost to set ioServer
      * @param io SuitHost's IOServer.
      */
-    void SetIO(IOServer io);
+    void setIO(IOServer io);
 }

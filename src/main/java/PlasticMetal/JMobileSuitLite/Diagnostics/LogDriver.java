@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@SuitInfo(ResourceBundleName = "LogDriver", value = "Class")
+@SuitInfo(resourceBundleName = "LogDriver", value = "Class")
 public class LogDriver extends SuitClient
 {
     private final SuitLogger _logger;
@@ -65,7 +65,7 @@ public class LogDriver extends SuitClient
     }
 
     @SuitAlias("On")
-    @SuitInfo(ResourceBundleName = "LogDriver", value = "Enable")
+    @SuitInfo(resourceBundleName = "LogDriver", value = "Enable")
     public TraceBack Enable()
     {
         _logger.EnableLogQuery = true;
@@ -73,7 +73,7 @@ public class LogDriver extends SuitClient
     }
 
     @SuitAlias("Off")
-    @SuitInfo(ResourceBundleName = "LogDriver", value = "Disable")
+    @SuitInfo(resourceBundleName = "LogDriver", value = "Disable")
     public TraceBack Disable()
     {
         _logger.EnableLogQuery = false;
@@ -81,7 +81,7 @@ public class LogDriver extends SuitClient
     }
 
     @SuitAlias("F")
-    @SuitInfo(ResourceBundleName = "LogDriver", value = "Find")
+    @SuitInfo(resourceBundleName = "LogDriver", value = "Find")
     public int Find(LogFilter filter)
     {
         List<LogUtil> logsToShow = logMem.parallelStream().filter(
@@ -121,7 +121,7 @@ public class LogDriver extends SuitClient
     }
 
     @SuitAlias("S")
-    @SuitInfo(ResourceBundleName = "LogDriver", value = "Status")
+    @SuitInfo(resourceBundleName = "LogDriver", value = "Status")
     public String Status()
     {
         IO().WriteLine(InfoProvider.getInfo("LogDriver", "LogFileAt") + ": ");

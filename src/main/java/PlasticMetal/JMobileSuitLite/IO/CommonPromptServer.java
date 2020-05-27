@@ -114,7 +114,7 @@ public class CommonPromptServer implements PromptServer
      * @param io SuitHost's IOServer.
      */
     @Override
-    public void SetIO(IOServer io)
+    public void setIO(IOServer io)
     {
         IO=io;
     }

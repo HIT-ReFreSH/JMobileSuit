@@ -36,7 +36,7 @@ public abstract class SuitClient implements InfoProvider, IOInteractive
      * @return The information provided.
      */
     @SuitIgnore
-    public String Text()
+    public String text()
     {
         return _text;
     }
@@ -46,7 +46,7 @@ public abstract class SuitClient implements InfoProvider, IOInteractive
      * @param io SuitHost's IOServer.
      */
      @SuitIgnore
-    public void SetIO(IOServer io)
+    public void setIO(IOServer io)
     {
         _io = io;
     }

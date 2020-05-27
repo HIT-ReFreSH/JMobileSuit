@@ -6,11 +6,11 @@ import PlasticMetal.JMobileSuitLite.SuitHost;
 public class SuitApplication extends SuitClient
 {
     /**
-     * Start a Application
+     * start a Application
      * @throws Exception exceptions thrown by Mobile Suit
      */
     @SuitIgnore
-    public void Start() throws Exception
+    public void start() throws Exception
     {
         new SuitHost(this).Run();
     }

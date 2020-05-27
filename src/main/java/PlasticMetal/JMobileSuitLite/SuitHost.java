@@ -68,7 +68,7 @@ public class SuitHost
 
     {
 
-        this(type.newInstance());
+        this(type.getConstructor().newInstance());
     }
 
     /**
@@ -80,7 +80,7 @@ public class SuitHost
     public SuitHost(Class<?> type, SuitConfiguration configuration) throws Exception
 
     {
-        this(type.newInstance(), configuration);
+        this(type.getConstructor().newInstance(), configuration);
     }
 
     /**
@@ -153,9 +153,9 @@ public class SuitHost
     }
 
     /**
-     * get Use TraceBack, or just throw Exceptions.
+     * get use TraceBack, or just throw Exceptions.
      *
-     * @return Use TraceBack, or just throw Exceptions.
+     * @return use TraceBack, or just throw Exceptions.
      */
     public boolean GetUseTraceBack()
     {
@@ -163,9 +163,9 @@ public class SuitHost
     }
 
     /**
-     * set Use TraceBack, or just throw Exceptions.
+     * set use TraceBack, or just throw Exceptions.
      *
-     * @param _useTraceBack Use TraceBack, or just throw Exceptions.
+     * @param _useTraceBack use TraceBack, or just throw Exceptions.
      */
     public void SetUseTraceBack(boolean _useTraceBack)
     {
@@ -173,7 +173,7 @@ public class SuitHost
     }
 
     /**
-     * Use TraceBack, or just throw Exceptions.
+     * use TraceBack, or just throw Exceptions.
      */
     private boolean _useTraceBack = true;
 
@@ -273,7 +273,7 @@ public class SuitHost
     {
         if (WorkInstance() instanceof IOInteractive)
         {
-            ((IOInteractive) WorkInstance()).SetIO(IO);
+            ((IOInteractive) WorkInstance()).setIO(IO);
         }
 
     }
@@ -304,7 +304,7 @@ public class SuitHost
             {
                 if (WorkInstance() instanceof InfoProvider)
                 {
-                    prompt_ = ((InfoProvider) WorkInstance()).Text();
+                    prompt_ = ((InfoProvider) WorkInstance()).text();
                 }
                 else
                 {
@@ -347,14 +347,17 @@ public class SuitHost
             Logger.LogTraceBack(InvalidCommand);
             return InvalidCommand;
         }
-        TraceBack tb = BicServer.Execute(cmdList).First;
+        Tuple<TraceBack,Object> ret=BicServer.execute(cmdList);
+        TraceBack tb = ret.First;
         Logger.LogTraceBack(tb);
+        if (ret.Second instanceof Exception)
+            Logger.LogException((Exception) ret.Second);
         return tb;
     }
 
-    private Tuple<TraceBack, Object> RunObject(String[] args) //throws IllegalAccessException, InvocationTargetException, InstantiationException
+    private Tuple<TraceBack, Object> RunObject(String[] args) throws Exception //throws IllegalAccessException, InvocationTargetException, InstantiationException
     {
-        Tuple<TraceBack, Object> t = Current.Execute(args);
+        Tuple<TraceBack, Object> t = Current.execute(args);
         if (t.Second != null && t.First.equals(AllOk))
         {
             String retVal = t.Second.toString();
@@ -367,8 +370,17 @@ public class SuitHost
         }
         if (t.Second == null) Logger.LogTraceBack(t.First);
         else Logger.LogTraceBack(t.First, t.Second);
+        if(t.Second instanceof Exception){
+            Logger.LogException((Exception) t.Second);
+            if(t.First.equals(AppException)){
+               NotifyError (Lang.ApplicationException+": "+((Exception) t.Second).getMessage());
+            }
+        }else if(t.First.equals(AppException)){
+            NotifyError (Lang.ApplicationException);
+        }
         return t;
     }
+
 
 
     /**
@@ -387,6 +399,7 @@ public class SuitHost
             switch (traceBack)
             {
                 case OnExit:
+                    Logger.exitLogger();
                     return 0;
                 case AllOk:
                     NotifyAllOk();
@@ -398,8 +411,7 @@ public class SuitHost
                     NotifyError(Lang.MemberNotFound);
                     break;
                 case AppException:
-                    NotifyError(Lang.ApplicationException);
-                    break;
+                    continue;
                 case Prompt:
                     continue;
                 case InvalidCommand:
