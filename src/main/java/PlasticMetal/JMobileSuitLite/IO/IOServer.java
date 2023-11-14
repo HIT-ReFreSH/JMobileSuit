@@ -355,6 +355,16 @@ public class IOServer
 
     private final StringBuilder PrefixBuilder = new StringBuilder();
 
+    public StringBuilder getPrefixBuilder() {
+        return new StringBuilder(PrefixBuilder);
+    }
+
+    public Stack<Integer> getPrefixLengthStack() {
+        Stack<Integer> copyStack = new Stack<>();
+        copyStack.addAll(PrefixLengthStack);
+        return copyStack;
+    }
+
     private final Stack<Integer> PrefixLengthStack = new Stack<>();
 
     private ConsoleColor SelectColor(OutputType type, ConsoleColor customColor)
