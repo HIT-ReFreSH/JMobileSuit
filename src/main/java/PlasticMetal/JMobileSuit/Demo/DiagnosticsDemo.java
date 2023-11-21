@@ -1,11 +1,10 @@
 package PlasticMetal.JMobileSuit.Demo;
 
-import PlasticMetal.JMobileSuitLite.Diagnostics.DiagnosticsBuildInCommandServer;
-import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.NeuesProjekt.PowerLineThemedPromptServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitConfigurator;
 import PlasticMetal.JMobileSuitLite.SuitHost;
+import org.apache.log4j.Logger;
 
 public class DiagnosticsDemo extends Client
 {
@@ -13,8 +12,7 @@ public class DiagnosticsDemo extends Client
     {
          SuitHost suitHost=new SuitHost(DiagnosticsDemo.class,
                 SuitConfigurator.ofDefault().use(PowerLineThemedPromptServer.class)
-                        .use(DiagnosticsBuildInCommandServer.class)
-                        .use(SuitLogger.ofDirectory("D:\\"))
+                        .use(Logger.getLogger(DiagnosticsDemo.class).getClass())
                         .getConfiguration());
          //suitHost.SetUseTraceBack(false);
          suitHost.Run();

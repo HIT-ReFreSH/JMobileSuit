@@ -2,12 +2,12 @@ package PlasticMetal.JMobileSuitLite.ObjectModel;
 
 import PlasticMetal.JMobileSuitLite.BuildInCommandServer;
 import PlasticMetal.JMobileSuitLite.CommonSuitConfiguration;
-import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.IO.ColorSetting;
 import PlasticMetal.JMobileSuitLite.IO.CommonPromptServer;
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.PromptServer;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
+import org.apache.log4j.Logger;
 
 import java.util.Arrays;
 
@@ -43,7 +43,7 @@ public class SuitConfigurator
     public Class<? extends BuildInCommandServer> BuildInCommandServerType = BuildInCommandServer.class;
     public ColorSetting ColorSetting = PlasticMetal.JMobileSuitLite.IO.ColorSetting.getInstance();
     public Class<? extends PromptServer> PromptServerType = CommonPromptServer.class;
-    public SuitLogger Logger = SuitLogger.ofTemp();
+    public Logger logger = Logger.getLogger(this.getClass());
     public Class<? extends IOServer> IOServerType = IOServer.class;
     public Class<? extends SuitConfiguration> ConfigurationType = CommonSuitConfiguration.class;
 
@@ -62,9 +62,9 @@ public class SuitConfigurator
         return this;
     }
 
-    public SuitConfigurator use(SuitLogger s)
+    public SuitConfigurator use(Logger s)
     {
-        this.Logger = s;
+        this.logger = s;
         return this;
     }
 
@@ -79,15 +79,15 @@ public class SuitConfigurator
         try
         {
             PromptServer promptServer = PromptServerType.getConstructor().newInstance();
-            IOServer ioServer = IOServerType.getConstructor(PromptServer.class, SuitLogger.class, ColorSetting.class)
-                    .newInstance(promptServer, Logger, ColorSetting);
+            IOServer ioServer = IOServerType.getConstructor(PromptServer.class, Logger.class, ColorSetting.class)
+                    .newInstance(promptServer, logger, ColorSetting);
             promptServer.setIO(ioServer);
-            return ConfigurationType.getConstructor(Class.class, IOServer.class, PromptServer.class, ColorSetting.class, SuitLogger.class).newInstance(
+            return ConfigurationType.getConstructor(Class.class, IOServer.class, PromptServer.class, ColorSetting.class, Logger.class).newInstance(
                     BuildInCommandServerType,
                     ioServer,
                     promptServer,
                     ColorSetting,
-                    Logger
+                    logger
             );
         }
         catch (Exception e)
@@ -112,10 +112,10 @@ public class SuitConfigurator
         return r;
     }
 
-    public static SuitConfigurator of(SuitLogger s)
+    public static SuitConfigurator of(Logger s)
     {
         SuitConfigurator r = new SuitConfigurator();
-        r.Logger = s;
+        r.logger = s;
         return r;
     }
 
