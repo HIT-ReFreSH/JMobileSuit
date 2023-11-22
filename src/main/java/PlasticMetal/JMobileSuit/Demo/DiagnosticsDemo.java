@@ -12,7 +12,7 @@ public class DiagnosticsDemo extends Client
     {
          SuitHost suitHost=new SuitHost(DiagnosticsDemo.class,
                 SuitConfigurator.ofDefault().use(PowerLineThemedPromptServer.class)
-                        .use(Logger.getLogger(DiagnosticsDemo.class).getClass())
+                        .use(Logger.getLogger(DiagnosticsDemo.class))
                         .getConfiguration());
          //suitHost.SetUseTraceBack(false);
          suitHost.Run();

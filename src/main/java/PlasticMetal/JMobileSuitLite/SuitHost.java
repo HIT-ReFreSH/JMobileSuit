@@ -282,7 +282,7 @@ public class SuitHost
     @SuppressWarnings("ConstantConditions")
     private void NotifyAllOk()
     {
-        if (_useTraceBack && _showDone) logger.trace("TraceBack:"+OutputType.AllOk);
+        if (_useTraceBack && _showDone && (logger!=null)) logger.trace("TraceBack:"+OutputType.AllOk);
     }
 
 
@@ -345,12 +345,16 @@ public class SuitHost
     {
         if (cmdList == null)
         {
-            logger.trace("TraceBack:"+InvalidCommand);
+            if(logger != null) {
+                logger.trace("TraceBack:" + InvalidCommand);
+            }
             return InvalidCommand;
         }
         Tuple<TraceBack,Object> ret=BicServer.execute(cmdList);
         TraceBack tb = ret.First;
-        logger.trace("TraceBack:"+tb);
+        if(logger != null) {
+            logger.trace("TraceBack:" + tb);
+        }
         if (ret.Second instanceof Exception)
             logException((Exception)ret.Second);
         return tb;
@@ -369,8 +373,16 @@ public class SuitHost
             ));
 
         }
-        if (t.Second == null) logger.trace("TraceBack:"+t.First);
-        else logger.trace("TraceBack:"+t.First.toString()+"("+t.Second+")");
+        if (t.Second == null ) {
+            if (logger != null) {
+                logger.trace("TraceBack:" + t.First);
+            }
+        }
+        else {
+            if (logger != null) {
+                logger.trace("TraceBack:" + t.First.toString() + "(" + t.Second + ")");
+            }
+        }
         if(t.Second instanceof Exception){
             logException((Exception) t.Second);
             if(t.First.equals(AppException)){
@@ -448,7 +460,7 @@ public class SuitHost
         }
 
         if (cmd == null || cmd.equals("")) return AllOk;
-        logger.info("Command:"+cmd);
+        if(this.logger!=null) logger.info("Command:"+cmd);
         TraceBack traceBack;
         String[] args = SplitCommandLine(cmd);
         if (args == null) return InvalidCommand;
@@ -473,7 +485,7 @@ public class SuitHost
         catch (Exception e)
         {
             IO.Error.println(e.toString());
-            logger.info("Exception:"+e);
+            if(this.logger != null)logger.info("Exception:"+e);
             traceBack = InvalidCommand;
         }
         Prompt.Update(_returnValue, UpdatePrompt(prompt), traceBack);
@@ -498,6 +510,6 @@ public class SuitHost
         {
             stringBuilder.append("\n\tAt ").append(se);
         }
-        logger.info(content.getClass().getName()+stringBuilder.toString());
+        if(logger != null) logger.info(content.getClass().getName()+stringBuilder.toString());
     }
 }
