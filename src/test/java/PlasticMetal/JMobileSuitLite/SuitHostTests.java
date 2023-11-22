@@ -41,30 +41,30 @@ public class SuitHostTests {
 
     @Test
     public void testSplitCommandLine() throws Exception {
-        // 通过反射获取私有方法
+        // Get a private method by reflection
         Class<?> clazz = SuitHost.class;
         Method method = clazz.getDeclaredMethod("SplitCommandLine", String.class);
         method.setAccessible(true);
 
-        // 测试正常命令
+        // Test the normal commands
         String cmd = "command arg1 arg2";
         String[] expected = {"command", "arg1", "arg2"};
         String[] actual = (String[]) method.invoke(null, cmd);
         assertArrayEquals(expected, actual);
 
-        // 测试带引号参数
+        // Test quoted parameters with "
         cmd = "command \"arg1\" arg2";
         expected = new String[]{"command", "arg1", "arg2"};
         actual = (String[]) method.invoke(null, cmd);
         assertArrayEquals(expected, actual);
 
-        // 测试带引号参数
+        // Test quoted parameters with \'
         cmd = "command \'arg1\' arg2";
         expected = new String[]{"command", "arg1", "arg2"};
         actual = (String[]) method.invoke(null, cmd);
         assertArrayEquals(expected, actual);
 
-        // 测试空命令
+        // Test the null command
         cmd = "";
         expected = null;
         actual = (String[]) method.invoke(null, cmd);
@@ -90,7 +90,7 @@ public class SuitHostTests {
     @Test
     public void testNotifyAllOk() throws Exception {
 
-        // 创建 SuitHost 实例
+        // Create a SuitHost instance
         Object instance = new TestInstance();
         SuitConfiguration config = SuitConfiguration.getInstance();
         SuitHost suitHost = new SuitHost(instance, config);
@@ -98,29 +98,29 @@ public class SuitHostTests {
         suitHost.SetShowDone(true);
         suitHost.SetUseTraceBack(true);
 
-        // 使用反射获取私有方法
+        // Get a private method by reflection
         Method method = SuitHost.class.getDeclaredMethod("NotifyAllOk", null);
         method.setAccessible(true);
 
-        // 调用方法
+        // Call the method
         method.invoke(suitHost,null);
     }
 
     @Test
     public void testNotifyError() throws Exception {
 
-        // 创建 SuitHost 实例
+        // Create a SuitHost instance
         Object instance = new TestInstance();
         SuitConfiguration config = SuitConfiguration.getInstance();
         SuitHost suitHost = new SuitHost(instance, config);
 
         suitHost.SetUseTraceBack(true);
 
-        // 使用反射获取私有方法
+        // Get a private method by reflection
         Method method = SuitHost.class.getDeclaredMethod("NotifyError", String.class);
         method.setAccessible(true);
 
-        // 调用方法
+        // Call the method
         method.invoke(suitHost,"java.lang.AssertionError");
     }
 
@@ -129,7 +129,7 @@ public class SuitHostTests {
     @Test
     public void testUpdatePrompt() throws Exception {
 
-        // 准备测试数据
+        // Create a SuitHost instance
         String prompt = "Test";
 
         Object instance = new TestInstance();
@@ -139,21 +139,21 @@ public class SuitHostTests {
         host.InstanceNameString.add("Instance1");
         host.InstanceNameString.add("Instance2");
 
-        // 使用反射获取私有方法
+        // Get a private method by reflection
         Method method = SuitHost.class.getDeclaredMethod("UpdatePrompt", String.class);
         method.setAccessible(true);
 
-        // 调用方法
+        // Call the method
         String result = (String) method.invoke(host, prompt);
 
-        // 验证结果
+        // Verify the results
         assertEquals(result, "Test[Instance1.Instance2]");
     }
 
     @Test
     public void testUpdatePrompt_empty() throws Exception {
 
-        // 准备测试数据
+        // Create a SuitHost instance
         String prompt = "";
 
         Object instance = new TestInstance();
@@ -162,7 +162,7 @@ public class SuitHostTests {
 
         host.InstanceNameString.add("Instance");
 
-        // 使用反射获取私有方法
+        // Get a private method by reflection
         Method method = SuitHost.class.getDeclaredMethod("UpdatePrompt", String.class);
         method.setAccessible(true);
 
@@ -174,6 +174,7 @@ public class SuitHostTests {
     @Test
     public void testRunBuildInCommand() throws Exception {
 
+        // Create a SuitHost instance
         Object instance = new TestInstance();
         SuitConfiguration config = SuitConfiguration.getInstance();
         SuitHost host = new SuitHost(instance, config);
@@ -192,6 +193,7 @@ public class SuitHostTests {
     @Test
     public void testRunBuildInCommand_invalid() throws Exception {
 
+        // Create a SuitHost instance
         Object instance = new TestInstance();
         SuitConfiguration config = SuitConfiguration.getInstance();
         SuitHost host = new SuitHost(instance, config);
@@ -208,19 +210,20 @@ public class SuitHostTests {
 
     @Test
     public void testRunObject() throws Exception {
-        // 创建 SuitHost 实例
+
+        // Create a SuitHost instance
         Object instance = new TestInstance();
         SuitConfiguration config = SuitConfiguration.getInstance();
         SuitHost suitHost = new SuitHost(instance, config);
 
-        // 创建私有方法的参数
+        // Parameters to create a private method
         String[] args = {"arg1", "arg2"};
 
-        // 使用反射获取私有方法
+        // Get a private method by reflection
         Method method = SuitHost.class.getDeclaredMethod("RunObject", String[].class);
-        method.setAccessible(true); // 设置私有方法可访问
+        method.setAccessible(true); // Set up private methods to be accessible
 
-        // 调用私有方法
+        // Call the private method
         Object result = method.invoke(suitHost, (Object) args);
 
         assertNotNull(result);
@@ -236,28 +239,28 @@ public class SuitHostTests {
 
     @Test
     public void testRunCommand() throws Exception {
-        // 创建 SuitHost 实例
+        // Create a SuitHost instance
         Object instance = new TestInstance();
         SuitConfiguration config = SuitConfiguration.getInstance();
         SuitHost suitHost = new SuitHost(instance, config);
 
-        // 测试空命令
+        // Test the null command
         TraceBack result = suitHost.RunCommand("", "");
         Assert.assertEquals(TraceBack.AllOk, result);
 
-        // 测试注释命令
+        // Test Annotation command
         result = suitHost.RunCommand("", "# This is a comment");
         Assert.assertEquals(TraceBack.AllOk, result);
 
-        // 测试内置命令
+        // Test the built-in command
         result = suitHost.RunCommand("", "@internal command");
         Assert.assertEquals(TraceBack.ObjectNotFound, result);
 
-        // 测试对象命令
+        // Test object command
         result = suitHost.RunCommand("", "object command");
         Assert.assertEquals(TraceBack.ObjectNotFound, result);
 
-        // 测试无效命令
+        // Test invalid command
         result = suitHost.RunCommand("", null);
         Assert.assertEquals(TraceBack.AllOk, result);
 
@@ -265,28 +268,28 @@ public class SuitHostTests {
 
     @Test
     public void testRunCommand_2() throws Exception {
-        // 创建 SuitHost 实例
+        // Create a SuitHost instance
         Object instance = new TestInstance();
         SuitConfiguration config = SuitConfiguration.getInstance();
         SuitHost suitHost = new SuitHost(instance, config);
 
-        // 测试空命令
+        // Test the null command
         TraceBack result = suitHost.RunCommand("");
         Assert.assertEquals(TraceBack.AllOk, result);
 
-        // 测试注释命令
+        // Test Annotation command
         result = suitHost.RunCommand("# This is a comment");
         Assert.assertEquals(TraceBack.AllOk, result);
 
-        // 测试内置命令
+        // Test the built-in command
         result = suitHost.RunCommand("@internal command");
         Assert.assertEquals(TraceBack.ObjectNotFound, result);
 
-        // 测试对象命令
+        // Test object command
         result = suitHost.RunCommand("object command");
         Assert.assertEquals(TraceBack.ObjectNotFound, result);
 
-        // 测试无效命令
+        // Test invalid command
         result = suitHost.RunCommand(null);
         Assert.assertEquals(TraceBack.AllOk, result);
 
