@@ -1,10 +1,10 @@
 package PlasticMetal.JMobileSuitLite;
 
 
-import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.IO.ColorSetting;
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.PromptServer;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -14,7 +14,7 @@ public class CommonSuitConfiguration implements SuitConfiguration
     private final Class<?> _buildInCommandServerType;
     private final PromptServer _prompt;
     private final ColorSetting _colorSetting;
-    private final SuitLogger _logger;
+    private final Logger logger;
     private BuildInCommandServer _buildInCommandServer;
 
     /// <summary>
@@ -24,13 +24,13 @@ public class CommonSuitConfiguration implements SuitConfiguration
     /// <param name="io">io server</param>
     /// <param name="promptServer">prompt server</param>
     /// <param name="colorSetting">color setting </param>
-    public CommonSuitConfiguration(Class<? extends BuildInCommandServer> buildInCommandServerType, IOServer io, PromptServer promptServer, ColorSetting colorSetting, SuitLogger logger)
+    public CommonSuitConfiguration(Class<? extends BuildInCommandServer> buildInCommandServerType, IOServer io, PromptServer promptServer, ColorSetting colorSetting, Logger logger)
     {
         _buildInCommandServerType = buildInCommandServerType;
         _io = io;
         _prompt = promptServer;
         _colorSetting = colorSetting;
-        _logger=logger;
+        this.logger=logger;
     }
 
 
@@ -67,9 +67,9 @@ public class CommonSuitConfiguration implements SuitConfiguration
      * @return The logger
      */
     @Override
-    public SuitLogger Logger()
+    public Logger Logger()
     {
-        return _logger;
+        return logger;
     }
 }
 

@@ -1,6 +1,5 @@
 package PlasticMetal.JMobileSuitLite;
 
-import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.OutputType;
 import PlasticMetal.JMobileSuitLite.IO.PromptServer;
@@ -15,11 +14,13 @@ import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 import java.util.*;
 
 import static PlasticMetal.JMobileSuitLite.TraceBack.*;
+import static PlasticMetal.Jarvis.Common.CoalesceNull;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.helpers.LogLog;
 /**
  * A entity, which serves the shell functions of a mobile-suit program.
  */
-@SuppressWarnings("ALL")
 public class SuitHost
 {
     /**
@@ -49,7 +50,7 @@ public class SuitHost
         BicServer = new SuitObject(configuration.BuildInCommandServer() == null ?
                 new BuildInCommandServer(this) : configuration.BuildInCommandServer());
         Prompt = configuration.Prompt();
-        Logger = configuration.Logger();
+        logger = configuration.Logger();
         Current = new SuitObject(instance);
         WorkInstanceInit();
 
@@ -57,7 +58,7 @@ public class SuitHost
 
     public final SuitConfiguration Configuration;
 
-    public final SuitLogger Logger;
+    public final Logger logger;
 
     /**
      * Initialize a SuitHost with general BicServer, IOServer, a type.
@@ -281,7 +282,7 @@ public class SuitHost
     @SuppressWarnings("ConstantConditions")
     private void NotifyAllOk()
     {
-        if (_useTraceBack && _showDone) IO.WriteLine(Lang.Done, OutputType.AllOk);
+        if (_useTraceBack && _showDone && (logger!=null)) logger.trace("TraceBack:"+OutputType.AllOk);
     }
 
 
@@ -344,14 +345,18 @@ public class SuitHost
     {
         if (cmdList == null)
         {
-            Logger.LogTraceBack(InvalidCommand);
+            if(logger != null) {
+                logger.trace("TraceBack:" + InvalidCommand);
+            }
             return InvalidCommand;
         }
         Tuple<TraceBack,Object> ret=BicServer.execute(cmdList);
         TraceBack tb = ret.First;
-        Logger.LogTraceBack(tb);
+        if(logger != null) {
+            logger.trace("TraceBack:" + tb);
+        }
         if (ret.Second instanceof Exception)
-            Logger.LogException((Exception) ret.Second);
+            logException((Exception)ret.Second);
         return tb;
     }
 
@@ -368,10 +373,18 @@ public class SuitHost
             ));
 
         }
-        if (t.Second == null) Logger.LogTraceBack(t.First);
-        else Logger.LogTraceBack(t.First, t.Second);
+        if (t.Second == null ) {
+            if (logger != null) {
+                logger.trace("TraceBack:" + t.First);
+            }
+        }
+        else {
+            if (logger != null) {
+                logger.trace("TraceBack:" + t.First.toString() + "(" + t.Second + ")");
+            }
+        }
         if(t.Second instanceof Exception){
-            Logger.LogException((Exception) t.Second);
+            logException((Exception) t.Second);
             if(t.First.equals(AppException)){
                NotifyError (Lang.ApplicationException+": "+((Exception) t.Second).getMessage());
             }
@@ -399,7 +412,6 @@ public class SuitHost
             switch (traceBack)
             {
                 case OnExit:
-                    Logger.exitLogger();
                     return 0;
                 case AllOk:
                     NotifyAllOk();
@@ -448,7 +460,7 @@ public class SuitHost
         }
 
         if (cmd == null || cmd.equals("")) return AllOk;
-        Logger.LogCommand(cmd);
+        if(this.logger!=null) logger.info("Command:"+cmd);
         TraceBack traceBack;
         String[] args = SplitCommandLine(cmd);
         if (args == null) return InvalidCommand;
@@ -473,7 +485,7 @@ public class SuitHost
         catch (Exception e)
         {
             IO.Error.println(e.toString());
-            Logger.LogException(e);
+            if(this.logger != null)logger.info("Exception:"+e);
             traceBack = InvalidCommand;
         }
         Prompt.Update(_returnValue, UpdatePrompt(prompt), traceBack);
@@ -489,5 +501,15 @@ public class SuitHost
     public int Run() throws Exception
     {
         return Run("");
+    }
+    public void logException(Exception content)
+    {
+        StringBuilder stringBuilder = new StringBuilder(CoalesceNull(content.getMessage(), ""));
+        for (StackTraceElement se : content.getStackTrace()
+        )
+        {
+            stringBuilder.append("\n\tAt ").append(se);
+        }
+        if(logger != null) logger.info(content.getClass().getName()+stringBuilder.toString());
     }
 }

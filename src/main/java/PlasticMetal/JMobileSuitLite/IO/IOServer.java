@@ -1,8 +1,7 @@
 package PlasticMetal.JMobileSuitLite.IO;
-
+import org.apache.log4j.Logger;
 import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
-import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
 import PlasticMetal.JMobileSuitLite.TraceBack;
@@ -24,7 +23,7 @@ public class IOServer
     public static final IOServer GeneralIO = new IOServer();
     private static final String ClearEffect = "\033[0m";
 
-    private final SuitLogger Logger;
+    private final Logger logger;
 
     /**
      * Color settings for this IOServer. (default getInstance)
@@ -37,7 +36,7 @@ public class IOServer
      * @param content debug info
      */
     public void WriteDebug(String content){
-        Logger.LogDebug(content);
+        logger.debug("Debug:"+content);
     }
 
     /**
@@ -45,7 +44,7 @@ public class IOServer
      * @param content exception
      */
     public void WriteException(Exception content){
-        Logger.LogException(content);
+        logger.info("Exception:"+content);
     }
 
     /**
@@ -53,7 +52,7 @@ public class IOServer
      * @param content exception info
      */
     public void WriteException(String content){
-        Logger.LogException(content);
+        logger.info("Exception:"+content);
     }
 
     /**
@@ -66,7 +65,7 @@ public class IOServer
         _input = System.in;
         Output = System.out;
         Error = System.err;
-        Logger=SuitLogger.ofTemp();
+        logger= Logger.getLogger(this.getClass());
         _inputScanner = new Scanner(_input);
 
     }
@@ -75,14 +74,14 @@ public class IOServer
     /**
      * Initialize a IOServer.
      */
-    public IOServer(PromptServer promptServer,SuitLogger logger,ColorSetting colorSetting)
+    public IOServer(PromptServer promptServer,Logger logger,ColorSetting colorSetting)
     {
         Prompt = promptServer;
         ColorSetting = colorSetting;
         _input = System.in;
         Output = System.out;
         Error = System.err;
-        Logger=logger;
+        this.logger=logger;
         _inputScanner = new Scanner(_input);
 
     }
@@ -97,7 +96,7 @@ public class IOServer
         _input = System.in;
         Output = System.out;
         Error = System.err;
-        Logger=configuration.Logger();
+        logger=configuration.Logger();
         _inputScanner = new Scanner(_input);
 
     }
