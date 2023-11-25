@@ -4,8 +4,7 @@ package PlasticMetal.JMobileSuitLite;
 /**
  * Status of the last Commandline. Return value type for Built-In-Commands and Host Functions.
  */
-public enum TraceBack
-{
+public enum TraceBack {
     /**
      * a prompt
      */
@@ -13,10 +12,9 @@ public enum TraceBack
     /**
      * The Progress is Exiting
      */
-    OnExit(1){
+    OnExit(1) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "OnExit";
         }
     },
@@ -24,10 +22,9 @@ public enum TraceBack
     /**
      * Everything is OK
      */
-    AllOk(0){
+    AllOk(0) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "AllOK";
         }
     },
@@ -35,10 +32,9 @@ public enum TraceBack
     /**
      * This is not a command
      */
-    InvalidCommand(-1){
+    InvalidCommand(-1) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "InvalidCommand";
         }
     },
@@ -46,10 +42,9 @@ public enum TraceBack
     /**
      * Cannot find the object referring to.
      */
-    ObjectNotFound(-2){
+    ObjectNotFound(-2) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "ObjectNotFound";
         }
     },
@@ -57,10 +52,9 @@ public enum TraceBack
     /**
      * Cannot find the member in the object referring to.
      */
-    MemberNotFound(-3){
+    MemberNotFound(-3) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "MemberNotFound";
         }
     },
@@ -68,17 +62,17 @@ public enum TraceBack
     /**
      * Cannot find the member in the object referring to.
      */
-    AppException(-4){
+    AppException(-4) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "ApplicationException";
         }
     };
 
-    TraceBack(int code){
-        Value=code;
-    }
     public final int Value;
+
+    TraceBack(int code) {
+        Value = code;
+    }
 
 }

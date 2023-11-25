@@ -1,12 +1,12 @@
 package PlasticMetal.JMobileSuitLite;
 
-import PlasticMetal.JMobileSuitLite.IO.*;
+import PlasticMetal.JMobileSuitLite.IO.IOServer;
+import PlasticMetal.JMobileSuitLite.IO.OutputType;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import PlasticMetal.JMobileSuitLite.IO.OutputType;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -34,9 +34,6 @@ public class SuitHostTests {
         SuitHost suitHost = new SuitHost(instance, config);
 
         assertEquals(config, suitHost.Configuration);
-    }
-
-    private static class TestInstance {
     }
 
     @Test
@@ -72,21 +69,6 @@ public class SuitHostTests {
 
     }
 
-    private class TestIOServer extends IOServer {
-
-        private StringWriter output = new StringWriter();
-
-        public PrintWriter getOutput() {
-            return new PrintWriter(output);
-        }
-
-        @Override
-        public void WriteLine(String message, OutputType type) {
-            getOutput().println(message);
-        }
-
-    }
-
     @Test
     public void testNotifyAllOk() throws Exception {
 
@@ -103,7 +85,7 @@ public class SuitHostTests {
         method.setAccessible(true);
 
         // Call the method
-        method.invoke(suitHost,null);
+        method.invoke(suitHost, null);
     }
 
     @Test
@@ -121,10 +103,8 @@ public class SuitHostTests {
         method.setAccessible(true);
 
         // Call the method
-        method.invoke(suitHost,"java.lang.AssertionError");
+        method.invoke(suitHost, "java.lang.AssertionError");
     }
-
-
 
     @Test
     public void testUpdatePrompt() throws Exception {
@@ -292,6 +272,24 @@ public class SuitHostTests {
         // Test invalid command
         result = suitHost.RunCommand(null);
         Assert.assertEquals(TraceBack.AllOk, result);
+
+    }
+
+    private static class TestInstance {
+    }
+
+    private class TestIOServer extends IOServer {
+
+        private StringWriter output = new StringWriter();
+
+        public PrintWriter getOutput() {
+            return new PrintWriter(output);
+        }
+
+        @Override
+        public void WriteLine(String message, OutputType type) {
+            getOutput().println(message);
+        }
 
     }
 

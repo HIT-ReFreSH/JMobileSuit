@@ -11,17 +11,18 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SuitInfo
-{
+public @interface SuitInfo {
 
     /**
      * The information.
+     *
      * @return The information.
      */
     String value();
 
     /**
      * Name of resource bundle
+     *
      * @return Name of resource bundle
      */
     String resourceBundleName() default "";

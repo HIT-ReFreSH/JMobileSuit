@@ -3,8 +3,7 @@ package PlasticMetal.JMobileSuitLite.ObjectModel.Members;
 /**
  * Represents type of the last parameter of a method
  */
-public enum TailParameterType
-{
+public enum TailParameterType {
     /**
      * Last parameter exists, and is quite normal.
      */

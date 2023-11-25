@@ -1,6 +1,9 @@
 package PlasticMetal.JMobileSuitLite.ObjectModel.Parsing;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Stores a parser which convert string argument to certain type.
@@ -8,17 +11,18 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SuitParser
-{
+public @interface SuitParser {
 
     /**
      * The class which contains the parser method
+     *
      * @return The class which contains the parser method
      */
     Class<?> ParserClass();
 
     /**
      * The parser method, which MUST BE public static
+     *
      * @return The parser method, which MUST BE public static
      */
     String MethodName();

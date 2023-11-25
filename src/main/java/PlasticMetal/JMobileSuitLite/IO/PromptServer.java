@@ -6,14 +6,15 @@ import PlasticMetal.JMobileSuitLite.TraceBack;
 /**
  * represents a server provides prompt output.
  */
-public interface PromptServer extends IOInteractive
-{
+public interface PromptServer extends IOInteractive {
 
 
     /**
      * get the default prompt server of Mobile Suit
      */
-    static PromptServer getInstance(){ return new CommonPromptServer();}
+    static PromptServer getInstance() {
+        return new CommonPromptServer();
+    }
 
 
     /**
@@ -37,7 +38,7 @@ public interface PromptServer extends IOInteractive
     void Update(String returnValue, String information, TraceBack traceBack, String promptInformation);
 
     /**
-     *  Output a prompt to IO.Output
+     * Output a prompt to IO.Output
      */
     void Print();
 }

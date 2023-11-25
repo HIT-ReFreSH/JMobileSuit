@@ -8,7 +8,6 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Members.MemberType;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Members.SuitObjectMember;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
-import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,34 +15,32 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
+
 /**
  * Built-In-Command Server. May be Override if necessary.
  */
 @SuppressWarnings("unused")
-public class BuildInCommandServer
-{
+public class BuildInCommandServer {
+    /**
+     * Host.
+     */
+    protected final SuitHost _host;
+    /**
+     * _host's current SuitObject.
+     */
+    protected SuitObject _current;
+
+
     /**
      * Initialize a BicServer with the given SuitHost.
      *
      * @param host The given SuitHost.
      */
 
-    public BuildInCommandServer(SuitHost host)
-    {
+    public BuildInCommandServer(SuitHost host) {
         _host = host;
     }
-
-    /**
-     * Host.
-     */
-    protected final SuitHost _host;
-
-
-    /**
-     * _host's current SuitObject.
-     */
-    protected SuitObject _current;
-
 
     /**
      * Show Members of the Current SuitObject
@@ -52,18 +49,17 @@ public class BuildInCommandServer
      * @return Command status
      */
     @SuitAlias("Ls")
-    @SuitInfo(resourceBundleName = "BicInfo",value = "List")
-    public TraceBack List(String[] args)
-    {
+    @SuitInfo(resourceBundleName = "BicInfo", value = "List")
+    public TraceBack List(String[] args) {
         if (_host.Current == null) return TraceBack.InvalidCommand;
         _host.IO.WriteLine(Lang.Members, OutputType.ListTitle);
         ListMembers(_host.Current);
         _host.IO.WriteLine();
 
         _host.IO.WriteLine(Arrays.asList(
-                new Tuple<>(Lang.ViewBic, null),
-                new Tuple<>("@Help", ConsoleColor.Cyan),
-                new Tuple<>("'", null))
+                        new Tuple<>(Lang.ViewBic, null),
+                        new Tuple<>("@Help", ConsoleColor.Cyan),
+                        new Tuple<>("'", null))
                 , OutputType.AllOk);
         return TraceBack.AllOk;
     }
@@ -76,10 +72,9 @@ public class BuildInCommandServer
      * @return Command status
      */
     @SuitAlias("Rs")
-    @SuitInfo(resourceBundleName = "BicInfo",value = "RunScript")
-    public TraceBack RunScript(String[] args)
-    {
-        if (_host.Current == null||args.length==0) return TraceBack.InvalidCommand;
+    @SuitInfo(resourceBundleName = "BicInfo", value = "RunScript")
+    public TraceBack RunScript(String[] args) {
+        if (_host.Current == null || args.length == 0) return TraceBack.InvalidCommand;
         File file = new File(args[0]);
         BufferedReader reader;
         try {
@@ -93,12 +88,12 @@ public class BuildInCommandServer
                         new Tuple<>(file.getName(), _host.IO.ColorSetting.InformationColor),
                         new Tuple<>(">", _host.IO.ColorSetting.PromptColor),
                         new Tuple<>(command, null)));
-                if((traceBack=_host.RunCommand(command))!=TraceBack.AllOk){
+                if ((traceBack = _host.RunCommand(command)) != TraceBack.AllOk) {
                     _host.IO.WriteLine(Arrays.asList(
-                            new Tuple<>("TraceBack:", null),
-                            new Tuple<>(traceBack.toString(), _host.IO.ColorSetting.InformationColor),
-                            new Tuple<>(" at line ", null ),
-                            new Tuple<>(String.valueOf(index),  _host.IO.ColorSetting.InformationColor)),
+                                    new Tuple<>("TraceBack:", null),
+                                    new Tuple<>(traceBack.toString(), _host.IO.ColorSetting.InformationColor),
+                                    new Tuple<>(" at line ", null),
+                                    new Tuple<>(String.valueOf(index), _host.IO.ColorSetting.InformationColor)),
                             OutputType.Error);
                     reader.close();
                     return traceBack;
@@ -119,9 +114,8 @@ public class BuildInCommandServer
      * @return Command status
      */
 
-    @SuitInfo(resourceBundleName = "BicInfo",value = "Exit")
-    public TraceBack Exit(String[] args)
-    {
+    @SuitInfo(resourceBundleName = "BicInfo", value = "Exit")
+    public TraceBack Exit(String[] args) {
         return TraceBack.OnExit;
     }
 
@@ -132,9 +126,8 @@ public class BuildInCommandServer
      * @return Command status
      */
 
-    @SuitInfo(resourceBundleName = "BicInfo",value = "Help")
-    public TraceBack Help(String[] args)
-    {
+    @SuitInfo(resourceBundleName = "BicInfo", value = "Help")
+    public TraceBack Help(String[] args) {
         _host.IO.WriteLine(Lang.Bic, OutputType.ListTitle);
         ListMembers(_host.BicServer);
         _host.IO.WriteLine();
@@ -153,12 +146,10 @@ public class BuildInCommandServer
      * @param obj The SuitObject, Maybe this BicServer.
      */
 
-    protected void ListMembers(SuitObject obj)
-    {
+    protected void ListMembers(SuitObject obj) {
         _host.IO.AppendWriteLinePrefix();
 
-        for (Tuple<String, SuitObjectMember> t : obj)
-        {
+        for (Tuple<String, SuitObjectMember> t : obj) {
             String name = t.First;
             SuitObjectMember member = t.Second;
             ConsoleColor infoColor = member.Type().equals(MemberType.MethodWithInfo) ? ConsoleColor.Blue : ConsoleColor.DarkBlue;

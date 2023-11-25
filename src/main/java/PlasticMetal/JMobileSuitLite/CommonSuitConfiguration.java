@@ -8,8 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class CommonSuitConfiguration implements SuitConfiguration
-{
+public class CommonSuitConfiguration implements SuitConfiguration {
     private final IOServer _io;
     private final Class<?> _buildInCommandServerType;
     private final PromptServer _prompt;
@@ -24,40 +23,39 @@ public class CommonSuitConfiguration implements SuitConfiguration
     /// <param name="io">io server</param>
     /// <param name="promptServer">prompt server</param>
     /// <param name="colorSetting">color setting </param>
-    public CommonSuitConfiguration(Class<? extends BuildInCommandServer> buildInCommandServerType, IOServer io, PromptServer promptServer, ColorSetting colorSetting, Logger logger)
-    {
+    public CommonSuitConfiguration(Class<? extends BuildInCommandServer> buildInCommandServerType, IOServer io, PromptServer promptServer, ColorSetting colorSetting, Logger logger) {
         _buildInCommandServerType = buildInCommandServerType;
         _io = io;
         _prompt = promptServer;
         _colorSetting = colorSetting;
-        this.logger=logger;
+        this.logger = logger;
     }
 
 
-    public Class<?> BuildInCommandServerType()
-    {
+    public Class<?> BuildInCommandServerType() {
         return _buildInCommandServerType;
     }
 
 
     public void InitializeBuildInCommandServer(SuitHost host)
-            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException
-    {
-        _buildInCommandServer=(BuildInCommandServer) _buildInCommandServerType.getConstructor(SuitHost.class).newInstance(host);
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        _buildInCommandServer = (BuildInCommandServer) _buildInCommandServerType.getConstructor(SuitHost.class).newInstance(host);
     }
 
-    public IOServer IO(){return _io;}
+    public IOServer IO() {
+        return _io;
+    }
 
-    public BuildInCommandServer BuildInCommandServer(){return _buildInCommandServer;}
+    public BuildInCommandServer BuildInCommandServer() {
+        return _buildInCommandServer;
+    }
 
 
-    public PromptServer Prompt()
-    {
+    public PromptServer Prompt() {
         return _prompt;
     }
 
-    public ColorSetting ColorSetting()
-    {
+    public ColorSetting ColorSetting() {
         return _colorSetting;
     }
 
@@ -67,8 +65,7 @@ public class CommonSuitConfiguration implements SuitConfiguration
      * @return The logger
      */
     @Override
-    public Logger Logger()
-    {
+    public Logger Logger() {
         return logger;
     }
 }

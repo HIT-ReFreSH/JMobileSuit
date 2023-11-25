@@ -6,7 +6,6 @@ import java.lang.annotation.*;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface SuitDefaultArgument
-{
+public @interface SuitDefaultArgument {
     String value();
 }

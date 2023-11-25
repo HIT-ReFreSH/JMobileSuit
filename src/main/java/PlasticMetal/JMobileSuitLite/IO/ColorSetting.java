@@ -1,12 +1,9 @@
 package PlasticMetal.JMobileSuitLite.IO;
 
-import PlasticMetal.JMobileSuitLite.IO.ConsoleColor;
-
 /**
  * Color settings of a IOServer.
  */
-public class ColorSetting
-{
+public class ColorSetting {
     /**
      * Default color. For OutputType.Default
      */
@@ -42,25 +39,21 @@ public class ColorSetting
      *
      * @return Default color settings for IOServer.
      */
-    public static ColorSetting getInstance()
-    {
+    public static ColorSetting getInstance() {
         return new ColorSetting();
     }
 
-    public static ConsoleColor selectColor(OutputType type, ConsoleColor customColor, ColorSetting colorSetting)
-    {
-        if (customColor == null || customColor == ConsoleColor.Null)
-        {
-            return switch (type)
-                    {
-                        case Default -> colorSetting.DefaultColor;
-                        case Prompt -> colorSetting.PromptColor;
-                        case Error -> colorSetting.ErrorColor;
-                        case AllOk -> colorSetting.AllOkColor;
-                        case ListTitle -> colorSetting.ListTitleColor;
-                        case CustomInfo -> colorSetting.CustomInformationColor;
-                        case MobileSuitInfo -> colorSetting.InformationColor;
-                    };
+    public static ConsoleColor selectColor(OutputType type, ConsoleColor customColor, ColorSetting colorSetting) {
+        if (customColor == null || customColor == ConsoleColor.Null) {
+            return switch (type) {
+                case Default -> colorSetting.DefaultColor;
+                case Prompt -> colorSetting.PromptColor;
+                case Error -> colorSetting.ErrorColor;
+                case AllOk -> colorSetting.AllOkColor;
+                case ListTitle -> colorSetting.ListTitleColor;
+                case CustomInfo -> colorSetting.CustomInformationColor;
+                case MobileSuitInfo -> colorSetting.InformationColor;
+            };
 
         }
 

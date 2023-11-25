@@ -9,10 +9,10 @@ import java.lang.annotation.*;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface Switch
-{
+public @interface Switch {
     /**
      * The name of option, for '-a', it's 'a'.
+     *
      * @return The name of option, for '-a', it's 'a'.
      */
     String value();

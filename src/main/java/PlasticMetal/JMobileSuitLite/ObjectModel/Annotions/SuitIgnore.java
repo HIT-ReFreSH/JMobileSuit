@@ -12,7 +12,6 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SuitIgnore
-{
+public @interface SuitIgnore {
 
 }

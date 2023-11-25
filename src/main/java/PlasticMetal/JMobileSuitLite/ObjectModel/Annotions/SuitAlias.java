@@ -10,8 +10,7 @@ import java.lang.annotation.*;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(SuitAliases.class)
-public @interface SuitAlias
-{
+public @interface SuitAlias {
     /**
      * @return The alias.
      */

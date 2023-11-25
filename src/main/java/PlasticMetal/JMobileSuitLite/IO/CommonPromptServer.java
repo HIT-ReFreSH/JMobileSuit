@@ -7,23 +7,37 @@ import PlasticMetal.JMobileSuitLite.TraceBack;
 /**
  * A common implement of PromptServer
  */
-public class CommonPromptServer implements PromptServer
-{
+public class CommonPromptServer implements PromptServer {
     protected final LangResourceBundle Lang;
+    /**
+     * Color setting of this prompt server
+     */
+    protected final ColorSetting Color;
     /**
      * IO server of this prompt server
      */
     protected IOServer IO;
     /**
-     * Color setting of this prompt server
+     * return value from last update
      */
-    protected final ColorSetting Color;
+    protected String LastReturnValue = "";
+    /**
+     * Information from last update
+     */
+    protected String LastInformation = "";
+    /**
+     * TraceBack from last update
+     */
+    protected TraceBack LastTraceBack;
+    /**
+     * Information shows when TraceBack==Prompt from last update
+     */
+    protected String LastPromptInformation = "";
 
     /**
      * Initialize a prompt with GeneralIO
      */
-    public CommonPromptServer()
-    {
+    public CommonPromptServer() {
         this(IOServer.GeneralIO, ColorSetting.getInstance());
     }
 
@@ -34,8 +48,7 @@ public class CommonPromptServer implements PromptServer
      * @param io           given io server
      */
 
-    protected CommonPromptServer(IOServer io, ColorSetting colorSetting)
-    {
+    protected CommonPromptServer(IOServer io, ColorSetting colorSetting) {
         IO = io;
         Color = colorSetting;
         Lang = new LangResourceBundle();
@@ -46,36 +59,13 @@ public class CommonPromptServer implements PromptServer
      *
      * @param configuration given configuration
      */
-    public CommonPromptServer(SuitConfiguration configuration)
-
-    {
+    public CommonPromptServer(SuitConfiguration configuration) {
         this(configuration.IO(),
                 configuration.ColorSetting());
 
     }
 
-    /**
-     * return value from last update
-     */
-    protected String LastReturnValue = "";
-
-    /**
-     * Information from last update
-     */
-    protected String LastInformation = "";
-
-    /**
-     * TraceBack from last update
-     */
-    protected TraceBack LastTraceBack;
-
-    /**
-     * Information shows when TraceBack==Prompt from last update
-     */
-    protected String LastPromptInformation = "";
-
-    public void Update(String returnValue, String information, TraceBack traceBack)
-    {
+    public void Update(String returnValue, String information, TraceBack traceBack) {
         LastReturnValue = returnValue;
         LastInformation = information;
         LastTraceBack = traceBack;
@@ -87,8 +77,7 @@ public class CommonPromptServer implements PromptServer
      * @param traceBack         traceBack of last command
      * @param promptInformation information shows when traceBack==TraceBack.Prompt
      */
-    public void Update(String returnValue, String information, TraceBack traceBack, String promptInformation)
-    {
+    public void Update(String returnValue, String information, TraceBack traceBack, String promptInformation) {
         Update(returnValue, information, traceBack);
         LastPromptInformation = promptInformation;
 
@@ -97,11 +86,9 @@ public class CommonPromptServer implements PromptServer
     /**
      * print out the prompt
      */
-    public void Print()
-    {
+    public void Print() {
         IO.Write(" " + LastInformation, OutputType.Prompt);
-        if (LastTraceBack == TraceBack.Prompt)
-        {
+        if (LastTraceBack == TraceBack.Prompt) {
             IO.Write("[" + LastPromptInformation + "]", OutputType.Prompt);
         }
 
@@ -114,8 +101,7 @@ public class CommonPromptServer implements PromptServer
      * @param io SuitHost's IOServer.
      */
     @Override
-    public void setIO(IOServer io)
-    {
-        IO=io;
+    public void setIO(IOServer io) {
+        IO = io;
     }
 }

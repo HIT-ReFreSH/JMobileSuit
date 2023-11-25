@@ -3,8 +3,7 @@ package PlasticMetal.JMobileSuitLite.IO;
 /**
  * Type of content that writes to the output stream.
  */
-public enum OutputType
-{
+public enum OutputType {
 
     /**
      * Normal content.

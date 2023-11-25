@@ -3,8 +3,7 @@ package PlasticMetal.JMobileSuitLite.ObjectModel.Members;
 /**
  * Type of a member
  */
-public enum MemberType
-{
+public enum MemberType {
 
     /**
      * A Method with customized information

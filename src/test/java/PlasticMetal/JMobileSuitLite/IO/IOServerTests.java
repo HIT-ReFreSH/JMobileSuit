@@ -1,27 +1,21 @@
 package PlasticMetal.JMobileSuitLite.IO;
 
-import PlasticMetal.JMobileSuitLite.IO.*;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import org.apache.logging.log4j.core.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.mock;
-
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-
 
 
 public class IOServerTests {
@@ -36,8 +30,8 @@ public class IOServerTests {
         return new IOServer();
     }
 
-    private IOServer getInstance(PromptServer promptServer,Logger logger,ColorSetting colorSetting) {
-        return new IOServer(promptServer,logger,colorSetting);
+    private IOServer getInstance(PromptServer promptServer, Logger logger, ColorSetting colorSetting) {
+        return new IOServer(promptServer, logger, colorSetting);
     }
 
     private IOServer getInstance(SuitConfiguration configuration) {
@@ -118,7 +112,7 @@ public class IOServerTests {
         String testException = "Mock String";
         ioserver.WriteException(testException);
 
-        verify(mockLogger, times(1)).LogException(testException);
+        verify(mockLogger, times(1)).error(testException);
     }
 
     /**
@@ -293,6 +287,7 @@ public class IOServerTests {
             System.setOut(originalOut);
         }
     }
+
     @Test
     public void testAppendWriteLinePrefix() {
         IOServer ioserver = getInstance();

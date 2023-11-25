@@ -3,8 +3,7 @@ package PlasticMetal.JMobileSuitLite.ObjectModel.Members;
 /**
  * Whether a member is SuitIgnore or not.
  */
-public enum MemberAccess
-{
+public enum MemberAccess {
     /**
      * With SuitIgnore Attribute
      */

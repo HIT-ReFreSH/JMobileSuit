@@ -1,22 +1,25 @@
 package PlasticMetal.JMobileSuitLite.IO;
-import org.apache.logging.log4j.Logger;
-import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
-import PlasticMetal.Jarvis.ObjectModel.Tuple;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
 import PlasticMetal.JMobileSuitLite.TraceBack;
+import PlasticMetal.Jarvis.ObjectModel.Tuple;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.Stack;
+
+import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
 /**
  * An entity, which serves the input/output of a mobile suit.
  */
 @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "unused"})
-public class IOServer
-{
+public class IOServer {
     /**
      * Default IOServer, using stdin, stdout, stderr.
      */
@@ -24,64 +27,51 @@ public class IOServer
     private static final String ClearEffect = "\033[0m";
 
     private final Logger logger;
-
+    private final StringBuilder PrefixBuilder = new StringBuilder();
+    private final Stack<Integer> PrefixLengthStack = new Stack<>();
     /**
      * Color settings for this IOServer. (default getInstance)
      */
     public PlasticMetal.JMobileSuitLite.IO.ColorSetting ColorSetting;
     public PromptServer Prompt;
-
     /**
-     * Write debug info to log file
-     * @param content debug info
+     * Error stream (default stderr)
      */
-    public void WriteDebug(String content){
-        logger.debug(content);
-    }
-
+    public PrintStream Error;
     /**
-     * Write exception info to log file
-     * @param content exception
+     * Output stream (default stdout)
      */
-    public void WriteException(Exception content){
-        logger.error(content);
-    }
-
+    public PrintStream Output;
     /**
-     * Write exception info to log file
-     * @param content exception info
+     * Input stream (default stdin)
      */
-    public void WriteException(String content){
-        logger.error(content);
-    }
+    private InputStream _input;
+    private Scanner _inputScanner;
 
     /**
      * Initialize a IOServer.
      */
-    public IOServer()
-    {
+    public IOServer() {
         Prompt = PromptServer.getInstance();
         ColorSetting = PlasticMetal.JMobileSuitLite.IO.ColorSetting.getInstance();
         _input = System.in;
         Output = System.out;
         Error = System.err;
-        logger= Logger.getLogger(this.getClass());
+        logger = LogManager.getLogger(this.getClass());
         _inputScanner = new Scanner(_input);
 
     }
 
-
     /**
      * Initialize a IOServer.
      */
-    public IOServer(PromptServer promptServer,Logger logger,ColorSetting colorSetting)
-    {
+    public IOServer(PromptServer promptServer, Logger logger, ColorSetting colorSetting) {
         Prompt = promptServer;
         ColorSetting = colorSetting;
         _input = System.in;
         Output = System.out;
         Error = System.err;
-        this.logger=logger;
+        this.logger = logger;
         _inputScanner = new Scanner(_input);
 
     }
@@ -89,32 +79,62 @@ public class IOServer
     /**
      * Initialize a IOServer.
      */
-    public IOServer(SuitConfiguration configuration)
-    {
+    public IOServer(SuitConfiguration configuration) {
         Prompt = configuration.Prompt();
         ColorSetting = configuration.ColorSetting();
         _input = System.in;
         Output = System.out;
         Error = System.err;
-        logger=configuration.Logger();
+        logger = configuration.Logger();
         _inputScanner = new Scanner(_input);
 
     }
 
-    /**
-     * Input stream (default stdin)
-     */
-    private InputStream _input;
+    private static String GetLabel(OutputType type) {
+        return switch (type) {
+            case Default -> "";
+            case Prompt -> "[Prompt]";
+            case Error -> "[Error]";
+            case AllOk -> "[AllOk]";
+            case ListTitle -> "[List]";
+            default -> "[Info]";
+        };
 
-    private Scanner _inputScanner;
+    }
+
+    /**
+     * Write debug info to log file
+     *
+     * @param content debug info
+     */
+    public void WriteDebug(String content) {
+        logger.debug(content);
+    }
+
+    /**
+     * Write exception info to log file
+     *
+     * @param content exception
+     */
+    public void WriteException(Exception content) {
+        logger.error(content);
+    }
+
+    /**
+     * Write exception info to log file
+     *
+     * @param content exception info
+     */
+    public void WriteException(String content) {
+        logger.error(content);
+    }
 
     /**
      * get Input stream (default stdin)
      *
      * @return Input stream
      */
-    public InputStream GetInput()
-    {
+    public InputStream GetInput() {
         return _input;
     }
 
@@ -123,8 +143,7 @@ public class IOServer
      *
      * @param value new input stream
      */
-    public void SetInput(InputStream value)
-    {
+    public void SetInput(InputStream value) {
         _input = value;
         _inputScanner = new Scanner(_input);
     }
@@ -134,19 +153,16 @@ public class IOServer
      *
      * @return if this IOServer's input stream is redirected (NOT stdin)
      */
-    public boolean IsInputRedirected()
-    {
+    public boolean IsInputRedirected() {
         return !System.in.equals(_input);
     }
 
     /**
      * Reset this IOServer's input stream to stdin
      */
-    public void ResetInput()
-    {
+    public void ResetInput() {
         _input = System.in;
     }
-
 
     /**
      * Reads a line from input stream, with prompt.
@@ -155,8 +171,7 @@ public class IOServer
      * @param newLine If the prompt will display in a single line.
      * @return Content from input stream, null if EOF.
      */
-    public String ReadLine(String prompt, boolean newLine)
-    {
+    public String ReadLine(String prompt, boolean newLine) {
         return ReadLineBase(prompt, null, newLine, null);
     }
 
@@ -168,8 +183,7 @@ public class IOServer
      * @param customPromptColor Prompt's Color, Color.PromptColor as default.
      * @return Content from input stream, null if EOF.
      */
-    public String ReadLine(String prompt, boolean newLine, ConsoleColor customPromptColor)
-    {
+    public String ReadLine(String prompt, boolean newLine, ConsoleColor customPromptColor) {
         return ReadLineBase(prompt, null, newLine, customPromptColor);
     }
 
@@ -182,8 +196,7 @@ public class IOServer
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
     public String ReadLine(String prompt, String defaultValue,
-                           ConsoleColor customPromptColor)
-    {
+                           ConsoleColor customPromptColor) {
         return ReadLineBase(prompt, defaultValue, false, customPromptColor);
     }
 
@@ -192,8 +205,7 @@ public class IOServer
      *
      * @return Content from input stream, null if EOF.
      */
-    public String ReadLine()
-    {
+    public String ReadLine() {
         return ReadLineBase(null, null, false, null);
     }
 
@@ -203,11 +215,9 @@ public class IOServer
      * @param prompt The prompt display (output to output stream) before user input.
      * @return Content from input stream, null if EOF.
      */
-    public String ReadLine(String prompt)
-    {
+    public String ReadLine(String prompt) {
         return ReadLineBase(prompt, null, false, null);
     }
-
 
     /**
      * Reads a line from input stream, with prompt. Return something default if user input "".
@@ -216,8 +226,7 @@ public class IOServer
      * @param customPromptColor Prompt's Color, Color.PromptColor as default.
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
-    public String ReadLine(String prompt, ConsoleColor customPromptColor)
-    {
+    public String ReadLine(String prompt, ConsoleColor customPromptColor) {
         return ReadLineBase(prompt, null, false, customPromptColor);
     }
 
@@ -228,8 +237,7 @@ public class IOServer
      * @param defaultValue Default return value if user input ""
      * @return Content from input stream, null if EOF, if user input "", return defaultValue
      */
-    public String ReadLine(String prompt, String defaultValue)
-    {
+    public String ReadLine(String prompt, String defaultValue) {
         return ReadLineBase(prompt, defaultValue, false, null);
     }
 
@@ -241,11 +249,9 @@ public class IOServer
      * @param newLine      If the prompt will display in a single line.
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
-    public String ReadLine(String prompt, String defaultValue, boolean newLine)
-    {
+    public String ReadLine(String prompt, String defaultValue, boolean newLine) {
         return ReadLineBase(prompt, defaultValue, newLine, null);
     }
-
 
     /**
      * Reads a line from input stream, with prompt. Return something default if user input "".
@@ -256,15 +262,12 @@ public class IOServer
      * @param customPromptColor Prompt's Color, Color.PromptColor as default.
      * @return Content from input stream, null if EOF, if user input "", return defaultValue.
      */
-    public String ReadLine(String prompt, String defaultValue, boolean newLine, ConsoleColor customPromptColor)
-    {
+    public String ReadLine(String prompt, String defaultValue, boolean newLine, ConsoleColor customPromptColor) {
         return ReadLineBase(prompt, defaultValue, newLine, customPromptColor);
     }
 
-    private String ReadLineBase(String prompt, String defaultValue, boolean newLine, ConsoleColor customPromptColor)
-    {
-        if (prompt != null && prompt.isEmpty())
-        {
+    private String ReadLineBase(String prompt, String defaultValue, boolean newLine, ConsoleColor customPromptColor) {
+        if (prompt != null && prompt.isEmpty()) {
             if (defaultValue != null && !defaultValue.isEmpty())
                 Prompt.Update("", prompt, TraceBack.Prompt);
             else
@@ -279,14 +282,13 @@ public class IOServer
         Scanner sc = _inputScanner;
         if (!sc.hasNextLine()) return null;
         StringBuilder stringBuilder = new StringBuilder(sc.nextLine());
-        while (stringBuilder.length() > 0 && stringBuilder.charAt(stringBuilder.length() - 1) == '%')
-        {
+        while (!stringBuilder.isEmpty() && stringBuilder.charAt(stringBuilder.length() - 1) == '%') {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
             if (!sc.hasNextLine()) break;
             stringBuilder.append(sc.nextLine());
 
         }
-        return (stringBuilder.length() == 0 ? defaultValue : stringBuilder.toString());
+        return (stringBuilder.isEmpty() ? defaultValue : stringBuilder.toString());
     }
 
     /**
@@ -295,19 +297,16 @@ public class IOServer
      * @return The next available character.
      * @throws IOException ignore.
      */
-    public int Read() throws IOException
-    {
+    public int Read() throws IOException {
         return _input.read();
     }
-
 
     /**
      * Check if this IOServer's error stream is redirected (NOT stderr)
      *
      * @return if this IOServer's error stream is redirected (NOT stderr)
      */
-    public boolean IsErrorRedirected()
-    {
+    public boolean IsErrorRedirected() {
         return !System.err.equals(Error);
     }
 
@@ -316,25 +315,14 @@ public class IOServer
      *
      * @return if this IOServer's output stream is redirected (NOT stdout)
      */
-    public boolean IsOutputRedirected()
-    {
+    public boolean IsOutputRedirected() {
         return !System.out.equals(Output);
     }
 
     /**
-     * Error stream (default stderr)
-     */
-    public PrintStream Error;
-    /**
-     * Output stream (default stdout)
-     */
-    public PrintStream Output;
-
-    /**
      * The prefix of WriteLine() output, usually used to make indentation.
      */
-    public String Prefix()
-    {
+    public String Prefix() {
         return PrefixBuilder.toString();
     }
 
@@ -343,16 +331,13 @@ public class IOServer
      *
      * @param value The prefix of WriteLine() output, usually used to make indentation.
      */
-    public void SetPrefix(String value)
-    {
+    public void SetPrefix(String value) {
 
         ResetWriteLinePrefix();
         PrefixBuilder.append(value);
         PrefixLengthStack.push(value.length());
 
     }
-
-    private final StringBuilder PrefixBuilder = new StringBuilder();
 
     public StringBuilder getPrefixBuilder() {
         return new StringBuilder(PrefixBuilder);
@@ -364,12 +349,8 @@ public class IOServer
         return copyStack;
     }
 
-    private final Stack<Integer> PrefixLengthStack = new Stack<>();
-
-    private ConsoleColor SelectColor(OutputType type, ConsoleColor customColor)
-    {
-        if (customColor == null || customColor == ConsoleColor.Null)
-        {
+    private ConsoleColor SelectColor(OutputType type, ConsoleColor customColor) {
+        if (customColor == null || customColor == ConsoleColor.Null) {
             return switch (type) {
                 case Default -> ColorSetting.DefaultColor;
                 case Prompt -> ColorSetting.PromptColor;
@@ -387,37 +368,21 @@ public class IOServer
 
     }
 
-    private static String GetLabel(OutputType type)
-    {
-        return switch (type) {
-            case Default -> "";
-            case Prompt -> "[Prompt]";
-            case Error -> "[Error]";
-            case AllOk -> "[AllOk]";
-            case ListTitle -> "[List]";
-            default -> "[Info]";
-        };
-
-    }
-
     /**
      * Reset this IOServer's error stream to stderr
      */
-    public void ResetError()
-    {
+    public void ResetError() {
         Error = System.err;
     }
 
     /**
      * Reset this IOServer's output stream to stdout
      */
-    public void ResetOutput()
-    {
+    public void ResetOutput() {
         Output = System.out;
     }
 
-    private void ResetWriteLinePrefix()
-    {
+    private void ResetWriteLinePrefix() {
         PrefixBuilder.setLength(0);
         PrefixLengthStack.clear();
     }
@@ -427,8 +392,7 @@ public class IOServer
      */
 
 
-    public void AppendWriteLinePrefix()
-    {
+    public void AppendWriteLinePrefix() {
         PrefixBuilder.append("\t");
         PrefixLengthStack.push(1);
     }
@@ -440,8 +404,7 @@ public class IOServer
      */
 
 
-    public void AppendWriteLinePrefix(String str)
-    {
+    public void AppendWriteLinePrefix(String str) {
         PrefixBuilder.append(str);
         PrefixLengthStack.push(str.length());
     }
@@ -449,8 +412,7 @@ public class IOServer
     /**
      * Subtract a str from Prefix, usually used to decrease indentation
      */
-    public void SubtractWriteLinePrefix()
-    {
+    public void SubtractWriteLinePrefix() {
         if (PrefixLengthStack.isEmpty()) return;
         int l = PrefixLengthStack.pop();
         PrefixBuilder.delete(PrefixBuilder.length() - l, PrefixBuilder.length());
@@ -462,8 +424,7 @@ public class IOServer
      * @param content     Content to output .
      * @param customColor Customized foreground color in console
      */
-    public void Write(String content, ConsoleColor customColor)
-    {
+    public void Write(String content, ConsoleColor customColor) {
         WriteBase(content, OutputType.Default, customColor);
     }
 
@@ -474,15 +435,11 @@ public class IOServer
      * @param foreGroundColor foreground color
      * @param backGroundColor background color
      */
-    public void Write(String content, ConsoleColor foreGroundColor, ConsoleColor backGroundColor)
-    {
-        if (!IsOutputRedirected())
-        {
+    public void Write(String content, ConsoleColor foreGroundColor, ConsoleColor backGroundColor) {
+        if (!IsOutputRedirected()) {
 
             Output.print(ConsoleColor.getColor(foreGroundColor, backGroundColor) + content + ClearEffect);
-        }
-        else
-        {
+        } else {
             Output.print(content);
         }
     }
@@ -492,8 +449,7 @@ public class IOServer
      *
      * @param content Content to output .
      */
-    public void Write(String content)
-    {
+    public void Write(String content) {
         WriteBase(content, OutputType.Default, null);
     }
 
@@ -503,8 +459,7 @@ public class IOServer
      * @param content Content to output .
      * @param type    Type of this content,this decides how will it be like.
      */
-    public void Write(String content, OutputType type)
-    {
+    public void Write(String content, OutputType type) {
         WriteBase(content, type, null);
     }
 
@@ -515,20 +470,15 @@ public class IOServer
      * @param type        Type of this content,this decides how will it be like.
      * @param customColor Customized color in console
      */
-    public void Write(String content, OutputType type, ConsoleColor customColor)
-    {
+    public void Write(String content, OutputType type, ConsoleColor customColor) {
         WriteBase(content, type, customColor);
     }
 
-    private void WriteBase(String content, OutputType type, ConsoleColor customColor)
-    {
-        if (!IsOutputRedirected())
-        {
+    private void WriteBase(String content, OutputType type, ConsoleColor customColor) {
+        if (!IsOutputRedirected()) {
             ConsoleColor color = SelectColor(type, customColor);
             Output.print(color + content + ClearEffect);
-        }
-        else
-        {
+        } else {
             if (type != OutputType.Prompt)
                 Output.print(content);
         }
@@ -538,8 +488,7 @@ public class IOServer
     /**
      * Writes a new line to output stream, with line break.
      */
-    public void WriteLine()
-    {
+    public void WriteLine() {
         WriteLineBase("", OutputType.Default, null);
     }
 
@@ -549,8 +498,7 @@ public class IOServer
      * @param content     Content to output
      * @param customColor Customized color in console.
      */
-    public void WriteLine(String content, ConsoleColor customColor)
-    {
+    public void WriteLine(String content, ConsoleColor customColor) {
         WriteLineBase(content, OutputType.Default, customColor);
     }
 
@@ -559,8 +507,7 @@ public class IOServer
      *
      * @param content Content to output
      */
-    public void WriteLine(String content)
-    {
+    public void WriteLine(String content) {
         WriteLineBase(content, OutputType.Default, null);
     }
 
@@ -570,8 +517,7 @@ public class IOServer
      * @param content Content to output
      * @param type    Type of this content,this decides how will it be like(color in Console, label in file).
      */
-    public void WriteLine(String content, OutputType type)
-    {
+    public void WriteLine(String content, OutputType type) {
         WriteLineBase(content, type, null);
     }
 
@@ -582,21 +528,16 @@ public class IOServer
      * @param type        Type of this content,this decides how will it be like(color in Console, label in file).
      * @param customColor Customized color in console.
      */
-    public void WriteLine(String content, OutputType type, ConsoleColor customColor)
-    {
+    public void WriteLine(String content, OutputType type, ConsoleColor customColor) {
         WriteLineBase(content, type, customColor);
     }
 
-    private void WriteLineBase(String content, OutputType type, ConsoleColor customColor)
-    {
-        if (!IsOutputRedirected())
-        {
+    private void WriteLineBase(String content, OutputType type, ConsoleColor customColor) {
+        if (!IsOutputRedirected()) {
             ConsoleColor color = SelectColor(type, customColor);
             Output.println(color + Prefix() + content + ClearEffect);
 
-        }
-        else
-        {
+        } else {
             String sb = "[" + LocalDateTime.now() +
                     "]" +
                     GetLabel(type) +
@@ -612,11 +553,9 @@ public class IOServer
      *                     first is a part of content second is optional,
      *                     the color of output(in console)
      */
-    public void WriteLine(Iterable<Tuple<String, ConsoleColor>> contentArray)
-    {
+    public void WriteLine(Iterable<Tuple<String, ConsoleColor>> contentArray) {
         WriteLine(contentArray, OutputType.Default);
     }
-
 
 
     /**
@@ -627,24 +566,17 @@ public class IOServer
      *                     the color of output(in console)
      * @param type         Type of this content,this decides how will it be like(color in Console, label in file).
      */
-    public void WriteLine(Iterable<Tuple<String, ConsoleColor>> contentArray, OutputType type)
-
-    {
-        if (!IsOutputRedirected())
-        {
+    public void WriteLine(Iterable<Tuple<String, ConsoleColor>> contentArray, OutputType type) {
+        if (!IsOutputRedirected()) {
             ConsoleColor defaultColor = SelectColor(type, null);
             Output.print(defaultColor + Prefix() + ClearEffect);
-            for (Tuple<String, ConsoleColor> t : contentArray)
-            {
-                if (t.Second == null || t.Second==ConsoleColor.Null) t.Second = defaultColor;
+            for (Tuple<String, ConsoleColor> t : contentArray) {
+                if (t.Second == null || t.Second == ConsoleColor.Null) t.Second = defaultColor;
                 Output.print(t.Second + t.First + ClearEffect);
             }
             Output.print("\n");
-        }
-        else
-        {
-            for (Tuple<String, ConsoleColor> t : contentArray)
-            {
+        } else {
+            for (Tuple<String, ConsoleColor> t : contentArray) {
                 Output.print(t.First);
             }
 

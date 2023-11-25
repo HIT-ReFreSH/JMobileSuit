@@ -12,10 +12,10 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SuitAliases
-{
+public @interface SuitAliases {
     /**
      * Container.
+     *
      * @return SuitAliases
      */
     SuitAlias[] value();

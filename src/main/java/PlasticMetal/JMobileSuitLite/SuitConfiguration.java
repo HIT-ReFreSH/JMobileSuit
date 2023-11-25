@@ -6,15 +6,21 @@ import PlasticMetal.JMobileSuitLite.IO.PromptServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitConfigurator;
 import org.apache.logging.log4j.Logger;
 
-
 import java.lang.reflect.InvocationTargetException;
 
 /**
  * represent a configuration for Mobile Suit
  */
-public interface SuitConfiguration
-{
+public interface SuitConfiguration {
 
+
+    /**
+     * get a default configuration of Mobile Suit
+     */
+
+    static SuitConfiguration getInstance() {
+        return SuitConfigurator.ofDefault().getConfiguration();
+    }
 
     /**
      * Type of BuildInCommandServer
@@ -52,16 +58,9 @@ public interface SuitConfiguration
 
     /**
      * Logger of current mobile suit
+     *
      * @return The logger
      */
     Logger Logger();
-
-    /**
-     *get a default configuration of Mobile Suit
-     */
-
-    static SuitConfiguration getInstance(){
-        return SuitConfigurator.ofDefault().getConfiguration();
-    }
 
 }

@@ -14,27 +14,23 @@ import java.util.*;
  * Represents an Object in Mobile Suit.
  */
 @SuppressWarnings("unused")
-public class SuitObject implements Executable, Iterable<Tuple<String, SuitObjectMember>>
-{
+public class SuitObject implements Executable, Iterable<Tuple<String, SuitObjectMember>> {
+    private static final Set<String> IgnoreMethods = new HashSet<>(Arrays.asList("wait", "getclass", "equals", "hashcode", "notifyall", "tostring", "notify"));
     private final Object _instance;
     private final Map<String, List<Tuple<String, SuitObjectMember>>> _members = new HashMap<>();
     private final Map<String, List<Tuple<String, SuitObjectMember>>> _membersAbs = new HashMap<>();
-    private static final Set<String> IgnoreMethods = new HashSet<>(Arrays.asList("wait", "getclass", "equals", "hashcode", "notifyall", "tostring", "notify"));
 
     /**
      * Initialize a SuitObject with an instance.
      *
      * @param instance The instance that this SuitObject represents.
      */
-    public SuitObject(Object instance)
-    {
+    public SuitObject(Object instance) {
         _instance = instance;
         Class<?> type = instance.getClass();
         if (type == null) return;
-        for (Method member : type.getMethods())
-        {
-            if ((member.getModifiers() & Modifier.PUBLIC) != 0 && (member.getModifiers() & Modifier.STATIC) == 0 && !IgnoreMethods.contains(member.getName().toLowerCase()))
-            {
+        for (Method member : type.getMethods()) {
+            if ((member.getModifiers() & Modifier.PUBLIC) != 0 && (member.getModifiers() & Modifier.STATIC) == 0 && !IgnoreMethods.contains(member.getName().toLowerCase())) {
                 tryAddMember(new SuitObjectMember(instance, member));
             }
         }
@@ -45,8 +41,7 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
      *
      * @return The instance that this SuitObject represents.
      */
-    public Object Instance()
-    {
+    public Object Instance() {
         return _instance;
     }
 
@@ -56,8 +51,7 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
      *
      * @return Count of Members that this Object contains.
      */
-    public int MemberCount()
-    {
+    public int MemberCount() {
         return _members.size();
     }
 
@@ -66,8 +60,7 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
      * @param args The arguments for execution.
      * @return execute this Object.
      */
-    public Tuple<TraceBack, Object> execute(String[] args)
-    {
+    public Tuple<TraceBack, Object> execute(String[] args) {
 
 
         if (args.length == 0) return new Tuple<>(TraceBack.ObjectNotFound, null);
@@ -75,22 +68,15 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
 
         if (!_members.containsKey(args[0])) return new Tuple<>(TraceBack.ObjectNotFound, null);
 
-        for (Tuple<String, SuitObjectMember> t : _members.get(args[0]))
-        {
+        for (Tuple<String, SuitObjectMember> t : _members.get(args[0])) {
             Tuple<TraceBack, Object> r;
-            try
-            {
+            try {
                 r = t.Second.execute(Arrays.copyOfRange(args, 1, args.length));
-            }
-            catch (IllegalAccessException  | InstantiationException e)
-            {
+            } catch (IllegalAccessException | InstantiationException e) {
                 r = new Tuple<>(TraceBack.InvalidCommand, e);
-            }
-            catch (InvocationTargetException e){
+            } catch (InvocationTargetException e) {
                 r = new Tuple<>(TraceBack.AppException, e.getTargetException());
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 r = new Tuple<>(TraceBack.AppException, e);
             }
 
@@ -100,8 +86,7 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
         return new Tuple<>(TraceBack.ObjectNotFound, null);
     }
 
-    private void tryAddMember(SuitObjectMember objMember)
-    {
+    private void tryAddMember(SuitObjectMember objMember) {
         if (objMember.Access() != MemberAccess.VisibleToUser)
             return;
 
@@ -110,8 +95,7 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
             _membersAbs.get(lAbsName).add(new Tuple<>(objMember.AbsoluteName(), objMember));
         else _membersAbs.put(lAbsName, new ArrayList<>(
                 Collections.singletonList(new Tuple<>(objMember.AbsoluteName(), objMember))));
-        for (String name : objMember.FriendlyNames())
-        {
+        for (String name : objMember.FriendlyNames()) {
             String lName = name.toLowerCase();
             if (_members.containsKey(lName)) _members.get(lName).add(new Tuple<>(name, objMember));
             else
@@ -127,11 +111,9 @@ public class SuitObject implements Executable, Iterable<Tuple<String, SuitObject
      * @return an Iterator.
      */
     @Override
-    public Iterator<Tuple<String, SuitObjectMember>> iterator()
-    {
+    public Iterator<Tuple<String, SuitObjectMember>> iterator() {
         List<Tuple<String, SuitObjectMember>> list = new ArrayList<>();
-        for (String absName : _membersAbs.keySet())
-        {
+        for (String absName : _membersAbs.keySet()) {
             list.addAll(_membersAbs.get(absName));
         }
         list.sort(Comparator.comparing(o -> o.First));

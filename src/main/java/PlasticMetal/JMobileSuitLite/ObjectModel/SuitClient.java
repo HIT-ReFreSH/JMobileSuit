@@ -7,26 +7,25 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitIgnore;
 /// An Standard mobile suit client driver-class.
 /// </summary>
 @SuppressWarnings("unused")
-public abstract class SuitClient implements InfoProvider, IOInteractive
-{
+public abstract class SuitClient implements InfoProvider, IOInteractive {
 
+    protected String _text = "";
     private IOServer _io;
-    protected String _text="";
 
     /**
      * The IOServer for current SuitHost.
      */
-    protected IOServer IO()
-    {
+    protected IOServer IO() {
         return _io;
     }
 
     /**
      * set The information provided.
+     *
      * @param value The information provided.
      */
-    protected void setText(String value){
-        _text=value;
+    protected void setText(String value) {
+        _text = value;
     }
 
 
@@ -36,18 +35,17 @@ public abstract class SuitClient implements InfoProvider, IOInteractive
      * @return The information provided.
      */
     @SuitIgnore
-    public String text()
-    {
+    public String text() {
         return _text;
     }
 
     /**
      * Provides Interface for SuitHost to set ioServer
+     *
      * @param io SuitHost's IOServer.
      */
-     @SuitIgnore
-    public void setIO(IOServer io)
-    {
+    @SuitIgnore
+    public void setIO(IOServer io) {
         _io = io;
     }
 }
