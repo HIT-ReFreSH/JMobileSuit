@@ -312,8 +312,8 @@ public class IOServerTests {
         assertEquals("", ioserver.getPrefixBuilder().toString());
         assertTrue(ioserver.getPrefixLengthStack().isEmpty());
 
-        ioserver.AppendWriteLinePrefix("abcabcabc");
-        assertEquals("abcabcabc", ioserver.getPrefixBuilder().toString());
+        ioserver.AppendWriteLinePrefix("nothing");
+        assertEquals("nothing", ioserver.getPrefixBuilder().toString());
 
         assertTrue(ioserver.getPrefixLengthStack().contains(9));
     }
