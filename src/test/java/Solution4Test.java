@@ -1,6 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-public class Solution4Tests {
+public class Solution4Test {
     @Test
     public void testMaximumGap() {
         Solution4 solution = new Solution4();
