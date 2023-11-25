@@ -18,3 +18,16 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Run tests with Maven
         run: mvn -B test --file pom.xml
+
+  merge_pull_request:
+    runs-on: ubuntu-latest
+    needs: run_tests
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+
+      - name: Merge PR
+        uses: pullreminders/pull-request-merge@v0.5.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          method: squash
