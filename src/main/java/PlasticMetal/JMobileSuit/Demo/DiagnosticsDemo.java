@@ -2,9 +2,8 @@ package PlasticMetal.JMobileSuit.Demo;
 
 import PlasticMetal.JMobileSuitLite.NeuesProjekt.PowerLineThemedPromptServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
-import PlasticMetal.JMobileSuitLite.ObjectModel.SuitConfigurator;
 import PlasticMetal.JMobileSuitLite.SuitHost;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 public class DiagnosticsDemo extends Client
 {

@@ -1,10 +1,9 @@
 package PlasticMetal.JMobileSuitLite.IO;
 
-import PlasticMetal.JMobileSuitLite.Diagnostics.LogUtil;
-import PlasticMetal.JMobileSuitLite.Diagnostics.SuitLogger;
 import PlasticMetal.JMobileSuitLite.IO.*;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
+import org.apache.logging.log4j.core.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,9 +26,9 @@ import org.powermock.api.mockito.PowerMockito;
 
 public class IOServerTests {
 
-//    private final SuitLogger Logger;
+//    private final Logger Logger;
 //
-//    public IOServerTests(SuitLogger logger) {
+//    public IOServerTests(Logger logger) {
 //        Logger = logger;
 //    }
 
@@ -37,7 +36,7 @@ public class IOServerTests {
         return new IOServer();
     }
 
-    private IOServer getInstance(PromptServer promptServer,SuitLogger logger,ColorSetting colorSetting) {
+    private IOServer getInstance(PromptServer promptServer,Logger logger,ColorSetting colorSetting) {
         return new IOServer(promptServer,logger,colorSetting);
     }
 
@@ -64,7 +63,7 @@ public class IOServerTests {
     public void testParameterizedIOServer1() {
         PromptServer mockPromptServer = mock(PromptServer.class);
 
-        SuitLogger mockLogger = mock(SuitLogger.class);
+        Logger mockLogger = mock(Logger.class);
         ColorSetting mockColorSetting = mock(ColorSetting.class);
 
         IOServer ioserver = getInstance(mockPromptServer, mockLogger, mockColorSetting);
@@ -84,7 +83,7 @@ public class IOServerTests {
 
     @Test
     public void testWriteDebug() throws Exception {
-        SuitLogger mockLogger = mock(SuitLogger.class);
+        Logger mockLogger = mock(Logger.class);
         ColorSetting colorSetting = mock(ColorSetting.class);
         PromptServer promptServer = mock(PromptServer.class);
 
@@ -93,12 +92,12 @@ public class IOServerTests {
         ioserver.WriteDebug("Any Message");
 
         // 验证模拟对象的 LogDebug 方法是否被调用，并且传入的参数是否符合预期
-        verify(mockLogger, times(1)).LogDebug(anyString());
+        verify(mockLogger, times(1)).debug(anyString());
     }
 
     @Test
     public void testWriteException() throws Exception {
-        SuitLogger mockLogger = mock(SuitLogger.class);
+        Logger mockLogger = mock(Logger.class);
         ColorSetting colorSetting = mock(ColorSetting.class);
         PromptServer promptServer = mock(PromptServer.class);
         IOServer ioserver = getInstance(promptServer, mockLogger, colorSetting);
@@ -106,12 +105,12 @@ public class IOServerTests {
         Exception testException = new Exception("Mock Exception");
         ioserver.WriteException(testException);
         // 验证模拟对象的 LogException 方法是否被调用，并且传入的参数是正确的异常对象
-        verify(mockLogger, times(1)).LogException(testException);
+        verify(mockLogger, times(1)).error(testException);
     }
 
     @Test
     public void testWriteExceptionString() throws Exception {
-        SuitLogger mockLogger = mock(SuitLogger.class);
+        Logger mockLogger = mock(Logger.class);
         ColorSetting colorSetting = mock(ColorSetting.class);
         PromptServer promptServer = mock(PromptServer.class);
         IOServer ioserver = getInstance(promptServer, mockLogger, colorSetting);

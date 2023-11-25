@@ -34,16 +34,18 @@
             <version>2.0.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>3.0.0-alpha1</version>
         </dependency>
+
 
     </dependencies>
     <groupId>io.github.plastic-metal</groupId>
     <artifactId>JMobileSuitLite</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0-alpha1</version>
 
 
     <packaging>jar</packaging>
@@ -52,12 +54,32 @@
         <url>https://plastic-metal.github.io/</url>
     </organization>
     <url>https://github.com/Plastic-Metal/JMobileSuitLite</url>
-    <inceptionYear>2020</inceptionYear>
+    <inceptionYear>2023</inceptionYear>
     <developers>
         <developer>
             <name>Ferdinand Sukhoi</name>
             <email>ferdinandsukhoi@outlook.com</email>
             <url>https://ferdinandsukhoi.github.io</url>
+        </developer>
+        <developer>
+            <name>mahoshojoHCG</name>
+            <email>yzy688@gmail.com</email>
+            <url>https://github.com/mahoshojoHCG</url>
+        </developer>
+        <developer>
+            <name>MrRuanCoder</name>
+            <email>110537579+MrRuanCoder@users.noreply.github.com</email>
+            <url>https://github.com/MrRuanCoder</url>
+        </developer>
+        <developer>
+            <name>JonojiKatsuya</name>
+            <email>1936826262@qq.com</email>
+            <url>https://github.com/JonojiKatsuya</url>
+        </developer>
+        <developer>
+            <name>wyh</name>
+            <email>1146900419@qq.com</email>
+            <url>https://github.com/wyh201202</url>
         </developer>
     </developers>
     <description>Light weight Mobile Suit for Java. Migrated from .NET Core.</description>
@@ -81,7 +103,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>14</java.version>
+        <java.version>21</java.version>
     </properties>
 
     <build>

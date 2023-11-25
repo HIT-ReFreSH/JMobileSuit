@@ -16,7 +16,7 @@ import java.util.*;
 import static PlasticMetal.JMobileSuitLite.TraceBack.*;
 import static PlasticMetal.Jarvis.Common.CoalesceNull;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.apache.log4j.helpers.LogLog;
 /**
  * A entity, which serves the shell functions of a mobile-suit program.
@@ -282,7 +282,7 @@ public class SuitHost
     @SuppressWarnings("ConstantConditions")
     private void NotifyAllOk()
     {
-        if (_useTraceBack && _showDone && (logger!=null)) logger.trace("TraceBack:"+OutputType.AllOk);
+        if (_useTraceBack && _showDone && (logger!=null)) logger.trace(OutputType.AllOk);
     }
 
 
@@ -485,7 +485,7 @@ public class SuitHost
         catch (Exception e)
         {
             IO.Error.println(e.toString());
-            if(this.logger != null)logger.info("Exception:"+e);
+            if(this.logger != null)logger.error(e);
             traceBack = InvalidCommand;
         }
         Prompt.Update(_returnValue, UpdatePrompt(prompt), traceBack);

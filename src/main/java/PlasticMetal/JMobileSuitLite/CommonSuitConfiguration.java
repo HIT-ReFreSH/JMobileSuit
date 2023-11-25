@@ -4,7 +4,7 @@ package PlasticMetal.JMobileSuitLite;
 import PlasticMetal.JMobileSuitLite.IO.ColorSetting;
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.PromptServer;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 

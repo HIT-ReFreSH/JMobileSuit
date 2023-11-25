@@ -7,7 +7,7 @@ import PlasticMetal.JMobileSuitLite.IO.CommonPromptServer;
 import PlasticMetal.JMobileSuitLite.IO.IOServer;
 import PlasticMetal.JMobileSuitLite.IO.PromptServer;
 import PlasticMetal.JMobileSuitLite.SuitConfiguration;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 

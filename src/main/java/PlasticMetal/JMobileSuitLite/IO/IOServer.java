@@ -1,5 +1,5 @@
 package PlasticMetal.JMobileSuitLite.IO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import static PlasticMetal.JMobileSuitLite.LangResourceBundle.Lang;
 
 import PlasticMetal.Jarvis.ObjectModel.Tuple;
@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.Stack;
 
 /**
- * A entity, which serves the input/output of a mobile suit.
+ * An entity, which serves the input/output of a mobile suit.
  */
 @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "unused"})
 public class IOServer
@@ -36,7 +36,7 @@ public class IOServer
      * @param content debug info
      */
     public void WriteDebug(String content){
-        logger.debug("Debug:"+content);
+        logger.debug(content);
     }
 
     /**
@@ -44,7 +44,7 @@ public class IOServer
      * @param content exception
      */
     public void WriteException(Exception content){
-        logger.info("Exception:"+content);
+        logger.error(content);
     }
 
     /**
@@ -52,7 +52,7 @@ public class IOServer
      * @param content exception info
      */
     public void WriteException(String content){
-        logger.info("Exception:"+content);
+        logger.error(content);
     }
 
     /**
@@ -263,9 +263,9 @@ public class IOServer
 
     private String ReadLineBase(String prompt, String defaultValue, boolean newLine, ConsoleColor customPromptColor)
     {
-        if (prompt != null && prompt.equals(""))
+        if (prompt != null && prompt.isEmpty())
         {
-            if (defaultValue != null && !defaultValue.equals(""))
+            if (defaultValue != null && !defaultValue.isEmpty())
                 Prompt.Update("", prompt, TraceBack.Prompt);
             else
                 Prompt.Update("", prompt, TraceBack.Prompt,
@@ -370,25 +370,15 @@ public class IOServer
     {
         if (customColor == null || customColor == ConsoleColor.Null)
         {
-            switch (type)
-            {
-
-
-                case Default:
-                    return ColorSetting.DefaultColor;
-                case Prompt:
-                    return ColorSetting.PromptColor;
-                case Error:
-                    return ColorSetting.ErrorColor;
-                case AllOk:
-                    return ColorSetting.AllOkColor;
-                case ListTitle:
-                    return ColorSetting.ListTitleColor;
-                case CustomInfo:
-                    return ColorSetting.CustomInformationColor;
-                case MobileSuitInfo:
-                    return ColorSetting.InformationColor;
-            }
+            return switch (type) {
+                case Default -> ColorSetting.DefaultColor;
+                case Prompt -> ColorSetting.PromptColor;
+                case Error -> ColorSetting.ErrorColor;
+                case AllOk -> ColorSetting.AllOkColor;
+                case ListTitle -> ColorSetting.ListTitleColor;
+                case CustomInfo -> ColorSetting.CustomInformationColor;
+                case MobileSuitInfo -> ColorSetting.InformationColor;
+            };
 
         }
 
@@ -399,23 +389,14 @@ public class IOServer
 
     private static String GetLabel(OutputType type)
     {
-        switch (type)
-        {
-            case Default:
-                return "";
-            case Prompt:
-                return "[Prompt]";
-            case Error:
-                return "[Error]";
-            case AllOk:
-                return "[AllOk]";
-            case ListTitle:
-                return "[List]";
-            case CustomInfo:
-            case MobileSuitInfo:
-            default:
-                return "[Info]";
-        }
+        return switch (type) {
+            case Default -> "";
+            case Prompt -> "[Prompt]";
+            case Error -> "[Error]";
+            case AllOk -> "[AllOk]";
+            case ListTitle -> "[List]";
+            default -> "[Info]";
+        };
 
     }
 
@@ -470,7 +451,7 @@ public class IOServer
      */
     public void SubtractWriteLinePrefix()
     {
-        if (PrefixLengthStack.size() == 0) return;
+        if (PrefixLengthStack.isEmpty()) return;
         int l = PrefixLengthStack.pop();
         PrefixBuilder.delete(PrefixBuilder.length() - l, PrefixBuilder.length());
     }
@@ -616,7 +597,7 @@ public class IOServer
         }
         else
         {
-            String sb = "[" + LocalDateTime.now().toString() +
+            String sb = "[" + LocalDateTime.now() +
                     "]" +
                     GetLabel(type) +
                     content;
@@ -667,7 +648,7 @@ public class IOServer
                 Output.print(t.First);
             }
 
-            String sb = "[" + LocalDateTime.now().toString() +
+            String sb = "[" + LocalDateTime.now() +
                     "]" +
                     GetLabel(type);
             Output.print(sb);
