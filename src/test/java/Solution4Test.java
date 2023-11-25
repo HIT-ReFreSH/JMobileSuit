@@ -9,7 +9,7 @@ public class Solution4Test {
         // 等价类1: 标准测试用例
         int[] nums1 = {3, 6, 9, 1};
         int result1 = solution.maximumGap(nums1);
-        assertEquals(4, result1); // Expected output: 3
+        assertEquals(3, result1); // Expected output: 3
 
         // 等价类2: 空数组，应返回0
         int[] nums2 = {};
