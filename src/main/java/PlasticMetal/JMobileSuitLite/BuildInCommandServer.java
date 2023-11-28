@@ -149,6 +149,7 @@ public class BuildInCommandServer {
     protected void ListMembers(SuitObject obj) {
         _host.IO.AppendWriteLinePrefix();
 
+
         for (Tuple<String, SuitObjectMember> t : obj) {
             String name = t.First;
             SuitObjectMember member = t.Second;
