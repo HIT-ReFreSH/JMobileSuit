@@ -3,10 +3,10 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <name>JMobileSuitLite</name>
+    <name>JMobileSuit</name>
     <dependencies>
         <dependency>
-            <groupId>io.github.plastic-metal</groupId>
+            <groupId>io.github.hit-refresh</groupId>
             <artifactId>Jarvis</artifactId>
             <version>0.1.2</version>
         </dependency>
@@ -48,17 +48,17 @@
         </dependency>
 
     </dependencies>
-    <groupId>io.github.plastic-metal</groupId>
-    <artifactId>JMobileSuitLite</artifactId>
+    <groupId>io.github.hit-refresh</groupId>
+    <artifactId>JMobileSuit</artifactId>
     <version>1.1.0-alpha1</version>
 
 
     <packaging>jar</packaging>
     <organization>
-        <name>PlasticMetal</name>
-        <url>https://plastic-metal.github.io/</url>
+        <name>io.github.hit-refresh</name>
+        <url>https://hit-refresh.github.io/</url>
     </organization>
-    <url>https://github.com/Plastic-Metal/JMobileSuitLite</url>
+    <url>https://github.com/HIT-ReFreSH/JMobileSuit</url>
     <inceptionYear>2023</inceptionYear>
     <developers>
         <developer>
@@ -387,8 +387,8 @@
             <distributionManagement>
                 <repository>
                     <id>github</id>
-                    <name>GitHub Plastic-Metal Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/Plastic-Metal/JMobileSuitLite</url>
+                    <name>GitHub HIT-ReFreSH Apache Maven Packages</name>
+                    <url>https://maven.pkg.github.com/HIT-ReFreSH/JMobileSuit</url>
                 </repository>
             </distributionManagement>
 
@@ -396,9 +396,9 @@
         </profile>
     </profiles>
     <scm>
-        <url>https://github.com/Plastic-Metal/JMobileSuitLite</url>
-        <connection>scm:git:https://github.com/Plastic-Metal/JMobileSuitLite.git</connection>
-        <developerConnection>scm:git:https://github.com/Plastic-Metal/JMobileSuitLite.git</developerConnection>
+        <url>https://github.com/HIT-ReFreSH/JMobileSuit</url>
+        <connection>scm:git:https://github.com/HIT-ReFreSH/JMobileSuit.git</connection>
+        <developerConnection>scm:git:https://github.com/HIT-ReFreSH/JMobileSuit.git</developerConnection>
         <tag>${project.version}</tag>
     </scm>
 

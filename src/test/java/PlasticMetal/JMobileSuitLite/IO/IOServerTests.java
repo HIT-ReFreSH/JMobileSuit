@@ -1,7 +1,7 @@
-package PlasticMetal.JMobileSuitLite.IO;
+package ReFreSH.JMobileSuit.IO;
 
-import PlasticMetal.JMobileSuitLite.SuitConfiguration;
-import PlasticMetal.Jarvis.ObjectModel.Tuple;
+import ReFreSH.JMobileSuit.SuitConfiguration;
+import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.apache.logging.log4j.core.Logger;
 import org.junit.After;
 import org.junit.Before;

@@ -1,0 +1,15 @@
+package ReFreSH.JMobileSuit.ObjectModel;
+
+import ReFreSH.JMobileSuit.IO.IOServer;
+
+/**
+ * Represents that an object is interactive to SuitHost's IOServer
+ */
+public interface IOInteractive {
+    /**
+     * Provides Interface for SuitHost to set ioServer
+     *
+     * @param io SuitHost's IOServer.
+     */
+    void setIO(IOServer io);
+}

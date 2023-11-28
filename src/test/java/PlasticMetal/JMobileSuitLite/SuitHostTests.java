@@ -1,8 +1,8 @@
-package PlasticMetal.JMobileSuitLite;
+package ReFreSH.JMobileSuit;
 
-import PlasticMetal.JMobileSuitLite.IO.IOServer;
-import PlasticMetal.JMobileSuitLite.IO.OutputType;
-import PlasticMetal.Jarvis.ObjectModel.Tuple;
+import ReFreSH.JMobileSuit.IO.IOServer;
+import ReFreSH.JMobileSuit.IO.OutputType;
+import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -148,7 +148,7 @@ public class SuitHostTests {
 
         String result = (String) method.invoke(host, prompt);
 
-        assertEquals(result, "PlasticMetal.JMobileSuitLite.SuitHostTests$TestInstance[Instance]");
+        assertEquals(result, "ReFreSH.JMobileSuit.SuitHostTests$TestInstance[Instance]");
     }
 
     @Test
