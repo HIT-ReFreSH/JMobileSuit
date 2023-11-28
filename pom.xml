@@ -8,7 +8,7 @@
         <dependency>
             <groupId>io.github.hit-refresh</groupId>
             <artifactId>Jarvis</artifactId>
-            <version>0.1.2</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -194,7 +194,7 @@
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>nexus-releases</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
@@ -274,11 +274,11 @@
             <distributionManagement>
                 <snapshotRepository>
                     <id>nexus-snapshots</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
                 </snapshotRepository>
                 <repository>
                     <id>nexus-releases</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                    <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
 
@@ -306,7 +306,7 @@
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>nexus-releases</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
