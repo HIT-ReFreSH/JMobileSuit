@@ -5,7 +5,6 @@ import ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitAlias;
 import ReFreSH.JMobileSuit.ObjectModel.SuitConfigurator;
 import ReFreSH.JMobileSuit.SuitHost;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class DiagnosticsDemo extends Client {
     public static void main(String[] args) throws Exception {

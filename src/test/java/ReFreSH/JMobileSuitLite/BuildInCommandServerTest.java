@@ -1,13 +1,13 @@
-package PlasticMetal.JMobileSuitLite;
-import PlasticMetal.JMobileSuitLite.ObjectModel.SuitObject;
+package ReFreSH.JMobileSuit;
+
+import ReFreSH.JMobileSuit.ObjectModel.SuitObject;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 
 public class BuildInCommandServerTest {
-
-
 
 
     @Test
@@ -24,7 +24,7 @@ public class BuildInCommandServerTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        instance=new BuildInCommandServer(suitHost);
+        instance = new BuildInCommandServer(suitHost);
         assertEquals(TraceBack.AllOk, instance.List(null));
     }
 
@@ -33,19 +33,19 @@ public class BuildInCommandServerTest {
 
 
         SuitHost suitHost;
-        Object object=new Object();
+        Object object = new Object();
         try {
             suitHost = new SuitHost(object);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        suitHost.Current=mock(SuitObject.class);
-        BuildInCommandServer instance=new BuildInCommandServer(suitHost);
-        String[] args={};
+        suitHost.Current = mock(SuitObject.class);
+        BuildInCommandServer instance = new BuildInCommandServer(suitHost);
+        String[] args = {};
         assertEquals(TraceBack.InvalidCommand, instance.RunScript(args));
-        String[] args1={"1"};
+        String[] args1 = {"1"};
         assertEquals(TraceBack.InvalidCommand, instance.RunScript(args1));//文件地址输入错误
-        args1[0]="src/test/java/PlasticMetal/JMobileSuitLite/testScript.mss";
+        args1[0] = "src/test/resources/SuitHostTests.mss";
         assertEquals(TraceBack.AllOk, instance.RunScript(args1));
 
     }
@@ -54,33 +54,33 @@ public class BuildInCommandServerTest {
     public void testExit() {
         SuitHost mockSuitHost = mock(SuitHost.class);
         BuildInCommandServer instance = new BuildInCommandServer(mockSuitHost);
-        assertEquals(TraceBack.OnExit,instance.Exit(null));
+        assertEquals(TraceBack.OnExit, instance.Exit(null));
     }
 
     @Test
     public void testHelp() {
         SuitHost suitHost;
-        Object object=new Object();
+        Object object = new Object();
         try {
             suitHost = new SuitHost(object);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        BuildInCommandServer instance=new BuildInCommandServer(suitHost);
+        BuildInCommandServer instance = new BuildInCommandServer(suitHost);
         assertEquals(TraceBack.AllOk, instance.Help(null));
     }
 
     @Test
     public void testListMembers() {
         SuitHost suitHost;
-        Object object=new Object();
+        Object object = new Object();
         try {
             suitHost = new SuitHost(object);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        BuildInCommandServer instance=new BuildInCommandServer(suitHost);
-        SuitObject obj=new SuitObject(object);
+        BuildInCommandServer instance = new BuildInCommandServer(suitHost);
+        SuitObject obj = new SuitObject(object);
         instance.ListMembers(obj);
 
 

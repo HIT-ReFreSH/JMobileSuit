@@ -19,6 +19,7 @@ public class SuitConfigurator {
     public Logger logger = null;
     public Class<? extends IOServer> IOServerType = IOServer.class;
     public Class<? extends SuitConfiguration> ConfigurationType = CommonSuitConfiguration.class;
+
     private SuitConfigurator() {
 
     }

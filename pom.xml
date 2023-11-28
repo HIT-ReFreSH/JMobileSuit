@@ -86,6 +86,10 @@
             <email>1146900419@qq.com</email>
             <url>https://github.com/wyh201202</url>
         </developer>
+        <developer>
+            <name>leeseetheloswer</name>
+            <email>1443442148@qq.com</email>
+        </developer>
     </developers>
     <description>Light weight Mobile Suit for Java. Migrated from .NET Core.</description>
 

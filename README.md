@@ -16,7 +16,6 @@ JMobileSuit is a Light-weight MobileSuit for Java. Migrated from .NET Core.
 
 **Previously named as [PlasticMetal.JMobileSuitLite](https://github.com/Plastic-Metal/JMobileSuitLite).**
 
-
 [View English Documentation](https://plastic-metal.github.io/en-US/JMobileSuitLite/index.html)
 
 [查看中文文档](https://plastic-metal.github.io/zh-CN/JMobileSuitLite/index.html)
