@@ -2,6 +2,7 @@ package PlasticMetal.JMobileSuitLite.Diagnostics;
 
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitIgnore;
 import PlasticMetal.JMobileSuitLite.TraceBack;
+import org.apache.log4j.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -14,13 +15,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static PlasticMetal.Jarvis.Common.*;
+import static org.apache.log4j.Level.ALL;
+import static org.apache.log4j.Level.TRACE;
 
 public class SuitLogger
 {
     private final List<LogUtil> logMem = new ArrayList<>();
     public boolean EnableLogQuery = true;
+    private final Logger logger = LogManager.getLogger(SuitLogger.class);
 
 
+    private void addLog(String info,String content){
+        LocalDateTime time=LocalDateTime.now();
+        if(EnableLogQuery){
+            logMem.add(new LogUtil(time,info,content));
+        }
+
+    }
     /**
      * get a clone record of memorised logs.
      *
@@ -34,34 +45,11 @@ public class SuitLogger
     @SuitIgnore
     public void exitLogger()
     {
-        try
-        {
-            Writer.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+        logger.setLevel(Level.OFF);
     }
 
 
-    private void writeLog(String info, String content)
-    {
-        LocalDateTime time = LocalDateTime.now();
-        String output = "[" + time.format(LogUtil.DateTimeFormat) + "]" + info + ":" + content + "\n";
-        if (EnableLogQuery)
-        {
-            logMem.add(new LogUtil(time, info, content));
-        }
-        try
-        {
-            Writer.write(output);
-            Writer.flush();
-        }
-        catch (IOException ignored)
-        {
-        }
-    }
+
 
     /**
      * Write debug info to the log file
@@ -71,7 +59,9 @@ public class SuitLogger
 
     public void LogDebug(String content)
     {
-        writeLog("Info", content);
+
+        logger.info(content);
+        addLog("info",content);
     }
 
     /**
@@ -81,7 +71,8 @@ public class SuitLogger
      */
     public void LogCommand(String content)
     {
-        writeLog("Command", content);
+        logger.info("Command: "+content);
+        addLog("Command",content);
     }
 
     /**
@@ -91,7 +82,8 @@ public class SuitLogger
      */
     public void LogTraceBack(TraceBack content)
     {
-        writeLog("TraceBack", content.toString());
+        logger.trace(content);
+        addLog("TraceBack",content.toString());
     }
 
     /**
@@ -102,7 +94,9 @@ public class SuitLogger
      */
     public void LogTraceBack(TraceBack content, Object returnValue)
     {
-        writeLog("TraceBack", content + "(" + returnValue + ")");
+
+        logger.trace(content.toString()+returnValue.toString());
+        addLog("TraceBack",content+"("+returnValue+")");
     }
 
     /**
@@ -112,7 +106,8 @@ public class SuitLogger
      */
     public void LogException(String content)
     {
-        writeLog("Exception", content);
+        logger.error(content);
+        addLog("Exception",content);
     }
 
     /**
@@ -128,7 +123,9 @@ public class SuitLogger
         {
             stringBuilder.append("\n\tAt ").append(se);
         }
-        writeLog(content.getClass().getName(), stringBuilder.toString());
+
+        logger.error(content.getClass().getName()+"  "+stringBuilder);
+        addLog(content.getClass().getName(),stringBuilder.toString());
     }
 
 
@@ -137,16 +134,15 @@ public class SuitLogger
      */
     public final String Path;
 
-    /**
-     * Writer of current log file
-     */
-    protected final BufferedWriter Writer;
+
 
     protected SuitLogger(String path) throws IOException
     {
         Path = path;
-        Writer = new BufferedWriter(new FileWriter(path));
-
+        PatternLayout patternLayout = new PatternLayout("%d{yyyy-MM-dd HH:mm:ss} %5p  - %m%n");
+        RollingFileAppender appender=new RollingFileAppender(patternLayout,path);
+        appender.setThreshold(ALL);
+        logger.addAppender(appender);
 
     }
 

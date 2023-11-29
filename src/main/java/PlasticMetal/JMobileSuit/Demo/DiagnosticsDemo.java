@@ -14,7 +14,7 @@ public class DiagnosticsDemo extends Client
          SuitHost suitHost=new SuitHost(DiagnosticsDemo.class,
                 SuitConfigurator.ofDefault().use(PowerLineThemedPromptServer.class)
                         .use(DiagnosticsBuildInCommandServer.class)
-                        .use(SuitLogger.ofDirectory("D:\\"))
+                        .use(SuitLogger.ofDirectory("./"))
                         .getConfiguration());
          //suitHost.SetUseTraceBack(false);
          suitHost.Run();

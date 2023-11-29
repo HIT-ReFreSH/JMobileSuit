@@ -1,6 +1,8 @@
 package PlasticMetal.JMobileSuitLite.Diagnostics;
 
+import PlasticMetal.JMobileSuit.Demo.Client;
 import PlasticMetal.JMobileSuitLite.IO.OutputType;
+import PlasticMetal.JMobileSuitLite.NeuesProjekt.PowerLineThemedPromptServer;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
 import PlasticMetal.JMobileSuitLite.ObjectModel.InfoProvider;
@@ -9,8 +11,10 @@ import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.Option;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.SuitParser;
 import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.WithDefault;
 import PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient;
+import PlasticMetal.JMobileSuitLite.SuitHost;
 import PlasticMetal.JMobileSuitLite.TraceBack;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +24,11 @@ import java.util.stream.Collectors;
 @SuitInfo(resourceBundleName = "LogDriver", value = "Class")
 public class LogDriver extends SuitClient
 {
+    public static void main(String[] args) throws Exception
+    {
+        new SuitHost(LogDriver.class,
+                PowerLineThemedPromptServer.getPowerLineThemeConfiguration()).Run();
+    }
     private final SuitLogger _logger;
     private final List<LogUtil> logMem;
 
@@ -30,6 +39,13 @@ public class LogDriver extends SuitClient
      */
     public LogDriver(SuitLogger logger)
     {
+        _logger = logger;
+        logMem = logger.getLogMem();
+    }
+
+    public LogDriver()throws IOException
+    {
+        SuitLogger logger = new SuitLogger("../LogUtil.txt");
         _logger = logger;
         logMem = logger.getLogMem();
     }
