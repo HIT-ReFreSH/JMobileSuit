@@ -25,7 +25,6 @@ public class Client extends SuitClient {
     @SuitAlias("H")
     @SuitInfo("hello command")
     public void Hello() {
-
         IO().WriteLine("Hello! MobileSuit!");
     }
 
