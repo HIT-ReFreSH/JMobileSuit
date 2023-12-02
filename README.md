@@ -1,5 +1,5 @@
 <div align=center>
-    <img src="https://raw.githubusercontent.com/HIT-ReFreSH/JMobileSuit/master/images/logo.svg)" width = 30% height = 30%   alt=""/>
+    <img src="https://raw.githubusercontent.com/HIT-ReFreSH/JMobileSuit/master/images/logo.svg" width = 30% height = 30%   alt=""/>
 </div>
 
 # ReFreSH.JMobileSuit

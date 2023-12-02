@@ -2,7 +2,7 @@ name: deploy_documentation
 on:
   push:
     branches:
-      - main # Default release branch
+      - master # Default release branch
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
