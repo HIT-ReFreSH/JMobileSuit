@@ -1,6 +1,6 @@
 - name: Articles
   href: docs/articles/
-  homepage: docs/articles/GetStarted.md
+  homepage: docs/articles/overview.html
 - name: Api Documentation
   href: docs/api/
   homepage: docs/api/index.md
