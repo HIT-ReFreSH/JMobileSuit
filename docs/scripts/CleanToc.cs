@@ -23,7 +23,7 @@ foreach (var line in lines)
     if (line.StartsWith("- name:") ||
     line == "  items:" ||
     line.Contains("- heading:") ||
-    line.EndsWith("name: \"Version history\"")
+    line.EndsWith("name: \"Version history\"") ||
     line.EndsWith("href: \"history.md\"")) continue;
     else if (line.StartsWith("  ")) output.Add(line[2..]);
     else output.Add(line);
