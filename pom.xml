@@ -135,6 +135,14 @@
                         <encoding>UTF-8</encoding>
                         <charset>UTF-8</charset>
                         <docencoding>UTF-8</docencoding>
+                        <locale>en_US</locale>
+                        <docletPath>${project.basedir}/docs/lib/docfx-doclet-1.9.0-jar-with-dependencies.jar</docletPath>
+                        <doclet>com.microsoft.doclet.DocFxDoclet</doclet>
+                        <useStandardDocletOptions>false</useStandardDocletOptions>
+                        <additionalOptions>
+                            -outputpath ${project.basedir}/docs/api -projectname ReFreSH.JMobileSuit
+                        </additionalOptions>
+                        <outputDirectory>docs/api</outputDirectory>
                     </configuration>
                     <executions>
                         <execution>

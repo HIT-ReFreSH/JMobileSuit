@@ -1,0 +1,1 @@
+~/.jdks/corretto-21.0.1/bin/javadoc -locale en_US -encoding UTF-8 -docletpath docs/lib/docfx-doclet-1.9.0-jar-with-dependencies.jar -doclet com.microsoft.doclet.DocFxDoclet -sourcepath src/main/java -outputpath docs/api -subpackages ReFreSH.JMobileSuit

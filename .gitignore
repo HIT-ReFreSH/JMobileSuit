@@ -16,7 +16,7 @@ Lab3.pdf
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+_site/
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

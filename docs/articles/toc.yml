@@ -1,0 +1,8 @@
+- name: Get Started
+  href: GetStarted.md
+- name: Create Complex Commands
+  href: ComplexCommands.md
+- name: Use MobileSuitScript Files
+  href: MobileSuitScripts.md
+- name: Useful Features
+  href: AdvancedUsage.md

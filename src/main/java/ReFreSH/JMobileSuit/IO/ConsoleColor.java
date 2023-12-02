@@ -21,12 +21,12 @@ public enum ConsoleColor {
     public static final String UnderLineCode = "4";
     private static final String ClearEffect = "\033[0m";
     /**
-     * get ForeGroundCode of a color. only foreground is available for colors with value < 0
+     * get ForeGroundCode of a color. only foreground is available for colors with value &lt; 0
      */
     public final String ForeGroundCode;
     /**
      * get BackGroundCode of a color.
-     * only foreground is available for colors with value < 0
+     * only foreground is available for colors with value &lt; 0
      * so if necessary, use getColorInverse().
      */
     public final String BackGroundCode;

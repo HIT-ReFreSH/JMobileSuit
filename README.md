@@ -1,5 +1,5 @@
 <div align=center>
-    <img src="logo.png" width = 30% height = 30%   alt=""/>
+    <img src="https://raw.githubusercontent.com/HIT-ReFreSH/JMobileSuit/main/images/logo.png" width = 30% height = 30%   alt=""/>
 </div>
 
 # ReFreSH.JMobileSuit
@@ -16,9 +16,7 @@ JMobileSuit is a Light-weight MobileSuit for Java. Migrated from .NET Core.
 
 **Previously named as [PlasticMetal.JMobileSuitLite](https://github.com/Plastic-Metal/JMobileSuitLite).**
 
-[View English Documentation](https://plastic-metal.github.io/en-US/JMobileSuitLite/index.html)
-
-[查看中文文档](https://plastic-metal.github.io/zh-CN/JMobileSuitLite/index.html)
+[View English Documentation](https://HIT-ReFreSH.github.io/JMobileSuit/index.html)
 
 ReFreSH.MobileSuit is a Powerful tool to quickly build a ConsoleApp, written in C#, mapping command to a specific
 method in your code.

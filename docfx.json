@@ -1,0 +1,56 @@
+{
+  "build": {
+    "content": [
+      {
+        "files": [
+          "docs/api/*.{md,yml}",
+          "docs/articles/*.{md,yml}"
+        ]
+      },
+      {
+        "files": [
+          "toc.yml",
+          "*.md"
+        ],
+        "src": "./",
+        "dest": "./"
+      }
+
+
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "overwrite": [
+      {
+        "files": [
+          "apidoc/**.md"
+        ],
+        "exclude": []
+      }
+    ],
+    "dest": "docs/_site",
+    "globalMetadataFiles": [],
+    "globalMetadata": {
+      "_appName": "ReFreSH.MobileSuit",
+      "_appLogoPath": "images/logo_docfx.png",
+      "_appFaviconPath": "images/logo.png"
+    },
+    "fileMetadataFiles": [],
+    "template": [
+      "default",
+      "modern",
+      "docs/templates/material"
+    ],
+    "postProcessors": [],
+    "markdownEngineName": "markdig",
+    "noLangKeyword": false,
+    "keepFileLink": false,
+    "cleanupCacheHistory": false,
+    "disableGitFeatures": false
+  }
+}
