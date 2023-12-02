@@ -42,7 +42,7 @@ jobs:
       run: dotnet tool install -g dotnet-script  
     - name: Clean docfx toc.yml
       run: dotnet script docs/scripts/CleanToc.cs
-    - name: Build documentation
+    - name: Build documentation with docfx
       run: docfx docfx.json
     - name: Setup Pages
       uses: actions/configure-pages@v3
