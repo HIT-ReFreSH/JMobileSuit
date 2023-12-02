@@ -28,7 +28,7 @@ public class SuitObjectTest {
                 new Object(),
                 new DiagnosticsDemo()
         };
-        var answers = new int[]{0, 2};
+        var answers = new int[]{0, 19};
         for (var i = 0; i < objects.length; i++) {
             assertEquals(answers[i], new SuitObject(objects[i]).MemberCount());
         }
