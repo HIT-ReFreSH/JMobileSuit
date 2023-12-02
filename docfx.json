@@ -36,7 +36,7 @@
     "dest": "docs/_site",
     "globalMetadataFiles": [],
     "globalMetadata": {
-      "_appName": "ReFreSH.MobileSuit",
+      "_appName": "ReFreSH.JMobileSuit",
       "_appLogoPath": "images/logo_docfx.png",
       "_appFaviconPath": "images/logo.png"
     },
