@@ -15,7 +15,7 @@ JMobileSuitLite support this function, now.
 
 A parser is a method that takes a String as input, then output a object;
 For example: Integer::parseInt, Long::parseLong, and so on.
-Parsers must be **public static** modified. 
+Parsers must be **public static** modified.
 
 ### Create a command with Parsable-type parameter
 
@@ -35,37 +35,41 @@ For example:
 
 If the user inputs a illegal argument that can't be parsed, ***TraceBack*** will be **InvalidCommand**.
 
-
-
 ## Array parameter
 
 ### Create a command with only a array parameter
 
-Add a method called ***GoodEvening*** to class ***Client*** . It has a ***String[]*** parameter. You may add a alias 'GE' for this method. The content of method can be anything you like.
+Add a method called ***GoodEvening*** to class ***Client*** . It has a ***String[]*** parameter. You may add a alias '
+GE' for this method. The content of method can be anything you like.
 
 Build and run your application.
 
 In the console, you may input:
 
-**GoodEvening** with 0, 1, 2 ... arguments, which will be seen as an array. 
+**GoodEvening** with 0, 1, 2 ... arguments, which will be seen as an array.
 
 ### Create a command with a array parameter and other parameters
 
-Add a method called ***GoodEvening2*** to class ***Client*** . It has a ***String[]*** parameter, and a ***String*** parameter. The parameter with ***String[]*** type **MUST BE** the last parameter of the method.  You may add a alias 'GE2' for this method. The content of method can be anything you like.
+Add a method called ***GoodEvening2*** to class ***Client*** . It has a ***String[]*** parameter, and a ***String***
+parameter. The parameter with ***String[]*** type **MUST BE** the last parameter of the method. You may add a alias '
+GE2' for this method. The content of method can be anything you like.
 
 Build and run your application.
 
 In the console, you may input:
 
-**GoodEvening2** with 1, 2 ... arguments, first will be mapped to the ***String*** parameter, else will be seen as an array and mapped to the ***String[]*** one. 
+**GoodEvening2** with 1, 2 ... arguments, first will be mapped to the ***String*** parameter, else will be seen as an
+array and mapped to the ***String[]*** one.
 
-The most important thing when you're using this type of command is that The parameter with ***String[]*** type **MUST BE** the last parameter of the method. If not, JMobileSuit will not parse you command correctly.
+The most important thing when you're using this type of command is that The parameter with ***String[]*** type **MUST BE
+** the last parameter of the method. If not, JMobileSuit will not parse you command correctly.
 
 ### Array parameter for Parsable-types
 
 **This feature only works on JMobileSuitLite 0.1.6 or later version**
 
-The array can not only be ***String[]***, but also other types. You just need to add a ***SuitParser*** Annotation before the array parameter.
+The array can not only be ***String[]***, but also other types. You just need to add a ***SuitParser*** Annotation
+before the array parameter.
 
 For example:
 
@@ -84,12 +88,12 @@ For example:
 
 **Attention!** The parser parsed String to something, **NOT** String[] to something!
 
-
 ## Dynamic Parameter
 
 ### Create a class implements DynamicParameter
 
-Add a class to class ***Client***, called ***GoodMorningParameter***, it implements ***ReFreSH.JMobileSuit.ObjectModel.Interfaces.DynamicParameter*** interface. The class should be `public static`:
+Add a class to class ***Client***, called ***GoodMorningParameter***, it implements
+***ReFreSH.JMobileSuit.ObjectModel.Interfaces.DynamicParameter*** interface. The class should be `public static`:
 
 ``` java
     public static class GoodMorningParameter implements DynamicParameter{
@@ -109,7 +113,8 @@ Add a class to class ***Client***, called ***GoodMorningParameter***, it impleme
     }
 ```
 
-Add some Contents to ***GoodMorningParameter*** , fill the ***Parse(String[] options)***. The method should return true, if parsing is successful, otherwise, it should return false.
+Add some Contents to ***GoodMorningParameter*** , fill the ***Parse(String[] options)***. The method should return true,
+if parsing is successful, otherwise, it should return false.
 
 For example:
 
@@ -137,25 +142,32 @@ For example:
 
 ### Create a command with only a DynamicParameter
 
-Add a method called ***GoodMorning*** to class ***Client*** . It has a ***GoodMorningParameter*** parameter. You may add a alias 'GM' for this method. The content of method can be anything you like.
+Add a method called ***GoodMorning*** to class ***Client*** . It has a ***GoodMorningParameter*** parameter. You may add
+a alias 'GM' for this method. The content of method can be anything you like.
 
 Build and run your application.
 
 In the console, you may input:
 
-**GoodMorning** with 0, 1, 2 ... arguments, which will be seen as an array, then parsed by ***GoodMorningParameter::Parse***. 
+**GoodMorning** with 0, 1, 2 ... arguments, which will be seen as an array, then parsed by
+***GoodMorningParameter::Parse***.
 
 ### Create a command with a DynamicParameter and other parameters
 
-Add a method called ***GoodMorning2*** to class ***Client*** . It has a ***GoodMorningParameter*** parameter, and a ***String*** parameter. The parameter with ***GoodMorningParameter*** type **MUST BE** the last parameter of the method.  You may add a alias 'GE2' for this method. The content of method can be anything you like.
+Add a method called ***GoodMorning2*** to class ***Client*** . It has a ***GoodMorningParameter*** parameter, and a
+***String*** parameter. The parameter with ***GoodMorningParameter*** type **MUST BE** the last parameter of the method.
+You may add a alias 'GE2' for this method. The content of method can be anything you like.
 
 Build and run your application.
 
 In the console, you may input:
 
-**GoodMorning2** with 1, 2 ... arguments, first will be mapped to the ***String*** parameter, else will be seen as an array and parsed to the ***GoodMorningParameter*** one. 
+**GoodMorning2** with 1, 2 ... arguments, first will be mapped to the ***String*** parameter, else will be seen as an
+array and parsed to the ***GoodMorningParameter*** one.
 
-The most important thing when you're using this type of command is that The parameter with ***? extends DynamicParameter*** type **MUST BE** the last parameter of the method. If not, JMobileSuit will not parse you command correctly.
+The most important thing when you're using this type of command is that The parameter with
+***? extends DynamicParameter*** type **MUST BE** the last parameter of the method. If not, JMobileSuit will not parse
+you command correctly.
 
 ### Auto DynamicParameter Class
 
@@ -167,9 +179,14 @@ You just need to make the class extend ***AutoDynamicParameter***, add some Fiel
 
 There are 4 Annotations can be added to fields:
 
-1. ***Option*** means this is a option, that will be parsed by "-xxx value". If you want to parse "-xxx value_part1 value_part2", specific the Length of option like: `@Option(value="xxx",length=2)`; The input of parser will be "value_part1 value_part2"
-2. ***Switch*** means this is a switch, This field must be ***boolean***,that will be parsed by "-sw". If "-sw" exists, this field is true; if not, The field's value **WILL NOT BE CHANGED**, but not be parsed as false. A field can only be one of ***Switch*** and ***Option***.
-3. ***WithDefault*** means this field has a default value, so it don't have to be parsed. ***Switch*** field don't need this annotation.
+1. ***Option*** means this is a option, that will be parsed by "-xxx value". If you want to parse "-xxx value_part1
+   value_part2", specific the Length of option like: `@Option(value="xxx",length=2)`; The input of parser will be "
+   value_part1 value_part2"
+2. ***Switch*** means this is a switch, This field must be ***boolean***,that will be parsed by "-sw". If "-sw" exists,
+   this field is true; if not, The field's value **WILL NOT BE CHANGED**, but not be parsed as false. A field can only
+   be one of ***Switch*** and ***Option***.
+3. ***WithDefault*** means this field has a default value, so it don't have to be parsed. ***Switch*** field don't need
+   this annotation.
 4. ***SuitParser*** if a ***Option*** field's type is not String, use this annotation to specific the parser.
 
 If a field has none of ***Switch*** or ***Option***, it will not be parsed.

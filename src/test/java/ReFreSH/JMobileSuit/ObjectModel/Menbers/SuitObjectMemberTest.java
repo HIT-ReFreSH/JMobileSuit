@@ -4,27 +4,30 @@ import ReFreSH.JMobileSuit.ObjectModel.Members.MemberAccess;
 import ReFreSH.JMobileSuit.ObjectModel.Members.SuitObjectMember;
 import ReFreSH.JMobileSuit.TraceBack;
 import ReFreSH.Jarvis.ObjectModel.Tuple;
+import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class SuitObjectMemberTest {
 
     @Test
-    public  void  testSuitObjectMemberCreation()  {
-        Object  instance  =  new String("TEST");  //  replace  with  actual  instance
+    public void testSuitObjectMemberCreation() {
+        Object instance = new String("TEST");  //  replace  with  actual  instance
         Method method = instance.getClass().getMethods()[0];
 
-        SuitObjectMember  suitObjectMember  =  new  SuitObjectMember(instance,  method);
+        SuitObjectMember suitObjectMember = new SuitObjectMember(instance, method);
 
         assertNotNull(suitObjectMember);
-        assertEquals(suitObjectMember.Access(),  MemberAccess.VisibleToUser);
-        assertEquals(suitObjectMember.AbsoluteName(),  method.getName());
-        assertEquals(suitObjectMember.Instance(),  instance);
+        assertEquals(suitObjectMember.Access(), MemberAccess.VisibleToUser);
+        assertEquals(suitObjectMember.AbsoluteName(), method.getName());
+        assertEquals(suitObjectMember.Instance(), instance);
 
     }
+
     @Test
     public void testSuitObjectMember() {
         Object instance = new Object();
@@ -63,6 +66,7 @@ public class SuitObjectMemberTest {
         assertNotNull(suitObjectMember.Information());
         assertEquals("arg0", suitObjectMember.Information());
     }
+
     @Test
     public void testFriendlyNames() {
         Object instance = new Object();
@@ -70,7 +74,6 @@ public class SuitObjectMemberTest {
         SuitObjectMember suitObjectMember = new SuitObjectMember(instance, method);
         assertEquals(suitObjectMember.FriendlyNames().get(0), suitObjectMember.AbsoluteName());
     }
-
 
 
     @Test
@@ -87,7 +90,7 @@ public class SuitObjectMemberTest {
         Method method = instance.getClass().getMethods()[0];
         SuitObjectMember suitObjectMember = new SuitObjectMember(instance, method);
         assertNotNull(suitObjectMember.AbsoluteName());
-        assertEquals(suitObjectMember.AbsoluteName(),  method.getName());
+        assertEquals(suitObjectMember.AbsoluteName(), method.getName());
     }
 
     @Test
@@ -105,8 +108,8 @@ public class SuitObjectMemberTest {
         Object instance = new Object();
         Method method = instance.getClass().getMethods()[0];
         SuitObjectMember suitObjectMember = new SuitObjectMember(instance, method);
-        String[] test = new String[]{"TEST1","TEST2","TEST3" };
-        Tuple tuple = new Tuple<>(TraceBack.ObjectNotFound,null);
+        String[] test = new String[]{"TEST1", "TEST2", "TEST3"};
+        Tuple tuple = new Tuple<>(TraceBack.ObjectNotFound, null);
         assertNotNull(suitObjectMember.execute(test));
         assertEquals(tuple.toString(), suitObjectMember.execute(test).toString());
     }

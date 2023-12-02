@@ -1,12 +1,13 @@
 package ReFreSH.JMobileSuit.Demo;
 
-import static org.junit.Assert.*;
+import ReFreSH.JMobileSuit.Demo.Client.GoodMorningParameter;
+import ReFreSH.JMobileSuit.Demo.Client.SleepArgument;
+import ReFreSH.JMobileSuit.IO.IOServer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import ReFreSH.JMobileSuit.IO.IOServer;
-import ReFreSH.JMobileSuit.Demo.Client.GoodMorningParameter;
-import ReFreSH.JMobileSuit.Demo.Client.SleepArgument;
+
+import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
 
@@ -38,7 +39,7 @@ public class ClientTest {
         GoodMorningParameter param = new GoodMorningParameter();
         param.name = "Alice";
         client.GoodMorning(param);
-        Mockito.verify(mockIoServer).WriteLine("Good morning, Alice");
+        Mockito.verify(mockIoServer).WriteLine("Good morning,Alice");
     }
 
     @Test

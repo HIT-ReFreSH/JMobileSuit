@@ -16,6 +16,11 @@ public class DiagnosticsDemo extends Client {
         suitHost.Run();
     }
 
+    @SuitAlias("Get1")
+    public int ReturnValueTest() throws Exception {
+        return 1;
+    }
+
     @SuitAlias("ET")
     public void ExceptionTest() throws Exception {
         throw new Exception("Test");

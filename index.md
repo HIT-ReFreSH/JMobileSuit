@@ -2,9 +2,11 @@
 
 ## What's JMobileSuit?
 
-JMobileSuit provides an easy way to quickly build a Java Console App. It is migrated from [MobileSuit (for .NET)](https://github.com/HIT-ReFreSH/MobileSuit).
+JMobileSuit provides an easy way to quickly build a Java Console App. It is migrated
+from [MobileSuit (for .NET)](https://github.com/HIT-ReFreSH/MobileSuit).
 
-Focus on writing the backend part, Import ReFreSH.MobileSuit, and simply write a Frontend in a very simple standard, then a beautiful Console App is born.
+Focus on writing the backend part, Import ReFreSH.MobileSuit, and simply write a Frontend in a very simple standard,
+then a beautiful Console App is born.
 
 > [!NOTE]
 > Before starting, make sure you are already familiar with Java.

@@ -22,37 +22,37 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Set up JDK 21
-      uses: actions/setup-java@v3
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
-    - name: Build docfx-javadoc with Maven
-      run: mvn javadoc:javadoc
-    - name: Dotnet Setup
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 8.x
-    - name: Install docfx
-      run: dotnet tool update -g docfx
-    - name: Install dotnet-script
-      run: dotnet tool install -g dotnet-script  
-    - name: Clean docfx toc.yml
-      run: dotnet script docs/scripts/CleanToc.cs
-    - name: Build documentation with docfx
-      run: docfx docfx.json
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-      with:
-        enablement: true
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v2
-      with:
-        # Upload entire repository
-        path: 'docs/_site'
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build docfx-javadoc with Maven
+        run: mvn javadoc:javadoc
+      - name: Dotnet Setup
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
+      - name: Install docfx
+        run: dotnet tool update -g docfx
+      - name: Install dotnet-script
+        run: dotnet tool install -g dotnet-script
+      - name: Clean docfx toc.yml
+        run: dotnet script docs/scripts/CleanToc.cs
+      - name: Build documentation with docfx
+        run: docfx docfx.json
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        with:
+          enablement: true
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # Upload entire repository
+          path: 'docs/_site'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

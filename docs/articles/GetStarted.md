@@ -1,13 +1,14 @@
 # Get Started
 
-PlasticMetal.MobileSuit is a powerful tool to quickly build a .NET Core ConsoleApp. 
-Now, it  is migrated to Java platform, which is called JMobileSuit.
+PlasticMetal.MobileSuit is a powerful tool to quickly build a .NET Core ConsoleApp.
+Now, it is migrated to Java platform, which is called JMobileSuit.
 
 ## Create your project
 
-So firstly, you need to create a new Application in your IDE. 
+So firstly, you need to create a new Application in your IDE.
 
-Then, you should add [ReFreSH.JMobileSuit](https://central.sonatype.com/artifact/io.github.hit-refresh/JMobileSuit) to your project.
+Then, you should add [ReFreSH.JMobileSuit](https://central.sonatype.com/artifact/io.github.hit-refresh/JMobileSuit) to
+your project.
 
 ## Write the MobileSuit Client class
 
@@ -23,7 +24,8 @@ Add a Class to your project, named ***Client*** . It inherits class ***ReFreSH.J
 
 Add a method called ***Hello*** to class ***Client*** . It has no parameters and return value.
 
-The content of method can be anything you like. You can use *IO().WriteLine* and *IO().ReadLine* instead of *System.out.println* and *Scanner::nextLine*.
+The content of method can be anything you like. You can use *IO().WriteLine* and *IO().ReadLine* instead of
+*System.out.println* and *Scanner::nextLine*.
 
 ### Add information and Alias for the first command
 
@@ -36,7 +38,8 @@ Add custom attributes to the method:
 
 Add a method called ***Bye*** to class ***Client***. It has a string parameter, named *name*. It returns a *string*.
 
-The content of method can be anything you like. You can use *IO().WriteLine* and *IO().ReadLine* instead of *System.out.println* and *Scanner::nextLine*.
+The content of method can be anything you like. You can use *IO().WriteLine* and *IO().ReadLine* instead of
+*System.out.println* and *Scanner::nextLine*.
 
 ### Add a main method for your application
 
@@ -86,7 +89,6 @@ public class Client extends SuitClient
 }
 
 ```
-
 
 ## Run and test your Application
 

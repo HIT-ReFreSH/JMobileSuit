@@ -1,11 +1,9 @@
 package ReFreSH.JMobileSuit.ObjectModel;
 
-import ReFreSH.JMobileSuit.ObjectModel.Members.SuitObjectMember;
+import ReFreSH.JMobileSuit.Demo.DiagnosticsDemo;
 import ReFreSH.JMobileSuit.TraceBack;
 import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.junit.Test;
-
-import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
@@ -14,18 +12,26 @@ public class SuitObjectTest {
     @Test
     public void testInstance() {
         // Test the Instance method
-        Object instance = new Object();
-        SuitObject suitObject = new SuitObject(instance);
-        assertEquals(instance, suitObject.Instance());
+        var objects = new Object[]{
+                new Object(),
+                new DiagnosticsDemo()
+        };
+        for (var instance : objects) {
+            assertEquals(instance, new SuitObject(instance).Instance());
+        }
     }
 
     @Test
     public void testMemberCount() {
         // Test the MemberCount method
-        Object instance = new Object();
-        SuitObject suitObject = new SuitObject(instance);
-        // Assuming the Object class has no public non-static methods
-        assertEquals(0, suitObject.MemberCount());
+        var objects = new Object[]{
+                new Object(),
+                new DiagnosticsDemo()
+        };
+        var answers = new int[]{0, 2};
+        for (var i = 0; i < objects.length; i++) {
+            assertEquals(answers[i], new SuitObject(objects[i]).MemberCount());
+        }
     }
 
     @Test
@@ -36,14 +42,21 @@ public class SuitObjectTest {
         Tuple<TraceBack, Object> result = suitObject.execute(new String[]{"nonexistentMethod"});
         assertEquals(TraceBack.ObjectNotFound, result.First);
         assertNull(result.Second);
+
+        Object instance2 = new DiagnosticsDemo();
+        suitObject = new SuitObject(instance2);
+        result = suitObject.execute(new String[]{"nonexistentMethod"});
+        assertEquals(TraceBack.ObjectNotFound, result.First);
+        assertNull(result.Second);
+        result = suitObject.execute(new String[]{"get1"});
+        assertEquals(TraceBack.AllOk, result.First);
+        assertEquals(1, result.Second);
     }
 
     @Test
     public void testIterator() {
         // Test the iterator method
-        Object instance = new Object();
-        SuitObject suitObject = new SuitObject(instance);
-        Iterator<Tuple<String, SuitObjectMember>> iterator = suitObject.iterator();
-        assertFalse(iterator.hasNext());
+        assertFalse(new SuitObject(new Object()).iterator().hasNext());
+        assertTrue(new SuitObject(new DiagnosticsDemo()).iterator().hasNext());
     }
 }
