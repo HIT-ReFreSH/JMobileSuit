@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.*;
 import java.util.Arrays;
@@ -51,6 +53,13 @@ public class IOServerTests {
     public void IOServerTest() {
         IOServer instance = getInstance();
         assertNotNull(instance);
+        // 测试 IOServer 和 ColorSetting 依赖注入
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContextTest.xml");
+        ColorSetting colorSetting = context.getBean("colorSetting", ColorSetting.class);
+        IOServer ioServer = context.getBean("IOServer", IOServer.class);
+        assertNotNull(colorSetting);
+        assertNotNull(ioServer);
+        assertNotNull(ioServer.ColorSetting);
     }
 
     @Test
