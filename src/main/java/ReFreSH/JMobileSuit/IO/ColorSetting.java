@@ -1,8 +1,11 @@
 package ReFreSH.JMobileSuit.IO;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Color settings of a IOServer.
  */
+@Component("colorSetting")
 public class ColorSetting {
     /**
      * Default color. For OutputType.Default
