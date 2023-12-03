@@ -1,19 +1,21 @@
 package ReFreSH.JMobileSuit.NeuesProjekt;
 
-import ReFreSH.JMobileSuit.IO.*;
+import ReFreSH.JMobileSuit.IO.ColorSetting;
+import ReFreSH.JMobileSuit.IO.CommonPromptServer;
+import ReFreSH.JMobileSuit.IO.ConsoleColor;
+import ReFreSH.JMobileSuit.IO.IOServer;
 import ReFreSH.JMobileSuit.SuitConfiguration;
 import ReFreSH.JMobileSuit.TraceBack;
-import org.mockito.ArgumentCaptor;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import org.mockito.ArgumentCaptor;
+
 import java.lang.reflect.Field;
 import java.util.List;
-import ReFreSH.JMobileSuit.IO.ColorSetting;
 
-
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
 
 
 public class PowerLineThemedPromptServerTest {
@@ -65,13 +67,10 @@ public class PowerLineThemedPromptServerTest {
         //promptServer.LastInformation = "TestInfo";
 
 
-
         Field ReturnValueField = CommonPromptServer.class.getDeclaredField("LastReturnValue");
         ReturnValueField.setAccessible(true);
         ReturnValueField.set(promptServer, "TestReturn");
         //promptServer.LastReturnValue = "TestReturn";
-
-
 
 
         Field PromptInformationField = CommonPromptServer.class.getDeclaredField("LastPromptInformation");
@@ -83,15 +82,15 @@ public class PowerLineThemedPromptServerTest {
         promptServer.Print();
         TraceBackField.set(promptServer, TraceBack.Prompt);
         promptServer.Print();
-        TraceBackField.set(promptServer,TraceBack.OnExit);
+        TraceBackField.set(promptServer, TraceBack.OnExit);
         promptServer.Print();
-        TraceBackField.set(promptServer,TraceBack.InvalidCommand);
+        TraceBackField.set(promptServer, TraceBack.InvalidCommand);
         promptServer.Print();
-        TraceBackField.set(promptServer,TraceBack.ObjectNotFound);
+        TraceBackField.set(promptServer, TraceBack.ObjectNotFound);
         promptServer.Print();
-        TraceBackField.set(promptServer,TraceBack.MemberNotFound);
+        TraceBackField.set(promptServer, TraceBack.MemberNotFound);
         promptServer.Print();
-        TraceBackField.set(promptServer,TraceBack.AppException);
+        TraceBackField.set(promptServer, TraceBack.AppException);
         promptServer.Print();
 
         // 使用ArgumentCaptor来捕获write方法的调用参数
@@ -108,8 +107,6 @@ public class PowerLineThemedPromptServerTest {
         ConsoleColor Color = ConsoleColor.White;
         assertEquals(Color, capturedColors.get(0));
     }
-
-
 
 
 }

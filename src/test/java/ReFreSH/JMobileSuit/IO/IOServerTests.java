@@ -1,15 +1,11 @@
 package ReFreSH.JMobileSuit.IO;
 
-import ReFreSH.JMobileSuit.BuildInCommandServer;
-import ReFreSH.JMobileSuit.CommonSuitConfiguration;
 import ReFreSH.JMobileSuit.SuitConfiguration;
-import ReFreSH.JMobileSuit.TraceBack;
 import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.apache.logging.log4j.core.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
@@ -178,6 +174,7 @@ public class IOServerTests {
         assertEquals(testInput, inputContent.toString());
 
     }
+
     @Test
     public void testGetAndSetInput2() throws Exception {
         //验证空字符串
@@ -386,16 +383,16 @@ public class IOServerTests {
     }
 
     @Test
-    public void testSelectColor(){
+    public void testSelectColor() {
         ColorSetting colorSetting = new ColorSetting();
-        assertEquals(colorSetting.DefaultColor,ColorSetting.selectColor(OutputType.Default,null,colorSetting));
-        assertEquals(colorSetting.PromptColor,ColorSetting.selectColor(OutputType.Prompt,null,colorSetting));
-        assertEquals(colorSetting.ErrorColor,ColorSetting.selectColor(OutputType.Error,null,colorSetting));
-        assertEquals(colorSetting.AllOkColor,ColorSetting.selectColor(OutputType.AllOk,null,colorSetting));
-        assertEquals(colorSetting.ListTitleColor,ColorSetting.selectColor(OutputType.ListTitle,null,colorSetting));
-        assertEquals(colorSetting.CustomInformationColor,ColorSetting.selectColor(OutputType.CustomInfo,null,colorSetting));
-        assertEquals(colorSetting.InformationColor,ColorSetting.selectColor(OutputType.MobileSuitInfo,null,colorSetting));
-        assertEquals(ConsoleColor.Blue,ColorSetting.selectColor(OutputType.MobileSuitInfo,ConsoleColor.Blue,colorSetting));
+        assertEquals(colorSetting.DefaultColor, ColorSetting.selectColor(OutputType.Default, null, colorSetting));
+        assertEquals(colorSetting.PromptColor, ColorSetting.selectColor(OutputType.Prompt, null, colorSetting));
+        assertEquals(colorSetting.ErrorColor, ColorSetting.selectColor(OutputType.Error, null, colorSetting));
+        assertEquals(colorSetting.AllOkColor, ColorSetting.selectColor(OutputType.AllOk, null, colorSetting));
+        assertEquals(colorSetting.ListTitleColor, ColorSetting.selectColor(OutputType.ListTitle, null, colorSetting));
+        assertEquals(colorSetting.CustomInformationColor, ColorSetting.selectColor(OutputType.CustomInfo, null, colorSetting));
+        assertEquals(colorSetting.InformationColor, ColorSetting.selectColor(OutputType.MobileSuitInfo, null, colorSetting));
+        assertEquals(ConsoleColor.Blue, ColorSetting.selectColor(OutputType.MobileSuitInfo, ConsoleColor.Blue, colorSetting));
     }
 
 }

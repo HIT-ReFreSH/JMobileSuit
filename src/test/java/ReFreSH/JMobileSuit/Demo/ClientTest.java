@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
 
@@ -95,16 +94,18 @@ public class ClientTest {
         client.Sleep(argument);
         Mockito.verify(mockIoServer).WriteLine("Bob is not sleeping.");
     }
+
     @Test
-    public void testParse(){
+    public void testParse() {
         GoodMorningParameter param = new GoodMorningParameter();
         String[] options = {"Alice"};
         assertTrue(param.parse(options));
-        assertEquals(param.name,"Alice");
-        String[] options2={""};
-        String[] options3={"Alice","Bob"};
+        assertEquals(param.name, "Alice");
+        String[] options2 = {""};
+        String[] options3 = {"Alice", "Bob"};
         assertTrue(param.parse(options2));
         assertFalse(param.parse(options3));
+        //TODO
         //test fail，Although the options.length!=1,the param.name also changes
         //assertEquals(param.name,"Alice");
 
