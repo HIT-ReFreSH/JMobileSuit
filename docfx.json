@@ -3,17 +3,12 @@
     "content": [
       {
         "files": [
-          "docs/api/*.{md,yml}",
-          "docs/articles/*.{md,yml}"
-        ]
-      },
-      {
-        "files": [
+          "api/*.{md,yml}",
+          "articles/**/*.{md,yml}",
           "toc.yml",
-          "*.md"
+          "index.md"
         ],
-        "src": "./",
-        "dest": "./"
+        "src": "docs/"
       }
     ],
     "resource": [
@@ -21,16 +16,19 @@
         "files": [
           "images/**"
         ]
-      }
-    ],
-    "overwrite": [
+      },
       {
         "files": [
-          "apidoc/**.md"
+          "*.*"
         ],
-        "exclude": []
+        "src": "./docs/static"
       }
     ],
+    "sitemap": {
+      "baseUrl": "https://hit-refresh.github.io/JMobileSuit/",
+      "priority": 0.3,
+      "changefreq": "monthly"
+    },
     "dest": "docs/_site",
     "globalMetadataFiles": [],
     "globalMetadata": {

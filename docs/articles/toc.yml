@@ -6,3 +6,17 @@
   href: MobileSuitScripts.md
 - name: Useful Features
   href: AdvancedUsage.md
+- name: 中文文档
+  href: zh_Hans/
+  homepage: zh_Hans/index.md
+  items:
+  - name: 主页
+    href: zh_Hans/index.md
+  - name: 快速入门
+    href: zh_Hans/GetStarted.md
+  - name: 创建复杂指令
+    href: zh_Hans/ComplexCommands.md
+  - name: 使用Mobile Suit脚本文件
+    href: zh_Hans/MobileSuitScripts.md
+  - name: 实用特性
+    href: zh_Hans/AdvancedUsage.md

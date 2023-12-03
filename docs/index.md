@@ -15,12 +15,14 @@ then a beautiful Console App is born.
 
 [Download/Install](https://central.sonatype.com/artifact/io.github.hit-refresh/JMobileSuit)
 
-[Get Started](./docs/articles/GetStarted.html)
+[Get Started](./articles/GetStarted.md)
 
-[Create Complex Commands](./docs/articles/ComplexCommands.html)
+[中文文档](./articles/zh_Hans/index.md)
 
-[Use MobileSuitScripts](./docs/articles/MobileSuitScripts.html)
+[Create Complex Commands](./articles/ComplexCommands.md)
 
-[Useful Features](./docs/articles/AdvancedUsage.html)
+[Use MobileSuitScripts](./articles/MobileSuitScripts.md)
 
-[View APIs](./docs/api/index.md)
+[Useful Features](./articles/AdvancedUsage.md)
+
+[View APIs](./api/index.md)
