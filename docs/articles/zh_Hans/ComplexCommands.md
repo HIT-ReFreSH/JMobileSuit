@@ -1,5 +1,5 @@
 ---
-title: 创建更复杂的 PlasticMetal.JMobileSuitLite 命令
+title: 创建更复杂的 ReFreSH.JMobileSuit 命令
 date: 2020-04-11 12:45:11
 ---
 
@@ -9,10 +9,10 @@ date: 2020-04-11 12:45:11
 
 ## 可解析类型的参数
 
-**这些特性在 JMobileSuitLite 0.1.6 或更晚版本被移植**
+**这些特性在 JMobileSuit 0.1.6 或更晚版本被移植**
 
 MobileSuit 的参数类型是任意的，只要你能提供一个解析器;
-JMobileSuitLite 如今也支持这一功能。
+JMobileSuit 如今也支持这一功能。
 
 ### 创建，或者选取一个解析器
 
@@ -62,11 +62,11 @@ JMobileSuitLite 如今也支持这一功能。
 
 **GoodEvening2** 接着 1, 2 ... 个参数, 第一个参数会被映射到 ***String*** 类型的参数, 其它的(可能是0个)会被视为数组，映射到 ***String[]*** 类型的参数. 
 
-编写这种命令最重要的是把使用 ***String[]*** 类型的参数 **必须放在** 方法参数列表的最后一位，否则JMobileSuitLite将无法正确解析它。
+编写这种命令最重要的是把使用 ***String[]*** 类型的参数 **必须放在** 方法参数列表的最后一位，否则JMobileSuit将无法正确解析它。
 
 ### 可解析类型的数组参数
 
-**这些特性在 JMobileSuitLite 0.1.6 或更晚版本被移植**
+**这些特性在 JMobileSuit 0.1.6 或更晚版本被移植**
 
 数组参数不仅可以是 ***String[]***, 还可以是其它类型的数组. 你只需要添加 ***SuitParser*** 注解在参数前.
 
@@ -92,7 +92,7 @@ JMobileSuitLite 如今也支持这一功能。
 
 ### 创建一个实现DynamicParameter的类
 
-添加一个类到类 ***Client*** 中, 叫做 ***GoodMorningParameter***, 它实现 ***PlasticMetal.JMobileSuitLite.ObjectModel.Interfaces.DynamicParameter*** 接口. 这个类应该是 `public static`的:
+添加一个类到类 ***Client*** 中, 叫做 ***GoodMorningParameter***, 它实现 ***ReFreSH.JMobileSuit.ObjectModel.Interfaces.DynamicParameter*** 接口. 这个类应该是 `public static`的:
 
 ``` java
     public static class GoodMorningParameter implements DynamicParameter{
@@ -158,11 +158,11 @@ JMobileSuitLite 如今也支持这一功能。
 
 **GoodMorning2** 跟着 1, 2 ... 个参数, 第一个参数会被映射到 ***String*** 类型的参数, 其它的会被视为数组并被解析为 ***GoodMorningParameter*** 类型的参数. 
 
-编写这种命令最重要的是 ***? extends DynamicParameter*** 类型的参数 **必须放在** 方法参数列表的最后一位，否则JMobileSuitLite将无法正确解析它。
+编写这种命令最重要的是 ***? extends DynamicParameter*** 类型的参数 **必须放在** 方法参数列表的最后一位，否则JMobileSuit将无法正确解析它。
 
 ### 自动解析的动态参数
 
-**这些特性在 JMobileSuitLite 0.1.6 或更晚版本被移植**
+**这些特性在 JMobileSuit 0.1.6 或更晚版本被移植**
 
 现在，你不再需要自己编写DynamicParameter::Parse.
 
@@ -201,15 +201,15 @@ JMobileSuit支持四种用于动态参数类型的字段的注解:
 在本节之后，你 **Client.java** 中的代码大概像:
 
 ``` java
-package PlasticMetal.JMobileSuit.Demo;
+package ReFreSH.JMobileSuit.Demo;
 
-import PlasticMetal.JMobileSuitLite.NeuesProjekt.PowerLineThemedPromptServer;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
-import PlasticMetal.JMobileSuitLite.ObjectModel.DynamicParameter;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Parsing.*;
-import PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient;
-import PlasticMetal.JMobileSuitLite.SuitHost;
+import ReFreSH.JMobileSuit.NeuesProjekt.PowerLineThemedPromptServer;
+import ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitAlias;
+import ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitInfo;
+import ReFreSH.JMobileSuit.ObjectModel.DynamicParameter;
+import ReFreSH.JMobileSuit.ObjectModel.Parsing.*;
+import ReFreSH.JMobileSuit.ObjectModel.SuitClient;
+import ReFreSH.JMobileSuit.SuitHost;
 
 @SuitInfo("Demo")
 public class Client extends SuitClient

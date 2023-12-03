@@ -1,6 +1,6 @@
 # Use MobileSuitScript Files
 
-**This feature only works on JMobileSuitLite 0.1.2 or later version**
+**This feature only works on JMobileSuit 0.1.2 or later version**
 
 Pack-up your commands into a script file can make workflow automatically.
 
@@ -12,7 +12,7 @@ application.
 Create a text file. Filename dosen't matter, but we recommend you to make the extension ".mss" stands for
 MobileSuitScript.
 
-Fill the file with commands of your application. **For JMobileSuitLite 0.1.2.2 or later version**, you can add comment
+Fill the file with commands of your application. **For JMobileSuit 0.1.2.2 or later version**, you can add comment
 lines starting with '#', which will not be parsed by JMobileSuit.
 
 The commands in the file may be invalid or not in the application (Object/Member not found), however, when JMobileSuit

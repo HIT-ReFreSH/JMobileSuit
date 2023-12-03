@@ -1,15 +1,15 @@
 # Create Complex Commands
 
-**These features only works on JMobileSuitLite 0.1.1.4 or later version**
+**These features only works on JMobileSuit 0.1.1.4 or later version**
 
 Code example is at the end of this part.
 
 ## Parsable-type Parameters
 
-**This feature only works on JMobileSuitLite 0.1.6 or later version**
+**This feature only works on JMobileSuit 0.1.6 or later version**
 
 MobileSuit's parameter type can be anything you like, in case there is a parser;
-JMobileSuitLite support this function, now.
+JMobileSuit support this function, now.
 
 ### Create or Select a parser
 
@@ -66,7 +66,7 @@ The most important thing when you're using this type of command is that The para
 
 ### Array parameter for Parsable-types
 
-**This feature only works on JMobileSuitLite 0.1.6 or later version**
+**This feature only works on JMobileSuit 0.1.6 or later version**
 
 The array can not only be ***String[]***, but also other types. You just need to add a ***SuitParser*** Annotation
 before the array parameter.
@@ -171,7 +171,7 @@ you command correctly.
 
 ### Auto DynamicParameter Class
 
-**This feature only works on JMobileSuitLite 0.1.6 or later version**
+**This feature only works on JMobileSuit 0.1.6 or later version**
 
 Now, you no more needs to write a DynamicParameter::Parse yourself.
 
@@ -214,7 +214,7 @@ For Example:
 After this part, your **Client.java** may looks like:
 
 ``` java
-package PlasticMetal.JMobileSuit.Demo;
+package ReFreSH.JMobileSuit.Demo;
 
 import ReFreSH.JMobileSuit.NeuesProjekt.PowerLineThemedPromptServer;
 import ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitAlias;

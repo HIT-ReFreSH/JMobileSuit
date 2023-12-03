@@ -1,6 +1,6 @@
 # Get Started
 
-PlasticMetal.MobileSuit is a powerful tool to quickly build a .NET Core ConsoleApp.
+ReFreSH.MobileSuit is a powerful tool to quickly build a .NET Core ConsoleApp.
 Now, it is migrated to Java platform, which is called JMobileSuit.
 
 ## Create your project

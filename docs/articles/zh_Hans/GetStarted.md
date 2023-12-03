@@ -1,27 +1,27 @@
 ---
-title: 快速开始 - PlasticMetal.JMobileSuitLite
+title: 快速开始 - ReFreSH.JMobileSuit
 date: 2020-04-11 12:45:11
 ---
 
 
-PlasticMetal.MobileSuit 是一个用来快速构造 .NET Core控制台程序的强大工具。现在，它的轻量化版本被移植到Java平台上来了，这就是JMobileSuitLite.
+ReFreSH.MobileSuit 是一个用来快速构造 .NET Core控制台程序的强大工具。现在，它的轻量化版本被移植到Java平台上来了，这就是JMobileSuit.
 
 ## 创建项目
 
 第一步，你需要在IDE中新建一个Java项目。
 
 
-然后，添加 [PlasticMetal.JMobileSuitLite](https://search.maven.org/artifact/io.github.plastic-metal/JMobileSuitLite) 到你的项目。
+然后，添加 [ReFreSH.JMobileSuit](https://search.maven.org/artifact/io.github.hit-refresh/JMobileSuit) 到你的项目。
 
 ## 编写客户端类
 
 ### 创建类
 
-向项目添加一个新类, 名为 ***Client***. 它继承自 ***PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient***.
+向项目添加一个新类, 名为 ***Client***. 它继承自 ***ReFreSH.JMobileSuit.ObjectModel.SuitClient***.
 
 ### 为类添加自定义标记:
 
-*PlasticMetal.JMobileSuitLite.ObjectModel.Annotions..SuitInfo* 使用参数 "Demo"
+*ReFreSH.JMobileSuit.ObjectModel.Annotions..SuitInfo* 使用参数 "Demo"
 
 ### 添加第一条指令
 
@@ -33,8 +33,8 @@ PlasticMetal.MobileSuit 是一个用来快速构造 .NET Core控制台程序的�
 
 向方法添加以下自定义标记:
 
-1. *PlasticMetal.JMobileSuitLite.ObjectModel.Annotions..SuitInfo* 使用参数 "hello command."
-2. *PlasticMetal.JMobileSuitLite.ObjectModel.Annotions..SuitAlias* 使用参数 "H"
+1. *ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitInfo* 使用参数 "hello command."
+2. *ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitAlias* 使用参数 "H"
 
 ### A添加另一条命令
 
@@ -63,10 +63,10 @@ new SuitHost(Client.class).Run();
 它的内容大概是:
 
 ``` java
-import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitAlias;
-import PlasticMetal.JMobileSuitLite.ObjectModel.Annotions.SuitInfo;
-import PlasticMetal.JMobileSuitLite.ObjectModel.SuitClient;
-import PlasticMetal.JMobileSuitLite.SuitHost;
+import ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitAlias;
+import ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitInfo;
+import ReFreSH.JMobileSuit.ObjectModel.SuitClient;
+import ReFreSH.JMobileSuit.SuitHost;
 
 @SuitInfo("Demo")
 public class Client extends SuitClient

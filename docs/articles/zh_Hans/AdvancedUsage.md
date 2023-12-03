@@ -1,5 +1,5 @@
 ---
-title: PlasticMetal.JMobileSuitLite的常用特性
+title: ReFreSH.JMobileSuit的常用特性
 date: 2020-04-19 12:45:11
 ---
 
@@ -25,11 +25,11 @@ hello
 
 ## 自定义Prompt Server和Powerline主题的 Prompt Server
 
-你可以自定义作为 Prompt Server的类, 他们需要实现接口 ***PlasticMetal.JMobileSuitLite.IO.PromptServer***. 当然, 也可以直接继承类 ***PlasticMetal.JMobileSuitLite.IO.CommonPromptServer***.
+你可以自定义作为 Prompt Server的类, 他们需要实现接口 ***ReFreSH.JMobileSuit.IO.PromptServer***. 当然, 也可以直接继承类 ***ReFreSH.JMobileSuit.IO.CommonPromptServer***.
 
 使用你的Prompt Server来初始化 ***SuitConfiguration***, 然后使用这个配置去初始化 ***SuitHost***.
 
-一个自定义Prompt Server主题: Powerline 被内构于包 *PlasticMetal.JMobileSuitLite* .
+一个自定义Prompt Server主题: Powerline 被内构于包 *ReFreSH.JMobileSuit* .
 
 你可以像下面这样使用它:
 
