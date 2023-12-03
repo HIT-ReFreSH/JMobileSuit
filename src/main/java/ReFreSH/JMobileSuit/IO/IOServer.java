@@ -5,6 +5,8 @@ import ReFreSH.JMobileSuit.TraceBack;
 import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +21,7 @@ import static ReFreSH.JMobileSuit.LangResourceBundle.Lang;
  * An entity, which serves the input/output of a mobile suit.
  */
 @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "unused"})
+@Component("IOServer")
 public class IOServer {
     /**
      * Default IOServer, using stdin, stdout, stderr.
@@ -32,6 +35,7 @@ public class IOServer {
     /**
      * Color settings for this IOServer. (default getInstance)
      */
+    @Autowired
     public ReFreSH.JMobileSuit.IO.ColorSetting ColorSetting;
     public PromptServer Prompt;
     /**
@@ -53,7 +57,7 @@ public class IOServer {
      */
     public IOServer() {
         Prompt = PromptServer.getInstance();
-        ColorSetting = ReFreSH.JMobileSuit.IO.ColorSetting.getInstance();
+//        ColorSetting = ReFreSH.JMobileSuit.IO.ColorSetting.getInstance();
         _input = System.in;
         Output = System.out;
         Error = System.err;
