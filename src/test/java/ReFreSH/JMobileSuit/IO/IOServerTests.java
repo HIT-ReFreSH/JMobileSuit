@@ -1,11 +1,15 @@
 package ReFreSH.JMobileSuit.IO;
 
+import ReFreSH.JMobileSuit.BuildInCommandServer;
+import ReFreSH.JMobileSuit.CommonSuitConfiguration;
 import ReFreSH.JMobileSuit.SuitConfiguration;
+import ReFreSH.JMobileSuit.TraceBack;
 import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.apache.logging.log4j.core.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 
@@ -87,6 +91,10 @@ public class IOServerTests {
 
         // 验证模拟对象的 LogDebug 方法是否被调用，并且传入的参数是否符合预期
         verify(mockLogger, times(1)).debug(anyString());
+
+        //空字符串也会被调用
+        ioserver.WriteDebug("");
+        verify(mockLogger, times(2)).debug(anyString());
     }
 
     @Test
@@ -149,6 +157,31 @@ public class IOServerTests {
     @Test
     public void testGetAndSetInput() throws Exception {
         String testInput = "abcdefg";
+        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+
+        IOServer ioserver = getInstance();
+        ioserver.SetInput(inputStream);
+
+        InputStream result = ioserver.GetInput();
+
+        byte[] buffer = new byte[1024];
+        int bytesRead;
+        StringBuilder inputContent = new StringBuilder();
+        try {
+            while ((bytesRead = result.read(buffer)) != -1) {
+                inputContent.append(new String(buffer, 0, bytesRead));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(testInput, inputContent.toString());
+
+    }
+    @Test
+    public void testGetAndSetInput2() throws Exception {
+        //验证空字符串
+        String testInput = "";
         InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
 
         IOServer ioserver = getInstance();
@@ -352,5 +385,17 @@ public class IOServerTests {
         assertEquals(Integer.valueOf(10), prefixLengthStack.pop());
     }
 
+    @Test
+    public void testSelectColor(){
+        ColorSetting colorSetting = new ColorSetting();
+        assertEquals(colorSetting.DefaultColor,ColorSetting.selectColor(OutputType.Default,null,colorSetting));
+        assertEquals(colorSetting.PromptColor,ColorSetting.selectColor(OutputType.Prompt,null,colorSetting));
+        assertEquals(colorSetting.ErrorColor,ColorSetting.selectColor(OutputType.Error,null,colorSetting));
+        assertEquals(colorSetting.AllOkColor,ColorSetting.selectColor(OutputType.AllOk,null,colorSetting));
+        assertEquals(colorSetting.ListTitleColor,ColorSetting.selectColor(OutputType.ListTitle,null,colorSetting));
+        assertEquals(colorSetting.CustomInformationColor,ColorSetting.selectColor(OutputType.CustomInfo,null,colorSetting));
+        assertEquals(colorSetting.InformationColor,ColorSetting.selectColor(OutputType.MobileSuitInfo,null,colorSetting));
+        assertEquals(ConsoleColor.Blue,ColorSetting.selectColor(OutputType.MobileSuitInfo,ConsoleColor.Blue,colorSetting));
+    }
 
 }

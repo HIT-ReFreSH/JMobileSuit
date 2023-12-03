@@ -81,6 +81,18 @@ public class PowerLineThemedPromptServerTest {
 
         // 调用Print方法
         promptServer.Print();
+        TraceBackField.set(promptServer, TraceBack.Prompt);
+        promptServer.Print();
+        TraceBackField.set(promptServer,TraceBack.OnExit);
+        promptServer.Print();
+        TraceBackField.set(promptServer,TraceBack.InvalidCommand);
+        promptServer.Print();
+        TraceBackField.set(promptServer,TraceBack.ObjectNotFound);
+        promptServer.Print();
+        TraceBackField.set(promptServer,TraceBack.MemberNotFound);
+        promptServer.Print();
+        TraceBackField.set(promptServer,TraceBack.AppException);
+        promptServer.Print();
 
         // 使用ArgumentCaptor来捕获write方法的调用参数
         ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
