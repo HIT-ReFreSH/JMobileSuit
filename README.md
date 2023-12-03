@@ -13,11 +13,11 @@
 
 [View in maven-central](https://search.maven.org/artifact/io.github.hit-refresh/JMobileSuit/)
 
+[View Documentation](https://HIT-ReFreSH.github.io/JMobileSuit/index.html) | [查看文档](https://hit-refresh.github.io/JMobileSuit/articles/zh_Hans/index.html)
+
 JMobileSuit is a Light-weight MobileSuit for Java. Migrated from .NET Core.
 
 **Previously named as [PlasticMetal.JMobileSuitLite](https://github.com/Plastic-Metal/JMobileSuitLite).**
-
-[View English Documentation](https://HIT-ReFreSH.github.io/JMobileSuit/index.html)
 
 ReFreSH.MobileSuit is a Powerful tool to quickly build a ConsoleApp, written in C#, mapping command to a specific
 method in your code.
