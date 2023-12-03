@@ -105,9 +105,7 @@ public class ClientTest {
         String[] options3 = {"Alice", "Bob"};
         assertTrue(param.parse(options2));
         assertFalse(param.parse(options3));
-        //TODO
-        //test fail，Although the options.length!=1,the param.name also changes
-        //assertEquals(param.name,"Alice");
+        assertEquals(param.name,"");
 
     }
 }
