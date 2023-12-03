@@ -62,7 +62,7 @@ public abstract class AutoDynamicParameter implements DynamicParameter {
         }
     }
 
-    private static String ConnectStringArray(String[] array) {
+    static String ConnectStringArray(String[] array) {
         if (array.length == 0) return "";
         StringBuilder r = new StringBuilder(array[0]);
         if (array.length <= 1) return r.toString();
