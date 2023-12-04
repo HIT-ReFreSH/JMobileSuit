@@ -4,6 +4,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>JMobileSuit</name>
+    <groupId>io.github.hit-refresh</groupId>
+    <artifactId>JMobileSuit</artifactId>
+    <version>1.2.0-alpha1</version>
+    <organization>
+        <name>io.github.hit-refresh</name>
+        <url>https://hit-refresh.github.io/</url>
+    </organization>
+    <url>https://github.com/HIT-ReFreSH/JMobileSuit</url>
+    <inceptionYear>2023</inceptionYear>
+    <packaging>jar</packaging>
+    <description>Light weight Mobile Suit for Java. Migrated from .NET Core.</description>
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://www.mit.edu/~amini/LICENSE.md</url>
+        </license>
+    </licenses>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>21</java.version>
+        <java.lang.version>${java.version}</java.lang.version>
+        <spring.version>6.0.11</spring.version>
+        <log4j.version>3.0.0-alpha1</log4j.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>io.github.hit-refresh</groupId>
@@ -38,106 +62,49 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>3.0.0-alpha1</version>
+            <version>${log4j.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>3.0.0-alpha1</version>
+            <version>${log4j.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>6.0.11</version>
+            <version>${spring.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>6.0.11</version>
+            <version>${spring.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>6.0.11</version>
+            <version>${spring.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-expression -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
-            <version>6.0.11</version>
+            <version>${spring.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>6.0.11</version>
+            <version>${spring.version}</version>
         </dependency>
 
     </dependencies>
-    <groupId>io.github.hit-refresh</groupId>
-    <artifactId>JMobileSuit</artifactId>
-    <version>1.1.0-alpha1</version>
 
-
-    <packaging>jar</packaging>
-    <organization>
-        <name>io.github.hit-refresh</name>
-        <url>https://hit-refresh.github.io/</url>
-    </organization>
-    <url>https://github.com/HIT-ReFreSH/JMobileSuit</url>
-    <inceptionYear>2023</inceptionYear>
-    <developers>
-        <developer>
-            <name>Ferdinand Sukhoi</name>
-            <email>ferdinandsukhoi@outlook.com</email>
-            <url>https://ferdinandsukhoi.github.io</url>
-        </developer>
-        <developer>
-            <name>mahoshojoHCG</name>
-            <email>yzy688@gmail.com</email>
-            <url>https://github.com/mahoshojoHCG</url>
-        </developer>
-        <developer>
-            <name>MrRuanCoder</name>
-            <email>110537579+MrRuanCoder@users.noreply.github.com</email>
-            <url>https://github.com/MrRuanCoder</url>
-        </developer>
-        <developer>
-            <name>JonojiKatsuya</name>
-            <email>1936826262@qq.com</email>
-            <url>https://github.com/JonojiKatsuya</url>
-        </developer>
-        <developer>
-            <name>wyh</name>
-            <email>1146900419@qq.com</email>
-            <url>https://github.com/wyh201202</url>
-        </developer>
-        <developer>
-            <name>leeseetheloswer</name>
-            <email>1443442148@qq.com</email>
-        </developer>
-    </developers>
-    <description>Light weight Mobile Suit for Java. Migrated from .NET Core.</description>
-
-    <licenses>
-        <license>
-            <name>MIT</name>
-            <url>https://www.mit.edu/~amini/LICENSE.md</url>
-        </license>
-    </licenses>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>21</java.version>
-        <java.lang.version>21</java.lang.version>
-    </properties>
-
+    
     <build>
-
         <finalName>${project.organization.name}.${project.name}.${project.version}</finalName>
         <defaultGoal>Package</defaultGoal>
         <pluginManagement>
@@ -146,7 +113,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <configuration>
-                        <encoding>UTF-8</encoding>
+                        <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -163,9 +130,9 @@
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>3.0.0</version>
                     <configuration>
-                        <encoding>UTF-8</encoding>
-                        <charset>UTF-8</charset>
-                        <docencoding>UTF-8</docencoding>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                        <charset>${project.build.sourceEncoding}</charset>
+                        <docencoding>${project.build.sourceEncoding}</docencoding>
                         <locale>en_US</locale>
                         <docletPath>${project.basedir}/docs/lib/docfx-doclet-1.9.0-jar-with-dependencies.jar
                         </docletPath>
@@ -226,7 +193,7 @@
                         <artifactId>maven-resources-plugin</artifactId>
                         <version>3.3.1</version>
                         <configuration>
-                            <encoding>UTF-8</encoding>
+                            <encoding>${project.build.sourceEncoding}</encoding>
                         </configuration>
                     </plugin>
 
@@ -338,7 +305,7 @@
                         <artifactId>maven-resources-plugin</artifactId>
                         <version>3.3.1</version>
                         <configuration>
-                            <encoding>UTF-8</encoding>
+                            <encoding>${project.build.sourceEncoding}</encoding>
                         </configuration>
                     </plugin>
 
@@ -445,5 +412,63 @@
         <developerConnection>scm:git:https://github.com/HIT-ReFreSH/JMobileSuit.git</developerConnection>
         <tag>${project.version}</tag>
     </scm>
-
+    <developers>
+        <developer>
+            <name>Ferdinand Sukhoi</name>
+            <email>ferdinandsukhoi@outlook.com</email>
+            <url>https://ferdinandsukhoi.github.io</url>
+        </developer>
+        <developer>
+            <name>mahoshojoHCG</name>
+            <email>yzy688@gmail.com</email>
+            <url>https://github.com/mahoshojoHCG</url>
+        </developer>
+        <developer>
+            <name>MrRuanCoder</name>
+            <email>110537579+MrRuanCoder@users.noreply.github.com</email>
+            <url>https://github.com/MrRuanCoder</url>
+        </developer>
+        <developer>
+            <name>JonojiKatsuya</name>
+            <email>1936826262@qq.com</email>
+            <url>https://github.com/JonojiKatsuya</url>
+        </developer>
+        <developer>
+            <name>wyh</name>
+            <email>1146900419@qq.com</email>
+            <url>https://github.com/wyh201202</url>
+        </developer>
+        <developer>
+            <name>leeseetheloswer</name>
+            <email>1443442148@qq.com</email>
+        </developer>
+        <developer>
+            <name>Guo Yihang</name>
+            <email>905479603@qq.com</email>
+        </developer>
+        <developer>
+            <name>gwx</name>
+            <email>xunhit@outlook.com</email>
+        </developer>
+        <developer>
+            <name>cliang42</name>
+            <email>cliang0911@163.com</email>
+        </developer>
+        <developer>
+            <name>YoYi L</name>
+            <email>liuhongzhi366@gmail.com</email>
+        </developer>
+        <developer>
+            <name>2021111502</name>
+            <email>3509461348@qq.com</email>
+        </developer>
+        <developer>
+            <name>rpete</name>
+            <email>rpete@icloud.com</email>
+        </developer>
+        <developer>
+            <name>Xi</name>
+            <email>Xi@gmail.com</email>
+        </developer>
+    </developers>
 </project>
