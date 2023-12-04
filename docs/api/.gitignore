@@ -2,4 +2,7 @@
 #  temp file  #
 ###############
 *.yml
-.manifest
+*.manifest
+*.bat
+options
+package
