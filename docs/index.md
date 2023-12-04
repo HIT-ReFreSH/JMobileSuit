@@ -26,3 +26,5 @@ then a beautiful Console App is born.
 [Useful Features](./articles/AdvancedUsage.md)
 
 [View APIs](./api/index.md)
+
+[Show Version History](./articles/VersionHistory.md)
