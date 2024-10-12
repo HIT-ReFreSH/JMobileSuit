@@ -6,6 +6,7 @@ import org.apache.logging.log4j.core.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.springframework.context.ApplicationContext;
@@ -22,6 +23,66 @@ import static org.mockito.Mockito.*;
 
 public class IOServerTests {
 
+    private IOServer ioServer;
+    private Logger logger;
+    private ByteArrayOutputStream outputStream;
+    private ByteArrayOutputStream errorStream;
+    private InputStream inputStream;
+
+    @BeforeEach
+    public void setUp() {
+        // Mock the logger
+        logger = mock(Logger.class);
+
+        // Initialize IOServer with mock dependencies
+        ioServer = new IOServer(null, logger, null);
+
+        // Set up custom output/error streams
+        outputStream = new ByteArrayOutputStream();
+        errorStream = new ByteArrayOutputStream();
+        inputStream = new ByteArrayInputStream("test input\n".getBytes());
+
+        ioServer.Output = new PrintStream(outputStream);
+        ioServer.Error = new PrintStream(errorStream);
+        ioServer.SetInput(inputStream);
+    }
+
+    @Test
+    public void testWriteLine() {
+        ioServer.WriteLine("Hello World");
+        assertEquals("Hello World\n", outputStream.toString());
+    }
+
+    @Test
+    public void testReadLine2() {
+        String input = ioServer.ReadLine();
+        assertEquals("test input", input);
+    }
+
+    @Test
+    public void testWriteDebug2() {
+        ioServer.WriteDebug("Debug message");
+        verify(logger).debug("Debug message");
+    }
+
+    @Test
+    public void testWriteException2() {
+        Exception e = new Exception("Test Exception");
+        ioServer.WriteException(e);
+        verify(logger).error(e);
+    }
+
+    @Test
+    public void testWriteWithColor() {
+        ioServer.Write("Colored Text", ConsoleColor.Red);
+        // Assuming ConsoleColor.Red changes the output, we verify the text without the color code
+        assertTrue(outputStream.toString().contains("Colored Text"));
+    }
+
+    @Test
+    public void testIsInputRedirected2() {
+        assertTrue(ioServer.IsInputRedirected());
+    }
 //    private final Logger Logger;
 //
 //    public IOServerTests(Logger logger) {
