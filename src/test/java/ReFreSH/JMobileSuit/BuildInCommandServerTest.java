@@ -1,3 +1,4 @@
+// src/test/java/ReFreSH/JMobileSuit/BuildInCommandServerTest.java
 package ReFreSH.JMobileSuit;
 
 import ReFreSH.JMobileSuit.ObjectModel.SuitObject;
@@ -6,9 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
-
 public class BuildInCommandServerTest {
-
 
     @Test
     public void testList() {
@@ -30,8 +29,6 @@ public class BuildInCommandServerTest {
 
     @Test
     public void testRunScript() {
-
-
         SuitHost suitHost;
         Object object = new Object();
         try {
@@ -44,10 +41,9 @@ public class BuildInCommandServerTest {
         String[] args = {};
         assertEquals(TraceBack.InvalidCommand, instance.RunScript(args));
         String[] args1 = {"1"};
-        assertEquals(TraceBack.InvalidCommand, instance.RunScript(args1));//文件地址输入错误
+        assertEquals(TraceBack.InvalidCommand, instance.RunScript(args1)); // Incorrect file path
         args1[0] = "src/test/resources/SuitHostTests.mss";
         assertEquals(TraceBack.AllOk, instance.RunScript(args1));
-
     }
 
     @Test
@@ -82,7 +78,5 @@ public class BuildInCommandServerTest {
         BuildInCommandServer instance = new BuildInCommandServer(suitHost);
         SuitObject obj = new SuitObject(object);
         instance.ListMembers(obj);
-
-
     }
 }

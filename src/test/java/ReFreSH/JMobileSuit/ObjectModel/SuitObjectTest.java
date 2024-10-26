@@ -1,3 +1,4 @@
+// src/test/java/ReFreSH/JMobileSuit/ObjectModel/SuitObjectTest.java
 package ReFreSH.JMobileSuit.ObjectModel;
 
 import ReFreSH.JMobileSuit.Demo.DiagnosticsDemo;
