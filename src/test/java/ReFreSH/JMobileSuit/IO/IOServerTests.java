@@ -31,15 +31,13 @@ public class IOServerTests {
 
     @BeforeEach
     public void setUp() {
-        // Mock dependencies
+        // Mock the logger
         logger = mock(Logger.class);
-        ColorSetting colorSetting = mock(ColorSetting.class);
-        PromptServer promptServer = mock(PromptServer.class);
 
-        // Initialize IOServer with mocked dependencies
-        ioServer = new IOServer(promptServer, logger, colorSetting);
+        // Initialize IOServer with mock dependencies
+        ioServer = new IOServer(null, logger, null);
 
-        // Set up output and input streams as before
+        // Set up custom output/error streams
         outputStream = new ByteArrayOutputStream();
         errorStream = new ByteArrayOutputStream();
         inputStream = new ByteArrayInputStream("test input\n".getBytes());
@@ -51,13 +49,7 @@ public class IOServerTests {
     @Test
     public void testWriteLine() {
         ioServer.WriteLine("Hello World");
-        assertEquals("Hello World", outputStream.toString());
-    }
-
-    @Test
-    public void testReadLine2() {
-        String input = ioServer.ReadLine();
-        assertEquals("test input", input);
+        assertEquals("Hello World\n", outputStream.toString());
     }
 
     @Test
@@ -287,8 +279,15 @@ public class IOServerTests {
         assertEquals(testInput, result);
     }
 
-    //TODO: Method Overloading test need to be added
-
+    @Test
+    public void testReadLineWithoutPrompt() {
+        String testInput = "anything";
+        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        IOServer ioserver = getInstance();
+        ioserver.SetInput(inputStream);
+        String result = ioserver.ReadLine();
+        assertEquals(testInput, result);
+    }
 
     @Test
     public void testRead() throws IOException {
