@@ -41,7 +41,6 @@ public class IOServerTests {
         outputStream = new ByteArrayOutputStream();
         errorStream = new ByteArrayOutputStream();
         inputStream = new ByteArrayInputStream("test input\n".getBytes());
-
         ioServer.Output = new PrintStream(outputStream);
         ioServer.Error = new PrintStream(errorStream);
         ioServer.SetInput(inputStream);
@@ -51,12 +50,6 @@ public class IOServerTests {
     public void testWriteLine() {
         ioServer.WriteLine("Hello World");
         assertEquals("Hello World\n", outputStream.toString());
-    }
-
-    @Test
-    public void testReadLine2() {
-        String input = ioServer.ReadLine();
-        assertEquals("test input", input);
     }
 
     @Test
@@ -114,7 +107,7 @@ public class IOServerTests {
     public void IOServerTest() {
         IOServer instance = getInstance();
         assertNotNull(instance);
-        // 测试 IOServer 和 ColorSetting 依赖注入
+        // Testing dependency injection of IOServer and ColorSetting
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContextTest.xml");
         ColorSetting colorSetting = context.getBean("colorSetting", ColorSetting.class);
         IOServer ioServer = context.getBean("IOServer", IOServer.class);
@@ -286,8 +279,15 @@ public class IOServerTests {
         assertEquals(testInput, result);
     }
 
-    //TODO: Method Overloading test need to be added
-
+    @Test
+    public void testReadLineWithoutPrompt() {
+        String testInput = "anything";
+        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        IOServer ioserver = getInstance();
+        ioserver.SetInput(inputStream);
+        String result = ioserver.ReadLine();
+        assertEquals(testInput, result);
+    }
 
     @Test
     public void testRead() throws IOException {
