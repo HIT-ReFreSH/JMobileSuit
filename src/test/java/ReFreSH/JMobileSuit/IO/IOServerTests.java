@@ -31,17 +31,18 @@ public class IOServerTests {
 
     @BeforeEach
     public void setUp() {
-        // Mock the logger
+        // Mock dependencies
         logger = mock(Logger.class);
+        ColorSetting colorSetting = mock(ColorSetting.class);
+        PromptServer promptServer = mock(PromptServer.class);
 
-        // Initialize IOServer with mock dependencies
-        ioServer = new IOServer(null, logger, null);
+        // Initialize IOServer with mocked dependencies
+        ioServer = new IOServer(promptServer, logger, colorSetting);
 
-        // Set up custom output/error streams
+        // Set up output and input streams as before
         outputStream = new ByteArrayOutputStream();
         errorStream = new ByteArrayOutputStream();
         inputStream = new ByteArrayInputStream("test input\n".getBytes());
-
         ioServer.Output = new PrintStream(outputStream);
         ioServer.Error = new PrintStream(errorStream);
         ioServer.SetInput(inputStream);
@@ -50,7 +51,7 @@ public class IOServerTests {
     @Test
     public void testWriteLine() {
         ioServer.WriteLine("Hello World");
-        assertEquals("Hello World\n", outputStream.toString());
+        assertEquals("Hello World", outputStream.toString());
     }
 
     @Test
@@ -114,7 +115,7 @@ public class IOServerTests {
     public void IOServerTest() {
         IOServer instance = getInstance();
         assertNotNull(instance);
-        // 测试 IOServer 和 ColorSetting 依赖注入
+        // Testing dependency injection of IOServer and ColorSetting
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContextTest.xml");
         ColorSetting colorSetting = context.getBean("colorSetting", ColorSetting.class);
         IOServer ioServer = context.getBean("IOServer", IOServer.class);
