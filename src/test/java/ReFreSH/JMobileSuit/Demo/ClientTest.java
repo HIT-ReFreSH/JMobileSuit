@@ -27,6 +27,12 @@ public class ClientTest {
         Mockito.verify(mockIoServer).WriteLine("Hello! MobileSuit!");
     }
 
+    @Test(expected = Exception.class)
+    public void testByeThrowsException() throws Exception {
+        client.exp(); // 直接调用会抛出异常
+    }
+
+
     @Test
     public void testBye() {
         String result = client.Bye("John");
@@ -51,11 +57,29 @@ public class ClientTest {
     }
 
     @Test
+    public void testGoodMorningParameterParseFailure() {
+        GoodMorningParameter param = new GoodMorningParameter();
+        String[] options = {"Alice", "Bob"}; // 超过一个参数
+        assertFalse(param.parse(options));
+        assertEquals(param.name, "foo"); // 默认值未更改
+    }
+
+
+    @Test
     public void testGoodEvening() {
         String[] args = {"Alice", "Bob"};
         client.GoodEvening(args);
         Mockito.verify(mockIoServer).WriteLine("Good Evening, Alice");
     }
+
+
+    @Test
+    public void testGoodEveningNoArgs() {
+        String[] args = {}; // 没有参数
+        client.GoodEvening(args);
+        Mockito.verify(mockIoServer).WriteLine("Good Evening, "); // 确保输出
+    }
+
 
     @Test
     public void testShowNumber() {
@@ -94,6 +118,23 @@ public class ClientTest {
         client.Sleep(argument);
         Mockito.verify(mockIoServer).WriteLine("Bob is not sleeping.");
     }
+
+    @Test
+    public void testSleepNoArgs() {
+        SleepArgument argument = new SleepArgument(); // 默认构造
+        client.Sleep(argument);
+        Mockito.verify(mockIoServer).WriteLine(argument.Name.get(0) + " is not sleeping."); // 确保输出
+    }
+
+    @Test
+    public void testShowNumberEmptyArray() {
+        int i = 5;
+        int[] j = {}; // 空数组
+        client.ShowNumber(i, j);
+        Mockito.verify(mockIoServer).WriteLine("5");
+        Mockito.verify(mockIoServer).WriteLine(""); // 输出空行
+    }
+
 
     @Test
     public void testParse() {
