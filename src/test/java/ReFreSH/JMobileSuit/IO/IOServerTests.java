@@ -23,11 +23,15 @@ import static org.mockito.Mockito.*;
 
 public class IOServerTests {
 
-    private IOServer ioServer;
+
+    private IOServer ioServer = new IOServer();
     private Logger logger;
-    private ByteArrayOutputStream outputStream;
+    private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private ByteArrayOutputStream errorStream;
     private InputStream inputStream;
+
+
+
 
     @BeforeEach
     public void setUp() {
@@ -45,11 +49,10 @@ public class IOServerTests {
         ioServer.Error = new PrintStream(errorStream);
         ioServer.SetInput(inputStream);
     }
-
     @Test
     public void testWriteLine() {
         ioServer.WriteLine("Hello World");
-        assertEquals("Hello World\n", outputStream.toString());
+        assertEquals("Hello World", ioServer.getContent());
     }
 
     @Test
@@ -69,7 +72,7 @@ public class IOServerTests {
     public void testWriteWithColor() {
         ioServer.Write("Colored Text", ConsoleColor.Red);
         // Assuming ConsoleColor.Red changes the output, we verify the text without the color code
-        assertTrue(outputStream.toString().contains("Colored Text"));
+        assertEquals("Colored Text\u001B[;31m", ioServer.getContent());
     }
 
     @Test
