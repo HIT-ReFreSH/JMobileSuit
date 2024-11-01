@@ -32,6 +32,10 @@ public class IOServer {
     private final Logger logger;
     private final StringBuilder PrefixBuilder = new StringBuilder();
     private final Stack<Integer> PrefixLengthStack = new Stack<>();
+    private String content;
+    public String getContent(){
+        return content;
+    }
     /**
      * Color settings for this IOServer. (default getInstance)
      */
@@ -481,6 +485,7 @@ public class IOServer {
     private void WriteBase(String content, OutputType type, ConsoleColor customColor) {
         if (!IsOutputRedirected()) {
             ConsoleColor color = SelectColor(type, customColor);
+            this.content=content+color.toString();
             Output.print(color + content + ClearEffect);
         } else {
             if (type != OutputType.Prompt)
@@ -522,7 +527,7 @@ public class IOServer {
      * @param type    Type of this content,this decides how will it be like(color in Console, label in file).
      */
     public void WriteLine(String content, OutputType type) {
-        WriteLineBase(content, type, null);
+        WriteLineBase(content, type, ConsoleColor.Black);
     }
 
     /**
@@ -539,6 +544,7 @@ public class IOServer {
     private void WriteLineBase(String content, OutputType type, ConsoleColor customColor) {
         if (!IsOutputRedirected()) {
             ConsoleColor color = SelectColor(type, customColor);
+            this.content=content;
             Output.println(color + Prefix() + content + ClearEffect);
 
         } else {
@@ -546,6 +552,7 @@ public class IOServer {
                     "]" +
                     GetLabel(type) +
                     content;
+            this.content=content;
             Output.println(sb);
         }
     }
