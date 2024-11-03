@@ -10,13 +10,13 @@ public class LangResourceBundleTest {
 
     @Before
     public void setUp() {
-        // 初始化 LangResourceBundle 实例
+        //Initialize LangResourceBundle instance
         langResourceBundle = new LangResourceBundle();
     }
 
     @Test
     public void testStringsAreLoaded() {
-        // 验证每个字符串属性是否不为 null
+        // Verify that each string property is not null
         assertNotNull(langResourceBundle.Bic);
         assertNotNull(langResourceBundle.BicExp1);
         assertNotNull(langResourceBundle.BicExp2);
