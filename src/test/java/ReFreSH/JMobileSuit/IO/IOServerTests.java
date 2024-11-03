@@ -49,10 +49,11 @@ public class IOServerTests {
         ioServer.Error = new PrintStream(errorStream);
         ioServer.SetInput(inputStream);
     }
+     // Test IOServer's WriteLine method to ensure it writes the correct text to the output stream  
     @Test
     public void testWriteLine() {
         ioServer.WriteLine("Hello World");
-        assertEquals("Hello World", ioServer.getContent());
+        assertEquals("Hello World", ioServer.getContent()); // trim() to remove any trailing newline  
     }
 
     @Test
@@ -99,10 +100,12 @@ public class IOServerTests {
 
     @Before
     public void before() throws Exception {
+        // Any setup code can be placed here (currently empty)  
     }
 
     @After
     public void after() throws Exception {
+        // Any teardown code can be placed here (currently empty)  
     }
 
 
