@@ -29,9 +29,8 @@ public class ClientTest {
 
     @Test(expected = Exception.class)
     public void testByeThrowsException() throws Exception {
-        client.exp(); // 直接调用会抛出异常
+        client.exp();  // Directly calling this should throw an exception  
     }
-
 
     @Test
     public void testBye() {
@@ -59,9 +58,9 @@ public class ClientTest {
     @Test
     public void testGoodMorningParameterParseFailure() {
         GoodMorningParameter param = new GoodMorningParameter();
-        String[] options = {"Alice", "Bob"}; // 超过一个参数
+        String[] options = {"Alice", "Bob"}; // More than one parameter  
         assertFalse(param.parse(options));
-        assertEquals(param.name, "foo"); // 默认值未更改
+        assertEquals(param.name, "foo");// Default value should not be changed  
     }
 
 
@@ -75,9 +74,9 @@ public class ClientTest {
 
     @Test
     public void testGoodEveningNoArgs() {
-        String[] args = {}; // 没有参数
+        String[] args = {}; // No arguments 
         client.GoodEvening(args);
-        Mockito.verify(mockIoServer).WriteLine("Good Evening, "); // 确保输出
+        Mockito.verify(mockIoServer).WriteLine("Good Evening, ");// Ensure output
     }
 
 
@@ -121,18 +120,18 @@ public class ClientTest {
 
     @Test
     public void testSleepNoArgs() {
-        SleepArgument argument = new SleepArgument(); // 默认构造
+        SleepArgument argument = new SleepArgument(); // Default constructor
         client.Sleep(argument);
-        Mockito.verify(mockIoServer).WriteLine(argument.Name.get(0) + " is not sleeping."); // 确保输出
+        Mockito.verify(mockIoServer).WriteLine(argument.Name.get(0) + " is not sleeping."); // Test the ShowNumber method with an empty array  
     }
 
     @Test
     public void testShowNumberEmptyArray() {
         int i = 5;
-        int[] j = {}; // 空数组
+        int[] j = {};// Empty array
         client.ShowNumber(i, j);
         Mockito.verify(mockIoServer).WriteLine("5");
-        Mockito.verify(mockIoServer).WriteLine(""); // 输出空行
+        Mockito.verify(mockIoServer).WriteLine("");// Output an empty line 
     }
 
 
