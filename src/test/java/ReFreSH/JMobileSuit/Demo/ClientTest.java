@@ -16,6 +16,7 @@ public class ClientTest {
 
     @Before
     public void setUp() {
+        // Initialize the Client and mock IOServer
         client = new Client();
         mockIoServer = Mockito.mock(IOServer.class);
         client.setIO(mockIoServer);
@@ -23,18 +24,20 @@ public class ClientTest {
 
     @Test
     public void testHello() {
+        // Test the Hello method
         client.Hello();
         Mockito.verify(mockIoServer).WriteLine("Hello! MobileSuit!");
     }
 
     @Test(expected = Exception.class)
     public void testByeThrowsException() throws Exception {
-        client.exp(); // 直接调用会抛出异常
+        // Directly calling exp() will throw an exception
+        client.exp();
     }
-
 
     @Test
     public void testBye() {
+        // Test the Bye method with a name parameter
         String result = client.Bye("John");
         assertEquals("bye", result);
         Mockito.verify(mockIoServer).WriteLine("Bye!John");
@@ -42,6 +45,7 @@ public class ClientTest {
 
     @Test
     public void testGoodMorning() {
+        // Test the GoodMorning method with a parameter
         GoodMorningParameter param = new GoodMorningParameter();
         param.name = "Alice";
         client.GoodMorning(param);
@@ -50,6 +54,7 @@ public class ClientTest {
 
     @Test
     public void testGoodMorning2() {
+        // Test the GoodMorning2 method with two name parameters
         GoodMorningParameter param = new GoodMorningParameter();
         param.name = "Alice";
         client.GoodMorning2("Bob", param);
@@ -58,31 +63,32 @@ public class ClientTest {
 
     @Test
     public void testGoodMorningParameterParseFailure() {
+        // Test parsing failure for the GoodMorningParameter
         GoodMorningParameter param = new GoodMorningParameter();
-        String[] options = {"Alice", "Bob"}; // 超过一个参数
+        String[] options = {"Alice", "Bob"}; // More than one parameter
         assertFalse(param.parse(options));
-        assertEquals(param.name, "foo"); // 默认值未更改
+        assertEquals(param.name, "foo"); // Default value should remain unchanged
     }
-
 
     @Test
     public void testGoodEvening() {
+        // Test the GoodEvening method with arguments
         String[] args = {"Alice", "Bob"};
         client.GoodEvening(args);
         Mockito.verify(mockIoServer).WriteLine("Good Evening, Alice");
     }
 
-
     @Test
     public void testGoodEveningNoArgs() {
-        String[] args = {}; // 没有参数
+        // Test the GoodEvening method with no arguments
+        String[] args = {}; // No parameters
         client.GoodEvening(args);
-        Mockito.verify(mockIoServer).WriteLine("Good Evening, "); // 确保输出
+        Mockito.verify(mockIoServer).WriteLine("Good Evening, "); // Ensure output
     }
-
 
     @Test
     public void testShowNumber() {
+        // Test showing a number and an array of numbers
         int i = 5;
         int[] j = {10};
         client.ShowNumber(i, j);
@@ -92,6 +98,7 @@ public class ClientTest {
 
     @Test
     public void testGoodEvening2() {
+        // Test the GoodEvening2 method with two name parameters
         String[] args = {"Alice"};
         client.GoodEvening2("Bob", args);
         Mockito.verify(mockIoServer).WriteLine("Good Evening, Bob and Alice");
@@ -99,6 +106,7 @@ public class ClientTest {
 
     @Test
     public void testSleep() {
+        // Test the Sleep method with sleeping argument
         SleepArgument argument = new SleepArgument();
         argument.Name.add("Alice");
         argument.SleepTime = 5;
@@ -111,6 +119,7 @@ public class ClientTest {
     // Additional tests for other methods can be added here...
     @Test
     public void testSleep2() {
+        // Test the Sleep method with a non-sleeping argument
         SleepArgument argument = new SleepArgument();
         argument.Name.add("Bob");
         argument.isSleeping = false;
@@ -121,23 +130,25 @@ public class ClientTest {
 
     @Test
     public void testSleepNoArgs() {
-        SleepArgument argument = new SleepArgument(); // 默认构造
+        // Test the Sleep method with default arguments
+        SleepArgument argument = new SleepArgument(); // Default constructor
         client.Sleep(argument);
-        Mockito.verify(mockIoServer).WriteLine(argument.Name.get(0) + " is not sleeping."); // 确保输出
+        Mockito.verify(mockIoServer).WriteLine(argument.Name.get(0) + " is not sleeping."); // Ensure output
     }
 
     @Test
     public void testShowNumberEmptyArray() {
+        // Test showing a number with an empty array
         int i = 5;
-        int[] j = {}; // 空数组
+        int[] j = {}; // Empty array
         client.ShowNumber(i, j);
         Mockito.verify(mockIoServer).WriteLine("5");
-        Mockito.verify(mockIoServer).WriteLine(""); // 输出空行
+        Mockito.verify(mockIoServer).WriteLine(""); // Output empty line
     }
-
 
     @Test
     public void testParse() {
+        // Test parsing of GoodMorningParameter with various options
         GoodMorningParameter param = new GoodMorningParameter();
         String[] options = {"Alice"};
         assertTrue(param.parse(options));
@@ -146,8 +157,6 @@ public class ClientTest {
         String[] options3 = {"Alice", "Bob"};
         assertTrue(param.parse(options2));
         assertFalse(param.parse(options3));
-        assertEquals(param.name,"");
-
+        assertEquals(param.name, "");
     }
 }
-
