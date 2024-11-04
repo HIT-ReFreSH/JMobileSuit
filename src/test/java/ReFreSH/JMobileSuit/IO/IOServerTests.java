@@ -76,6 +76,12 @@ public class IOServerTests {
     }
 
     @Test
+    public void testWriteDefault() {
+        ioServer.Write("Default Text");
+        assertEquals("Default Text\u001B[;1;m", ioServer.getContent());
+    }
+
+    @Test
     public void testIsInputRedirected2() {
         assertTrue(ioServer.IsInputRedirected());
     }
@@ -293,6 +299,33 @@ public class IOServerTests {
     }
 
     @Test
+    public void testReadLineWithoutInputStream() {
+        String testInput = "";
+        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        IOServer ioserver = getInstance();
+        ioserver.SetInput(inputStream);
+        String prompt = "";
+        boolean newLine = true;
+        String defaultValue ="Default Value";
+        String result = ioserver.ReadLine(prompt, defaultValue, newLine);
+
+        assertEquals(defaultValue, result);
+    }
+
+    @Test
+    public void testReadLineWithPromptAndNewline() {
+        String testInput = "Test Input";
+        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        IOServer ioserver = getInstance();
+        ioserver.SetInput(inputStream);
+        String prompt = "";
+        boolean newLine = true;
+        String result = ioserver.ReadLine(prompt, newLine);
+
+        assertEquals(testInput, result);
+    }
+
+    @Test
     public void testRead() throws IOException {
         String testInput = "Test Input";
         InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
@@ -425,6 +458,9 @@ public class IOServerTests {
         assertEquals(1, prefixLengthStack.size());
         assertEquals(Integer.valueOf(10), prefixLengthStack.pop());
     }
+    @Test
+    public void testWriteLineDefault(){
 
+    }
 
 }
