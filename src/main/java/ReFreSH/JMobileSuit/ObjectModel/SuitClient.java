@@ -7,7 +7,7 @@ import ReFreSH.JMobileSuit.ObjectModel.Annotions.SuitIgnore;
 /// An Standard mobile suit client driver-class.
 /// </summary>
 @SuppressWarnings("unused")
-public abstract class SuitClient implements InfoProvider, IOInteractive {
+public class SuitClient implements InfoProvider, IOInteractive {
 
     protected String _text = "";
     private IOServer _io;
@@ -15,7 +15,7 @@ public abstract class SuitClient implements InfoProvider, IOInteractive {
     /**
      * The IOServer for current SuitHost.
      */
-    protected IOServer IO() {
+    public IOServer IO() {
         return _io;
     }
 
@@ -24,7 +24,7 @@ public abstract class SuitClient implements InfoProvider, IOInteractive {
      *
      * @param value The information provided.
      */
-    protected void setText(String value) {
+    public void setText(String value) {
         _text = value;
     }
 

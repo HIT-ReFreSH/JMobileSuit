@@ -63,4 +63,5 @@ public interface SuitConfiguration {
      */
     Logger Logger();
 
+    Object getPromptServer();
 }

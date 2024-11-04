@@ -20,7 +20,7 @@ public class SuitConfigurator {
     public Class<? extends IOServer> IOServerType = IOServer.class;
     public Class<? extends SuitConfiguration> ConfigurationType = CommonSuitConfiguration.class;
 
-    private SuitConfigurator() {
+    SuitConfigurator() {
 
     }
 

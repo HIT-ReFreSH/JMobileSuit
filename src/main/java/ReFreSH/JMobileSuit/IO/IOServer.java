@@ -591,6 +591,11 @@ public class IOServer {
         }
     }
 
+    public Object getContent() {
+
+        return null;
+    }
+
     /// <summary>
     ///
     /// </summary>

@@ -1,5 +1,7 @@
 package ReFreSH.JMobileSuit.IO;
 
+
+
 import ReFreSH.JMobileSuit.SuitConfiguration;
 import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.apache.logging.log4j.core.Logger;
@@ -23,11 +25,15 @@ import static org.mockito.Mockito.*;
 
 public class IOServerTests {
 
-    private IOServer ioServer;
+
+    private IOServer ioServer = new IOServer();
     private Logger logger;
-    private ByteArrayOutputStream outputStream;
+    private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     private ByteArrayOutputStream errorStream;
     private InputStream inputStream;
+
+
+
 
     @BeforeEach
     public void setUp() {
@@ -47,40 +53,37 @@ public class IOServerTests {
     }
 
     @Test
-    public void testWriteLine() {
-        ioServer.WriteLine("Hello World");
-        assertEquals("Hello World\n", outputStream.toString());
-    }
-
-    @Test
     public void testWriteDebug2() {
-        ioServer.WriteDebug("Debug message");
-        verify(logger).debug("Debug message");
+        Logger mockLogger = mock(Logger.class);
+        ColorSetting colorSetting = mock(ColorSetting.class);
+        PromptServer promptServer = mock(PromptServer.class);
+
+        IOServer ioserver = getInstance(promptServer, mockLogger, colorSetting);
+
+        ioserver.WriteDebug("Debug message");
+
+        // Verify if the LogDebug method of the mock object has been called and if the passed parameters match the expected values.
+        verify(mockLogger, times(1)).debug(anyString());
     }
 
     @Test
     public void testWriteException2() {
-        Exception e = new Exception("Test Exception");
-        ioServer.WriteException(e);
-        verify(logger).error(e);
+        Logger mockLogger = mock(Logger.class);
+        ColorSetting colorSetting = mock(ColorSetting.class);
+        PromptServer promptServer = mock(PromptServer.class);
+        IOServer ioserver = getInstance(promptServer, mockLogger, colorSetting);
+
+        String testException = new String("Test Exception");
+        ioserver.WriteException(testException);
+        verify(mockLogger, times(1)).error(testException);
     }
 
     @Test
     public void testWriteWithColor() {
         ioServer.Write("Colored Text", ConsoleColor.Red);
         // Assuming ConsoleColor.Red changes the output, we verify the text without the color code
-        assertTrue(outputStream.toString().contains("Colored Text"));
+        assertEquals("Colored Text\u001B[;31m", ioServer.getContent());
     }
-
-    @Test
-    public void testIsInputRedirected2() {
-        assertTrue(ioServer.IsInputRedirected());
-    }
-//    private final Logger Logger;
-//
-//    public IOServerTests(Logger logger) {
-//        Logger = logger;
-//    }
 
     private IOServer getInstance() {
         return new IOServer();

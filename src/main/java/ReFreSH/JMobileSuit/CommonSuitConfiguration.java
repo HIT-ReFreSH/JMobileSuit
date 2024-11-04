@@ -68,5 +68,10 @@ public class CommonSuitConfiguration implements SuitConfiguration {
     public Logger Logger() {
         return logger;
     }
+
+    @Override
+    public Object getPromptServer() {
+        return null;
+    }
 }
 

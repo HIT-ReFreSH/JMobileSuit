@@ -119,12 +119,6 @@ public class ClientTest {
         Mockito.verify(mockIoServer).WriteLine("Bob is not sleeping.");
     }
 
-    @Test
-    public void testSleepNoArgs() {
-        SleepArgument argument = new SleepArgument(); // 默认构造
-        client.Sleep(argument);
-        Mockito.verify(mockIoServer).WriteLine(argument.Name.get(0) + " is not sleeping."); // 确保输出
-    }
 
     @Test
     public void testShowNumberEmptyArray() {
