@@ -22,6 +22,11 @@ public class ClientTest {
         client.setIO(mockIoServer);
     }
 
+    private void verifyGoodEvening(String expectedOutput, String... args) {
+        client.GoodEvening(args);
+        Mockito.verify(mockIoServer).WriteLine(expectedOutput);
+    }
+
     @Test
     public void testHello() {
         // Test the Hello method
@@ -44,8 +49,8 @@ public class ClientTest {
     }
 
     @Test
-    public void testGoodMorning() {
-        // Test the GoodMorning method with a parameter
+    public void testGoodMorningWithSingleName() {
+        // Test the GoodMorning method with a single name parameter
         GoodMorningParameter param = new GoodMorningParameter();
         param.name = "Alice";
         client.GoodMorning(param);
@@ -53,7 +58,7 @@ public class ClientTest {
     }
 
     @Test
-    public void testGoodMorning2() {
+    public void testGoodMorningWithTwoNames() {
         // Test the GoodMorning2 method with two name parameters
         GoodMorningParameter param = new GoodMorningParameter();
         param.name = "Alice";
@@ -67,23 +72,21 @@ public class ClientTest {
         GoodMorningParameter param = new GoodMorningParameter();
         String[] options = {"Alice", "Bob"}; // More than one parameter
         assertFalse(param.parse(options));
-        assertEquals(param.name, "foo"); // Default value should remain unchanged
+        assertEquals(param.name, "defaultName"); // Ensure default value is set correctly
     }
 
     @Test
     public void testGoodEvening() {
         // Test the GoodEvening method with arguments
         String[] args = {"Alice", "Bob"};
-        client.GoodEvening(args);
-        Mockito.verify(mockIoServer).WriteLine("Good Evening, Alice");
+        verifyGoodEvening("Good Evening, Alice", args);
     }
 
     @Test
     public void testGoodEveningNoArgs() {
         // Test the GoodEvening method with no arguments
         String[] args = {}; // No parameters
-        client.GoodEvening(args);
-        Mockito.verify(mockIoServer).WriteLine("Good Evening, "); // Ensure output
+        verifyGoodEvening("Good Evening, ", args);
     }
 
     @Test
@@ -94,6 +97,7 @@ public class ClientTest {
         client.ShowNumber(i, j);
         Mockito.verify(mockIoServer).WriteLine("5");
         Mockito.verify(mockIoServer).WriteLine("10");
+        Mockito.verifyNoMoreInteractions(mockIoServer);
     }
 
     @Test
@@ -143,7 +147,8 @@ public class ClientTest {
         int[] j = {}; // Empty array
         client.ShowNumber(i, j);
         Mockito.verify(mockIoServer).WriteLine("5");
-        Mockito.verify(mockIoServer).WriteLine(""); // Output empty line
+        Mockito.verify(mockIoServer).WriteLine("");
+        Mockito.verifyNoMoreInteractions(mockIoServer);
     }
 
     @Test
