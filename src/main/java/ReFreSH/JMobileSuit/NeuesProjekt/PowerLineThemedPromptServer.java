@@ -6,37 +6,37 @@ import ReFreSH.JMobileSuit.SuitConfiguration;
 import ReFreSH.JMobileSuit.TraceBack;
 
 /**
- * a power line themed prompt server for mobile suit
+ * 一款以 Power Line 为主题的机动战士提示服务器
  */
 public class PowerLineThemedPromptServer extends CommonPromptServer {
 
 
     /**
-     * a lightning ⚡ char
+     * 闪电 ⚡
      */
     protected static final char Lightning = '⚡';
     /**
-     * a right arrow  char
+     *右箭头  char
      */
     protected static final char RightArrow = '';
     /**
-     * a right triangle  char
+     * 直角三角形  char
      */
     protected static final char RightTriangle = '';
     /**
-     * a cross ⨯ char
+     * 叉 ⨯ char
      */
     protected static final char Cross = '⨯';
 
     /**
-     * Initialize a prompt default.
+     * 初始化提示 default。
      */
     public PowerLineThemedPromptServer() {
         super();
     }
 
     /**
-     * Initialize a prompt with IO and color setting.
+     *使用 IO 和颜色设置初始化提示。
      *
      * @param io given io server
      */
@@ -45,7 +45,7 @@ public class PowerLineThemedPromptServer extends CommonPromptServer {
     }
 
     /**
-     * Initialize a prompt Server with given configuration
+     * 使用给定配置初始化提示 Server
      *
      * @param configuration given configuration
      */
@@ -54,7 +54,7 @@ public class PowerLineThemedPromptServer extends CommonPromptServer {
     }
 
     /**
-     * Create a mobile suit configuration with power line theme
+     * 创建具有电力线主题的移动设备套装配置
      */
     public static SuitConfiguration getPowerLineThemeConfiguration() {
         return SuitConfigurator.ofDefault().use(PowerLineThemedPromptServer.class).getConfiguration();

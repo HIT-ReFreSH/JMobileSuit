@@ -4,13 +4,13 @@ import ReFreSH.JMobileSuit.ObjectModel.IOInteractive;
 import ReFreSH.JMobileSuit.TraceBack;
 
 /**
- * represents a server provides prompt output.
+ * 表示服务器提供提示输出。
  */
 public interface PromptServer extends IOInteractive {
 
 
     /**
-     * get the default prompt server of Mobile Suit
+     * 获取 Mobile Suit 的默认提示服务器
      */
     static PromptServer getInstance() {
         return new CommonPromptServer();
@@ -18,27 +18,27 @@ public interface PromptServer extends IOInteractive {
 
 
     /**
-     * update the prompt of this prompt server
+     * 更新此提示服务器的提示符
      *
-     * @param returnValue return value of last command
-     * @param information information of current instance
-     * @param traceBack   traceBack of last command
+     * @param returnValue 返回 last 命令的值
+     * @param information 当前实例信息
+     * @param traceBack   traceLast 命令的返回
      */
     void Update(String returnValue, String information, TraceBack traceBack);
 
 
     /**
-     * update the prompt of this prompt server
+     * 更新此提示服务器的提示符
      *
-     * @param returnValue       return value of last command
-     * @param information       information of current instance
-     * @param traceBack         traceBack of last command
-     * @param promptInformation information shows when traceBack==TraceBack.Prompt
+     * @param returnValue      返回 last 命令的值
+     * @param information       当前实例信息
+     * @param traceBack        traceLast 命令的返回
+     * @param promptInformation 信息显示 traceBack==TraceBack.Prompt
      */
     void Update(String returnValue, String information, TraceBack traceBack, String promptInformation);
 
     /**
-     * Output a prompt to IO.Output
+     *将提示输出到 IO。输出
      */
     void Print();
 }

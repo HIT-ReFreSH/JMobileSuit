@@ -7,15 +7,14 @@ import ReFreSH.JMobileSuit.ObjectModel.SuitConfigurator;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
-
 /**
- * represent a configuration for Mobile Suit
+ * 表示移动套件的配置
  */
 public interface SuitConfiguration {
 
 
     /**
-     * get a default configuration of Mobile Suit
+     * 获取移动套件的默认配置
      */
 
     static SuitConfiguration getInstance() {
@@ -23,43 +22,43 @@ public interface SuitConfiguration {
     }
 
     /**
-     * Type of BuildInCommandServer
+     * 内置命令服务器的类型
      */
     Class<?> BuildInCommandServerType();
 
     /**
-     * Initialize the BuildInCommandServer with BuiltInCommandServerType and given host
+     * 使用 BuiltInCommandServerType 和给定主机初始化 BuildInCommandServer
      *
-     * @param host host for BuildInCommandServer
+     * @param host BuildInCommandServer 的主机
      */
 
     void InitializeBuildInCommandServer(SuitHost host)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException;
 
     /**
-     * IOServer for the Mobile Suit
+     * 移动套件的 IO 服务器
      */
     IOServer IO();
 
     /**
-     * BuildInCommandServer for the Mobile Suit
+     * 移动套件的内置命令服务器
      */
     BuildInCommandServer BuildInCommandServer();
 
     /**
-     * Prompt for the Mobile Suit
+     * 移动套件的提示服务器
      */
     PromptServer Prompt();
 
     /**
-     * Color for the Mobile Suit
+     * 移动套件的颜色设置
      */
     ColorSetting ColorSetting();
 
     /**
-     * Logger of current mobile suit
+     * 当前移动套件的记录器
      *
-     * @return The logger
+     * @return 记录器
      */
     Logger Logger();
 

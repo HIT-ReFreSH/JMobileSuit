@@ -6,6 +6,8 @@ import ReFreSH.JMobileSuit.TraceBack;
 import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.junit.Test;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 public class SuitObjectTest {
@@ -51,7 +53,7 @@ public class SuitObjectTest {
         assertNull(result.Second);
         result = suitObject.execute(new String[]{"get1"});
         assertEquals(TraceBack.AllOk, result.First);
-        assertEquals(1, result.Second);
+        assertEquals(Optional.of(1), result.Second);
     }
 
     @Test
