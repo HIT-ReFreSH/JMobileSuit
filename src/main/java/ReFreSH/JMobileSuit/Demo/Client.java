@@ -13,7 +13,7 @@ import java.util.List;
 
 @SuitInfo("Demo")
 public class Client extends SuitClient {
-    static void exp() throws Exception {
+    private static void exp() throws Exception {
         throw new Exception();
     }
 

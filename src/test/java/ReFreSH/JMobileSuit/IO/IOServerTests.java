@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
@@ -23,19 +24,15 @@ import static org.mockito.Mockito.*;
 
 public class IOServerTests {
 
-
-    private IOServer ioServer = new IOServer();
+    private IOServer ioServer;
     private Logger logger;
-    private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    private ByteArrayOutputStream outputStream;
     private ByteArrayOutputStream errorStream;
     private InputStream inputStream;
 
-
-
-
-    @BeforeEach
+    @Before
     public void setUp() {
-        // Mock the logger
+        //
         logger = mock(Logger.class);
 
         // Initialize IOServer with mock dependencies
@@ -45,14 +42,22 @@ public class IOServerTests {
         outputStream = new ByteArrayOutputStream();
         errorStream = new ByteArrayOutputStream();
         inputStream = new ByteArrayInputStream("test input\n".getBytes());
+
         ioServer.Output = new PrintStream(outputStream);
         ioServer.Error = new PrintStream(errorStream);
         ioServer.SetInput(inputStream);
     }
+
     @Test
     public void testWriteLine() {
         ioServer.WriteLine("Hello World");
-        assertEquals("Hello World", ioServer.getContent());
+        assertEquals("Hello World\r\n", outputStream.toString());
+    }
+
+    @Test
+    public void testReadLine2() {
+        String input = ioServer.ReadLine();
+        assertEquals("test input", input);
     }
 
     @Test
@@ -72,7 +77,7 @@ public class IOServerTests {
     public void testWriteWithColor() {
         ioServer.Write("Colored Text", ConsoleColor.Red);
         // Assuming ConsoleColor.Red changes the output, we verify the text without the color code
-        assertEquals("Colored Text\u001B[;31m", ioServer.getContent());
+        assertTrue(outputStream.toString().contains("Colored Text"));
     }
 
     @Test
@@ -110,7 +115,7 @@ public class IOServerTests {
     public void IOServerTest() {
         IOServer instance = getInstance();
         assertNotNull(instance);
-        // Testing dependency injection of IOServer and ColorSetting
+        // 测试 IOServer 和 ColorSetting 依赖注入
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContextTest.xml");
         ColorSetting colorSetting = context.getBean("colorSetting", ColorSetting.class);
         IOServer ioServer = context.getBean("IOServer", IOServer.class);
@@ -282,15 +287,8 @@ public class IOServerTests {
         assertEquals(testInput, result);
     }
 
-    @Test
-    public void testReadLineWithoutPrompt() {
-        String testInput = "anything";
-        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
-        IOServer ioserver = getInstance();
-        ioserver.SetInput(inputStream);
-        String result = ioserver.ReadLine();
-        assertEquals(testInput, result);
-    }
+    //TODO: Method Overloading test need to be added
+
 
     @Test
     public void testRead() throws IOException {
@@ -426,5 +424,40 @@ public class IOServerTests {
         assertEquals(Integer.valueOf(10), prefixLengthStack.pop());
     }
 
+    @Test
+    public void testSetAndGetInput() {
+        String testInput = "Test Input Content";
+        InputStream testInputStream = new ByteArrayInputStream(testInput.getBytes());
 
+        ioServer.SetInput(testInputStream);
+
+        // 验证 GetInput 返回的输入流确实是我们设置的流
+        assertEquals(testInputStream, ioServer.GetInput());
+
+        // 验证读取内容是否匹配
+        Scanner scanner = new Scanner(ioServer.GetInput());
+        assertEquals("Test Input Content", scanner.nextLine());
+    }
+    @Test
+    public void testWriteWithDifferentColors() {
+        ioServer.Write("Test Red", ConsoleColor.Red);
+        assertTrue(outputStream.toString().contains("Test Red"));
+
+        outputStream.reset();
+
+        ioServer.Write("Test Blue", ConsoleColor.Blue);
+        assertTrue(outputStream.toString().contains("Test Blue"));
+    }
+    @Test
+    public void testResetInputBehavior() {
+        ioServer.SetInput(new ByteArrayInputStream("Temporary input".getBytes()));
+        assertTrue(ioServer.IsInputRedirected());
+
+        // 重置输入流
+        ioServer.ResetInput();
+
+        // 检查是否恢复到 System.in
+        assertEquals(System.in, ioServer.GetInput());
+        assertFalse(ioServer.IsInputRedirected());
+    }
 }

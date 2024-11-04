@@ -67,7 +67,7 @@ public class SuitHost {
     private String _returnValue;
 
     /**
-     * Initialize a SuitHost with general BicServer, IOServer, an instance.
+     * 使用通用 BicServer、IOServer 和一个实例初始化 SuitHost。
      *
      * @param instance The instance for Mobile Suit to drive.
      */
@@ -76,9 +76,8 @@ public class SuitHost {
         Current = new SuitObject(instance);
         WorkInstanceInit();
     }
-
     /**
-     * Initialize a SuitHost with given BicServer, IOServer, an instance.
+     * 使用给定的 BicServer、IOServer 和一个实例初始化 SuitHost。
      *
      * @param configuration Configuration
      */
@@ -96,7 +95,7 @@ public class SuitHost {
     }
 
     /**
-     * Initialize a SuitHost with general BicServer, IOServer, a type.
+     * 使用通用 BicServer、IOServer 和一个类型初始化 SuitHost。
      *
      * @param type The type for Mobile Suit to drive.
      */
@@ -106,7 +105,7 @@ public class SuitHost {
     }
 
     /**
-     * Initialize a SuitHost with given BicServer, IOServer, a type.
+     * 使用给定的 BicServer、IOServer 和一个类型初始化 SuitHost。
      *
      * @param type          The type for Mobile Suit to drive.
      * @param configuration Configuration
@@ -169,7 +168,7 @@ public class SuitHost {
     }
 
     /**
-     * set If the prompt contains the reference (For example, System.Console.Title) of current instance.
+     * 设置提示是否包含当前实例的引用（例如，System.Console.Title）。
      *
      * @param value If the prompt contains the reference (For example, System.Console.Title) of current instance.
      */
@@ -178,7 +177,7 @@ public class SuitHost {
     }
 
     /**
-     * get If the prompt contains the reference (For example, System.Console.Title) of current instance.
+     * 获取提示是否包含当前实例的引用（例如，System.Console.Title）。
      *
      * @return if the prompt contains the reference (For example, System.Console.Title) of current instance.
      */
@@ -194,14 +193,14 @@ public class SuitHost {
     }
 
     /**
-     * Current Instance's type.
+     * 当前实例
      */
     public Class<?> WorkType() {
         return Current.Instance().getClass();
     }
 
     /**
-     * get use TraceBack, or just throw Exceptions.
+     * 获取使用 TraceBack，还是只是抛出异常。
      *
      * @return use TraceBack, or just throw Exceptions.
      */
@@ -210,7 +209,7 @@ public class SuitHost {
     }
 
     /**
-     * set use TraceBack, or just throw Exceptions.
+     * 设置使用 TraceBack，还是只是抛出异常。
      *
      * @param _useTraceBack use TraceBack, or just throw Exceptions.
      */
@@ -219,7 +218,7 @@ public class SuitHost {
     }
 
     /**
-     * get If show that a command has been executed.
+     * 获取是否显示命令已被执行。
      *
      * @return If show that a command has been executed.
      */
@@ -228,7 +227,7 @@ public class SuitHost {
     }
 
     /**
-     * set If show that a command has been executed.
+     * 设置是否显示命令已被执行。
      *
      * @param _showDone If show that a command has been executed.
      */
@@ -237,7 +236,7 @@ public class SuitHost {
     }
 
     /**
-     * Initialize the current instance, if it is a SuitClient, or implements IIOInteractive.
+     * 初始化当前实例，如果它是 SuitClient 或实现 IIOInteractive。
      */
     public void WorkInstanceInit() {
         if (WorkInstance() instanceof IOInteractive) {
@@ -338,7 +337,7 @@ public class SuitHost {
 
 
     /**
-     * Run a Mobile Suit with Prompt.
+     * 运行一个 Mobile Suit并显示提示。
      *
      * @param prompt The prompt.
      * @return 0, is All ok.
@@ -373,7 +372,7 @@ public class SuitHost {
     }
 
     /**
-     * Run a Mobile Suit command with Prompt="".
+     * 运行一个Mobile Suit命令，提示为空。
      *
      * @return AllOK, is All ok.
      */
@@ -382,7 +381,7 @@ public class SuitHost {
     }
 
     /**
-     * Run a Mobile Suit command with Prompt.
+     * 运行一个Mobile Suit命令并显示提示。
      *
      * @param prompt The prompt.
      * @return AllOK, is All ok.
@@ -422,11 +421,10 @@ public class SuitHost {
     }
 
     /**
-     * Run a Mobile Suit with default Prompt.
+     * 运行一个Mobile Suit命令并显示默认提示.
      *
      * @return 0, is All ok .
      */
-
     public int Run() throws Exception {
         return Run("");
     }

@@ -1,36 +1,36 @@
 package ReFreSH.JMobileSuit.IO;
 
 /**
- * Type of content that writes to the output stream.
+ * 写入输出流的内容类型。
  */
 public enum OutputType {
 
     /**
-     * Normal content.
+     * 正常内容。
      */
     Default,
     /**
-     * Prompt content.
+     * 提示内容。
      */
     Prompt,
     /**
-     * Error content.
+     * 错误内容。
      */
     Error,
     /**
-     * All-Ok content.
+     * 全部正常内容。
      */
     AllOk,
     /**
-     * Title of a list.
+     * 列表的标题。
      */
     ListTitle,
     /**
-     * Normal information.
+     * 正常信息
      */
     CustomInfo,
     /**
-     * Information provided by MobileSuit.
+     * 信息由 MobileSuit 提供。
      */
     MobileSuitInfo
 

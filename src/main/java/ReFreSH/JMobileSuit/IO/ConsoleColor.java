@@ -21,17 +21,17 @@ public enum ConsoleColor {
     public static final String UnderLineCode = "4";
     private static final String ClearEffect = "\033[0m";
     /**
-     * get ForeGroundCode of a color. only foreground is available for colors with value &lt; 0
+     * 获取颜色的 ForeGroundCode。只有 foreground 可用于值 <; 0
      */
     public final String ForeGroundCode;
     /**
-     * get BackGroundCode of a color.
-     * only foreground is available for colors with value &lt; 0
-     * so if necessary, use getColorInverse().
+     * 获取颜色的 BackGroundCode.
+     * 只有 foreground 可用于值为 0 &lt;的颜色
+     *因此，如有必要，请使用 getColorInverse（）。
      */
     public final String BackGroundCode;
     /**
-     * the code represents the color
+     * 代码表示颜色
      */
     public final int Code;
 

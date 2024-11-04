@@ -17,12 +17,12 @@ public class CommonSuitConfiguration implements SuitConfiguration {
     private BuildInCommandServer _buildInCommandServer;
 
     /// <summary>
-    /// Initialize a configuration
+    /// 初始化配置
     /// </summary>
-    /// <param name="buildInCommandServerType">type of builtInCommandServerType</param>
-    /// <param name="io">io server</param>
-    /// <param name="promptServer">prompt server</param>
-    /// <param name="colorSetting">color setting </param>
+    /// <param name="buildInCommandServerType">内置命令服务器的类型</param>
+    /// <param name="io">IO 服务器</param>
+    /// <param name="promptServer">提示服务器</param>
+    /// <param name="colorSetting">颜色设置</param>
     public CommonSuitConfiguration(Class<? extends BuildInCommandServer> buildInCommandServerType, IOServer io, PromptServer promptServer, ColorSetting colorSetting, Logger logger) {
         _buildInCommandServerType = buildInCommandServerType;
         _io = io;
@@ -60,9 +60,9 @@ public class CommonSuitConfiguration implements SuitConfiguration {
     }
 
     /**
-     * Logger of current mobile suit
+     * 当前移动套件的记录器
      *
-     * @return The logger
+     * @return 记录器
      */
     @Override
     public Logger Logger() {

@@ -3,44 +3,44 @@ package ReFreSH.JMobileSuit.IO;
 import org.springframework.stereotype.Component;
 
 /**
- * Color settings of a IOServer.
+ * IOServer 的颜色设置。
  */
 @Component("colorSetting")
 public class ColorSetting {
     /**
-     * Default color. For OutputType.Default
+     * 默认颜色。对于 OutputType.Default
      */
     public final ConsoleColor DefaultColor = ConsoleColor.White;
     /**
-     * Prompt Color. For OutputType.Prompt
+     * 提示色。对于 OutputType.Prompt
      */
     public final ConsoleColor PromptColor = ConsoleColor.Magenta;
     /**
-     * Error Color. For OutputType.Error
+     * 错误颜色。对于 OutputType.Error
      */
     public final ConsoleColor ErrorColor = ConsoleColor.Red;
     /**
-     * AllOK Color. For OutputType.AllOK
+     * AllOK 颜色。对于 OutputType.AllOK
      */
     public final ConsoleColor AllOkColor = ConsoleColor.Green;
     /**
-     * ListTitle Color. For OutputType.ListTitle
+     * 列表标题颜色。对于 OutputType.ListTitle
      */
     public final ConsoleColor ListTitleColor = ConsoleColor.Yellow;
     /**
-     * CustomInformation Color. For OutputType.CustomInformation
+     * 用户信息颜色。对于 OutputType.CustomInformation
      */
     public final ConsoleColor CustomInformationColor = ConsoleColor.DarkCyan;
     /**
-     * Information Color. For OutputType.Information
+     * 信息颜色. 对于OutputType.Information
      */
     public final ConsoleColor InformationColor = ConsoleColor.DarkBlue;
 
 
     /**
-     * Default color settings for IOServer.
+     * IOServer 的默认颜色设置。
      *
-     * @return Default color settings for IOServer.
+     * @return 返回IOServer 的默认颜色设置。.
      */
     public static ColorSetting getInstance() {
         return new ColorSetting();

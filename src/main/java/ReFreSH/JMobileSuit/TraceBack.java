@@ -2,15 +2,15 @@ package ReFreSH.JMobileSuit;
 
 
 /**
- * Status of the last Commandline. Return value type for Built-In-Commands and Host Functions.
+ * 最后命令行的状态。内置命令和主机功能的返回值类型。
  */
 public enum TraceBack {
     /**
-     * a prompt
+     * 提示符
      */
     Prompt(2),
     /**
-     * The Progress is Exiting
+     * 进程正在退出
      */
     OnExit(1) {
         @Override
@@ -30,7 +30,7 @@ public enum TraceBack {
     },
 
     /**
-     * This is not a command
+     * 一切正常
      */
     InvalidCommand(-1) {
         @Override
@@ -40,7 +40,7 @@ public enum TraceBack {
     },
 
     /**
-     * Cannot find the object referring to.
+     * 这不是一个命令
      */
     ObjectNotFound(-2) {
         @Override
@@ -50,7 +50,7 @@ public enum TraceBack {
     },
 
     /**
-     * Cannot find the member in the object referring to.
+     * 找不到引用的对象。
      */
     MemberNotFound(-3) {
         @Override
@@ -60,7 +60,7 @@ public enum TraceBack {
     },
 
     /**
-     * Cannot find the member in the object referring to.
+     * 找不到对象中引用的成员。
      */
     AppException(-4) {
         @Override
