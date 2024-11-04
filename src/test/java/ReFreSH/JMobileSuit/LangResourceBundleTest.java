@@ -10,13 +10,13 @@ public class LangResourceBundleTest {
 
     @Before
     public void setUp() {
-        // 初始化 LangResourceBundle 实例
+        // Initialize an instance of LangResourceBundle
         langResourceBundle = new LangResourceBundle();
     }
 
     @Test
     public void testStringsAreLoaded() {
-        // 验证每个字符串属性是否不为 null
+        // Verify that each string property is not null
         assertNotNull(langResourceBundle.Bic);
         assertNotNull(langResourceBundle.BicExp1);
         assertNotNull(langResourceBundle.BicExp2);
@@ -35,10 +35,10 @@ public class LangResourceBundleTest {
         assertNotNull(langResourceBundle.ApplicationException);
     }
 
-    // 可以添加更多的测试方法来验证特定的字符串值
-    // 例如：
+    // More test methods can be added to verify specific string values
+    // For example:
     @Test
     public void testSpecificStringValue() {
-        assertEquals("就绪.", langResourceBundle.Done);
+        assertEquals("就绪.", langResourceBundle.Done); // Check if Done equals "就绪."
     }
 }
