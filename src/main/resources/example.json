@@ -1,8 +1,10 @@
 {
-  "name": "hello",
   "ColorSetting": {
-    "AllOkCr": "Blue"
+    "AllOkColor": "Blue",
+    "ErrorColor": "Yellow"
+  },
+  "PromptServer": "Common",
+  "IOServer": {
+    "input": "H"
   }
-
-
 }

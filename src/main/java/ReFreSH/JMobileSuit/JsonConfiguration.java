@@ -2,6 +2,7 @@ package ReFreSH.JMobileSuit;
 
 import ReFreSH.JMobileSuit.Demo.Client;
 import ReFreSH.JMobileSuit.IO.ColorSetting;
+import ReFreSH.JMobileSuit.IO.CommonPromptServer;
 import ReFreSH.JMobileSuit.IO.ConsoleColor;
 import ReFreSH.JMobileSuit.IO.IOServer;
 import ReFreSH.JMobileSuit.NeuesProjekt.PowerLineThemedPromptServer;
@@ -15,18 +16,20 @@ import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.Configurator;
 
 import java.io.*;
-import java.lang.module.Configuration;
-import java.lang.reflect.Field;
+import java.net.URL;
 
 import static java.lang.System.exit;
 
-//this class is for load configuration from the file which format is json
-public class JsonConfiguration implements IConfiguration{
+/**
+ * this class is for load configuration from the file which format is json
+ */
+
+public class JsonConfiguration implements IConfiguration {
     SuitConfiguration suitConfiguration;
 
 
     @Override
-    public SuitConfiguration parse(String JsonFilePath){
+    public SuitConfiguration parse(String JsonFilePath) {
 
         Logger logger = LogManager.getLogger(JsonConfiguration.class);
 
@@ -42,11 +45,10 @@ public class JsonConfiguration implements IConfiguration{
             e.printStackTrace();
         }
         //獲取到JSON對象，格式出錯則直接退出
-        System.out.println(jsonContent);
         JSONObject jsonObject = new JSONObject();
-        try{
+        try {
             jsonObject = JSON.parseObject(jsonContent.toString());
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.error("JSON配置文件因格式問題解析錯誤，項目結束，請修改後重啟");
             exit(-1);
         }
@@ -54,90 +56,197 @@ public class JsonConfiguration implements IConfiguration{
         //開始配置文件
 
         //首先配置ColorSetting
-        ColorSetting colorSetting = new ColorSetting();
-        try{
+        ColorSetting colorSetting = ReFreSH.JMobileSuit.IO.ColorSetting.getInstance();
+        try {
             Class<ConsoleColor> enumClass = ConsoleColor.class;
-            Object OAllOkColor = (Object) JSONPath.read(jsonContent.toString(), "$.ColorSetting.AllOkColor");
+            //獲取到ColorSetting下的所有顏色配置
+            Object ODefaultColor =  JSONPath.read(jsonContent.toString(), "$.ColorSetting.DefaultColor");
+            Object OAllOkColor =  JSONPath.read(jsonContent.toString(), "$.ColorSetting.AllOkColor");
+            Object OPromptColor =  JSONPath.read(jsonContent.toString(), "$.ColorSetting.PromptColor");
+            Object OErrorColor =  JSONPath.read(jsonContent.toString(), "$.ColorSetting.ErrorColor");
+            Object OListTitleColor =  JSONPath.read(jsonContent.toString(), "$.ColorSetting.ListTitleColor");
+            Object OCustomInformationColor =  JSONPath.read(jsonContent.toString(), "$.ColorSetting.CustomInformationColor");
+            Object OInformationColor =  JSONPath.read(jsonContent.toString(), "$.ColorSetting.InfotmationColor");
 
-            if(OAllOkColor == null){
-                System.out.println("為空");
+
+            try {
+                if (OAllOkColor != null) {
+                    String enumName = (String) OAllOkColor;
+                    // 获取枚举对象
+                    ConsoleColor enumInstance = Enum.valueOf(enumClass, enumName);
+                    colorSetting.AllOkColor = enumInstance;
+                }
+                if (ODefaultColor != null) {
+                    String enumName = (String) ODefaultColor;
+                    // 获取枚举对象
+                    ConsoleColor enumInstance = Enum.valueOf(enumClass, enumName);
+                    colorSetting.DefaultColor = enumInstance;
+                }
+                if (OErrorColor != null) {
+                    String enumName = (String) OErrorColor;
+                    // 获取枚举对象
+                    ConsoleColor enumInstance = Enum.valueOf(enumClass, enumName);
+                    colorSetting.ErrorColor = enumInstance;
+                }
+                if (OListTitleColor != null) {
+                    String enumName = (String) OListTitleColor;
+                    // 获取枚举对象
+                    ConsoleColor enumInstance = Enum.valueOf(enumClass, enumName);
+                    colorSetting.ListTitleColor = enumInstance;
+                }
+                if (OPromptColor != null) {
+                    String enumName = (String) OPromptColor;
+                    // 获取枚举对象
+                    ConsoleColor enumInstance = Enum.valueOf(enumClass, enumName);
+                    colorSetting.PromptColor = enumInstance;
+                }
+                if (OCustomInformationColor != null) {
+                    String enumName = (String) OCustomInformationColor;
+                    // 获取枚举对象
+                    ConsoleColor enumInstance = Enum.valueOf(enumClass, enumName);
+                    colorSetting.CustomInformationColor = enumInstance;
+                }
+                if (OInformationColor != null) {
+                    String enumName = (String) OInformationColor;
+                    // 获取枚举对象
+                    ConsoleColor enumInstance = Enum.valueOf(enumClass, enumName);
+                    colorSetting.InformationColor = enumInstance;
+                }
+            } catch (NullPointerException e) {
+                logger.error("Json顏色配置中存在無效顏色名稱");
+
             }
-            String enumName = (String) o;
 
 
-            System.out.println(enumName);
-//            String enumName = "Blue";
-            // 获取枚举对象
-            ConsoleColor enumInstance = Enum.valueOf(enumClass, enumName);
-
-            colorSetting.AllOkColor = enumInstance;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println(colorSetting.AllOkColor);
-        System.out.println(ConsoleColor.Blue == colorSetting.AllOkColor);
+        //將ColorSetting的配置放入到Configurator之中
         SuitConfigurator suitConfigurator = SuitConfigurator.ofDefault();
         suitConfigurator.ColorSetting = colorSetting;
-        PowerLineThemedPromptServer powerLineThemedPromptServer = new PowerLineThemedPromptServer(suitConfigurator.getConfiguration());
-
-        //單獨配置prompt,
-        suitConfiguration = new CommonSuitConfiguration(BuildInCommandServer.class,new IOServer(),powerLineThemedPromptServer,colorSetting,logger);
 
 
+        //現在開始進行logger的配置，但是需要目前logger疑似存在bug，即使是resource下的logger配置文件也無法讀取
 
-        suitConfigurator.PromptServerType = powerLineThemedPromptServer.getClass();
-
-        SuitConfiguration configuration = suitConfigurator.getConfiguration();
-
-
-
-
-
-
-
-
-
-
-
-
-        //我们将log4j2.xml放在D盘下
-             //这是需要手动的加载
-             //绝对路径配置文件
-             ConfigurationSource source;
-             try {
-//               //方法1  使用  public ConfigurationSource(InputStream stream) throws IOException 构造函数
-//               source = new ConfigurationSource(new FileInputStream("E:\\\\桌面\\\\book\\\\开源软件实践\\\\lab3\\\\JMobileSuit\\\\src\\\\main\\\\resources\\\\log4j.properties"));
-                 //方法2 使用 public ConfigurationSource(InputStream stream, File file)构造函数
-//                 File config = new File("D:\\log4j.properties");
-//                 source = new ConfigurationSource(new FileInputStream(config), config);
-//               //方法3 使用 public ConfigurationSource(InputStream stream, URL url) 构造函数
-//               String path = "E:\\桌面\\book\\开源软件实践\\lab3\\JMobileSuit\\src\\main\\resources\\log4j.properties";
-//               source = new ConfigurationSource(new FileInputStream(path), new File(path).toURL());
-                 //source.setFile(new File("D:\log4j2.xml"));
-                 //source.setInputStream(new FileInputStream("D:\log4j2.xml"));
-//                 Configurator.initialize(null, source);
-
-                 System.out.println("hello1");
-                 logger.trace("trace...");
-                 logger.debug("debug...");
-                 logger.info("info...");
-                 logger.warn("warn...");
-                 logger.error("error...");
-                 logger.fatal("fatal...");
-             }catch(Exception e){
-            e.printStackTrace();
+        ConfigurationSource source;
+        //第一種：绝对路径配置文件
+        Object OAbsolutePath =  JSONPath.read(jsonContent.toString(), "$.Logger.AbsolutePath");
+        if(OAbsolutePath != null) {
+            try {
+                //使用 public ConfigurationSource(InputStream stream, URL url) 构造函数
+                String path = (String) OAbsolutePath;
+                source = new ConfigurationSource(new FileInputStream(path), new File(path).toURL());
+                Configurator.initialize(null, source);
+            } catch (Exception e) {
+                logger.error("logger絕對路徑配置文件地址解析錯誤");
+                e.printStackTrace();
+            }
+        }
+        //第二種 相對路徑
+        Object ORelativePath =  JSONPath.read(jsonContent.toString(), "$.Logger.RelativePath");
+        if(ORelativePath != null) {
+            try {
+                String path = (String) ORelativePath;
+                //使用System.getProperty
+                String config=System.getProperty("user.dir");
+                source = new ConfigurationSource(new FileInputStream(config+path));
+                Configurator.initialize(null, source);
+            } catch (Exception e) {
+                logger.error("logger相对路徑配置文件地址解析錯誤");
+                e.printStackTrace();
+            }
         }
 
+        suitConfigurator.use(logger);
 
 
-            return suitConfiguration;
+        //配置CommonPromptServer或者PowerLineThemedPromptServer
+        IOServer ioServer = new IOServer();
+        ioServer.ColorSetting = colorSetting;
+        Object OPromptServer =  JSONPath.read(jsonContent.toString(), "$.PromptServer");
+        CommonPromptServer commonPromptServer = new CommonPromptServer(suitConfigurator.getConfiguration());
+        PowerLineThemedPromptServer powerLineThemedPromptServer = new PowerLineThemedPromptServer(suitConfigurator.getConfiguration());
+        if(OPromptServer != null){
+            String promptServer = (String) OPromptServer;
+            if(promptServer.equals("Common")){
+                ioServer.Prompt = commonPromptServer;
+                suitConfiguration = new CommonSuitConfiguration(BuildInCommandServer.class, ioServer, commonPromptServer, colorSetting, logger);
+
+            }else if(promptServer.equals("PowerLineThemed")){
+                ioServer.Prompt = powerLineThemedPromptServer;
+
+                suitConfiguration = new CommonSuitConfiguration(BuildInCommandServer.class, ioServer, powerLineThemedPromptServer, colorSetting, logger);
+            }else{
+                logger.error("暂不提供其他类型的PromptServer");
+                ioServer.Prompt = commonPromptServer;
+                suitConfiguration = new CommonSuitConfiguration(BuildInCommandServer.class, new IOServer(),new CommonPromptServer(), colorSetting, logger);
+            }
+        }else{
+
+            suitConfiguration = new CommonSuitConfiguration(BuildInCommandServer.class, new IOServer(),new CommonPromptServer(), colorSetting, logger);
+        }
+
+        //最后修改一下IOServer的輸入輸出流
+        //輸入流配置，不配置默認為系統輸入流
+        Object Oinput =  JSONPath.read(jsonContent.toString(), "$.IOServer.input");
+        if(Oinput != null) {
+            try{
+                String input = (String) Oinput;
+                if(Oinput.equals("System.in")){
+                    ioServer.ResetInput();
+                }else{
+                    InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+                    ioServer.SetInput(inputStream);
+                }
+            }catch(Exception e){
+                logger.error("解析IOServer的輸入流出錯");
+                e.printStackTrace();
+            }
+        }
+        //配置輸出流
+        Object Ooutput =  JSONPath.read(jsonContent.toString(), "$.IOServer.output");
+        if(Ooutput != null) {
+            try{
+                String output = (String) Ooutput;
+                if(output.equals("System.out")){
+                    ioServer.ResetOutput();
+                }else{
+                    PrintStream outputStream = new PrintStream(output);
+                    ioServer.Output = outputStream;
+                }
+            }catch(Exception e){
+                logger.error("解析IOServer的輸出流出錯");
+                e.printStackTrace();
+            }
+        }
+
+        //配置错误流
+        Object Oerr =  JSONPath.read(jsonContent.toString(), "$.IOServer.err");
+        if(Oerr != null) {
+            try{
+                String err = (String) Oerr;
+                if(err.equals("System.err")){
+                    ioServer.ResetError();
+                }else{
+                    PrintStream outputStream = new PrintStream(err);
+                    ioServer.Error = outputStream;
+                }
+            }catch(Exception e){
+                logger.error("解析IOServer的错误流出錯");
+                e.printStackTrace();
+            }
+        }
+
+        return suitConfiguration;
     }
 
     public static void main(String[] args) throws Exception {
         JsonConfiguration jsonConfiguration = new JsonConfiguration();
         SuitConfiguration configuration = jsonConfiguration.parse("src/main/resources/example.json");
-        System.out.println(configuration.Prompt());
+        if(configuration.ColorSetting() == null){
+            System.out.println("yes");
+        }
         new SuitHost(Client.class,
                 configuration).Run();
     }
