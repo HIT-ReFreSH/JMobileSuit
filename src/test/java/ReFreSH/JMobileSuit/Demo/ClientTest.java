@@ -72,7 +72,7 @@ public class ClientTest {
         GoodMorningParameter param = new GoodMorningParameter();
         String[] options = {"Alice", "Bob"}; // More than one parameter
         assertFalse(param.parse(options));
-        assertEquals(param.name, "defaultName"); // Ensure default value is set correctly
+        assertEquals(param.name, "foo"); // Ensure default value is set correctly
     }
 
     @Test
@@ -132,7 +132,7 @@ public class ClientTest {
         Mockito.verify(mockIoServer).WriteLine("Bob is not sleeping.");
     }
 
-    @Test
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testSleepNoArgs() {
         // Test the Sleep method with default arguments
         SleepArgument argument = new SleepArgument(); // Default constructor

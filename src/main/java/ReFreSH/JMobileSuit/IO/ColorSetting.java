@@ -10,31 +10,31 @@ public class ColorSetting {
     /**
      * Default color. For OutputType.Default
      */
-    public final ConsoleColor DefaultColor = ConsoleColor.White;
+    public ConsoleColor DefaultColor = ConsoleColor.White;
     /**
      * Prompt Color. For OutputType.Prompt
      */
-    public final ConsoleColor PromptColor = ConsoleColor.Magenta;
+    public ConsoleColor PromptColor = ConsoleColor.Magenta;
     /**
      * Error Color. For OutputType.Error
      */
-    public final ConsoleColor ErrorColor = ConsoleColor.Red;
+    public ConsoleColor ErrorColor = ConsoleColor.Red;
     /**
      * AllOK Color. For OutputType.AllOK
      */
-    public final ConsoleColor AllOkColor = ConsoleColor.Green;
+    public ConsoleColor AllOkColor = ConsoleColor.Green;
     /**
      * ListTitle Color. For OutputType.ListTitle
      */
-    public final ConsoleColor ListTitleColor = ConsoleColor.Yellow;
+    public ConsoleColor ListTitleColor = ConsoleColor.Yellow;
     /**
      * CustomInformation Color. For OutputType.CustomInformation
      */
-    public final ConsoleColor CustomInformationColor = ConsoleColor.DarkCyan;
+    public ConsoleColor CustomInformationColor = ConsoleColor.DarkCyan;
     /**
      * Information Color. For OutputType.Information
      */
-    public final ConsoleColor InformationColor = ConsoleColor.DarkBlue;
+    public ConsoleColor InformationColor = ConsoleColor.DarkBlue;
 
 
     /**
