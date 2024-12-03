@@ -61,7 +61,7 @@ public class IOServer {
      */
     public IOServer() {
         Prompt = PromptServer.getInstance();
-//        ColorSetting = ReFreSH.JMobileSuit.IO.ColorSetting.getInstance();
+        ColorSetting = ReFreSH.JMobileSuit.IO.ColorSetting.getInstance();
         _input = System.in;
         Output = System.out;
         Error = System.err;

@@ -76,6 +76,12 @@ public class IOServerTests {
     }
 
     @Test
+    public void testWriteDefault() {
+        ioServer.Write("Default Text");
+        assertEquals("Default Text\u001B[;1;m", ioServer.getContent());
+    }
+
+    @Test
     public void testIsInputRedirected2() {
         assertTrue(ioServer.IsInputRedirected());
     }
@@ -293,6 +299,33 @@ public class IOServerTests {
     }
 
     @Test
+    public void testReadLineWithoutInputStream() {
+        String testInput = "";
+        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        IOServer ioserver = getInstance();
+        ioserver.SetInput(inputStream);
+        String prompt = "";
+        boolean newLine = true;
+        String defaultValue ="Default Value";
+        String result = ioserver.ReadLine(prompt, defaultValue, newLine);
+
+        assertEquals(defaultValue, result);
+    }
+
+    @Test
+    public void testReadLineWithPromptAndNewline() {
+        String testInput = "Test Input";
+        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        IOServer ioserver = getInstance();
+        ioserver.SetInput(inputStream);
+        String prompt = "";
+        boolean newLine = true;
+        String result = ioserver.ReadLine(prompt, newLine);
+
+        assertEquals(testInput, result);
+    }
+
+    @Test
     public void testRead() throws IOException {
         String testInput = "Test Input";
         InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
@@ -425,6 +458,69 @@ public class IOServerTests {
         assertEquals(1, prefixLengthStack.size());
         assertEquals(Integer.valueOf(10), prefixLengthStack.pop());
     }
+    @Test
+    public void testSelectColorWithDefault() {
+        ColorSetting colorSetting = new ColorSetting();
 
+        // 测试当 customColor 为 null 时返回默认颜色
+        assertEquals(ConsoleColor.White, ColorSetting.selectColor(OutputType.Default, null, colorSetting));
+        assertEquals(ConsoleColor.Magenta, ColorSetting.selectColor(OutputType.Prompt, null, colorSetting));
+        assertEquals(ConsoleColor.Red, ColorSetting.selectColor(OutputType.Error, null, colorSetting));
+        assertEquals(ConsoleColor.Green, ColorSetting.selectColor(OutputType.AllOk, null, colorSetting));
+        assertEquals(ConsoleColor.Yellow, ColorSetting.selectColor(OutputType.ListTitle, null, colorSetting));
+        assertEquals(ConsoleColor.DarkCyan, ColorSetting.selectColor(OutputType.CustomInfo, null, colorSetting));
+        assertEquals(ConsoleColor.DarkBlue, ColorSetting.selectColor(OutputType.MobileSuitInfo, null, colorSetting));
+    }
+
+
+    @Test
+    public void testSelectColorWithCustomColor() {
+        ColorSetting colorSetting = new ColorSetting();
+
+        ConsoleColor customColor = ConsoleColor.Blue; // 定义一个自定义颜色
+        // 测试当 customColor 非空时返回自定义颜色
+        assertEquals(customColor, ColorSetting.selectColor(OutputType.Default, customColor, colorSetting));
+        assertEquals(customColor, ColorSetting.selectColor(OutputType.Prompt, customColor, colorSetting));
+        assertEquals(customColor, ColorSetting.selectColor(OutputType.Error, customColor, colorSetting));
+        assertEquals(customColor, ColorSetting.selectColor(OutputType.AllOk, customColor, colorSetting));
+        assertEquals(customColor, ColorSetting.selectColor(OutputType.ListTitle, customColor, colorSetting));
+        assertEquals(customColor, ColorSetting.selectColor(OutputType.CustomInfo, customColor, colorSetting));
+        assertEquals(customColor, ColorSetting.selectColor(OutputType.MobileSuitInfo, customColor, colorSetting));
+    }
+
+    @Test
+    public void testGetInstance() {
+        ColorSetting colorSetting1 = ColorSetting.getInstance();
+        ColorSetting colorSetting2 = ColorSetting.getInstance();
+
+        assertNotNull(colorSetting1);
+        assertNotNull(colorSetting2);
+        // 检查是否每次都返回新的实例
+        assertNotSame(colorSetting1, colorSetting2);
+    }
+    @Test
+    public void testDefaultColorsInitialization() {
+        ColorSetting colorSetting = new ColorSetting();
+
+        assertEquals(ConsoleColor.White, colorSetting.DefaultColor);
+        assertEquals(ConsoleColor.Magenta, colorSetting.PromptColor);
+        assertEquals(ConsoleColor.Red, colorSetting.ErrorColor);
+        assertEquals(ConsoleColor.Green, colorSetting.AllOkColor);
+        assertEquals(ConsoleColor.Yellow, colorSetting.ListTitleColor);
+        assertEquals(ConsoleColor.DarkCyan, colorSetting.CustomInformationColor);
+        assertEquals(ConsoleColor.DarkBlue, colorSetting.InformationColor);
+    }
+    @Test
+    public void testColorForDifferentOutputTypes() {
+        ColorSetting colorSetting = new ColorSetting();
+
+        assertEquals(ConsoleColor.White, colorSetting.DefaultColor);
+        assertEquals(ConsoleColor.Magenta, colorSetting.PromptColor);
+        assertEquals(ConsoleColor.Red, colorSetting.ErrorColor);
+        assertEquals(ConsoleColor.Green, colorSetting.AllOkColor);
+        assertEquals(ConsoleColor.Yellow, colorSetting.ListTitleColor);
+        assertEquals(ConsoleColor.DarkCyan, colorSetting.CustomInformationColor);
+        assertEquals(ConsoleColor.DarkBlue, colorSetting.InformationColor);
+    }
 
 }
