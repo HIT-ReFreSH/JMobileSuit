@@ -190,4 +190,6 @@ public class JsonConfiguration implements IConfiguration {
         new SuitHost(Client.class,
                 configuration).Run();
     }
+
+
 }

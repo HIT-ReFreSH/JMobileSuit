@@ -8,6 +8,7 @@ import ReFreSH.JMobileSuit.IO.IOServer;
 import ReFreSH.JMobileSuit.NeuesProjekt.PowerLineThemedPromptServer;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -360,4 +361,31 @@ public class JsonConfigurationTest {
         IOServer ioServer = suitConfiguration.IO();
         assertEquals(System.in, ioServer.GetInput());
     }
+
+
+
+    // 测试用例 3：验证当 ColorSetting 不为 null 时不会输出 "yes"
+//    @Test
+//    public void testMainWithNonNullColorSetting() throws Exception {
+//        // 创建一个临时的 JSON 文件（模拟有 ColorSetting 配置）
+//        String jsonContent = "{ \"ColorSetting\": { \"AllOkColor\": \"Blue\" } }";
+//        File tempFile = File.createTempFile("test_", ".json");
+//        tempFile.deleteOnExit();
+//        FileUtils.writeStringToFile(tempFile, jsonContent, "UTF-8");
+//
+//        // 使用 System.setOut() 捕获控制台输出
+//        PrintStream originalOut = System.out;
+//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+//        System.setOut(new PrintStream(outContent));
+//
+//        // 调用 main 方法
+//        JsonConfiguration.main(new String[]{tempFile.getAbsolutePath()});
+//
+//        // 验证控制台输出中不包含 "yes"
+//        assertFalse(outContent.toString().contains("yes"));
+//
+//        // 恢复控制台输出
+//        System.setOut(originalOut);
+//    }
+
 }
