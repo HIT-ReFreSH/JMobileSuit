@@ -1,0 +1,10 @@
+{
+  "ColorSetting": {
+    "AllOkColor": "Blue",
+    "ErrorColor": "Yellow"
+  },
+  "PromptServer": "Common",
+  "IOServer": {
+    "input": "H"
+  }
+}

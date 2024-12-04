@@ -5,14 +5,17 @@ import ReFreSH.JMobileSuit.IO.OutputType;
 import ReFreSH.Jarvis.ObjectModel.Tuple;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SuitHostTests {
@@ -292,5 +295,41 @@ public class SuitHostTests {
         }
 
     }
+
+
+
+    @Test
+    public void testConstructorWithObject() throws Exception {
+        // Test initialization with an Object
+        Object instance = new TestInstance();
+        SuitConfiguration config = SuitConfiguration.getInstance();
+        SuitHost suitHost = new SuitHost(instance, config);
+        assertNotNull(suitHost);
+        assertEquals(TestInstance.class, suitHost.WorkType());
+    }
+
+//    @Test
+//    public void testConstructorWithClass() throws Exception {
+//        // Test initialization with a Class type
+//        String instance = new String("hello");
+//        SuitConfiguration config = SuitConfiguration.getInstance();
+//        SuitHost suitHost2 = new SuitHost(String.class, config);
+//        assertNotNull(suitHost2);
+//        assertEquals(String.class, suitHost2.WorkType());
+//    }
+
+
+
+//    @Test
+//    public void testRun() throws Exception {
+//        // Test running the suit host without any input (prompt)
+//        Object instance = new TestInstance();
+//        SuitConfiguration config = SuitConfiguration.getInstance();
+//        SuitHost suitHost = new SuitHost(instance, config);
+//        int result = suitHost.Run("");
+//        assertEquals(0, result); // Assuming the prompt has no errors
+//    }
+
+
 
 }

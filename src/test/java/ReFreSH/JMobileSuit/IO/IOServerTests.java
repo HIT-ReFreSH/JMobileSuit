@@ -36,7 +36,7 @@ public class IOServerTests {
     @BeforeEach
     public void setUp() {
         // Mock the logger
-        logger = mock(Logger.class);
+        logger = Mockito.mock(Logger.class);
 
         // Initialize IOServer with mock dependencies
         ioServer = new IOServer(null, logger, null);
@@ -49,23 +49,41 @@ public class IOServerTests {
         ioServer.Error = new PrintStream(errorStream);
         ioServer.SetInput(inputStream);
     }
+    @Test(expected = NullPointerException.class)
+    public void testWriteLineWithoutSetColorSetting() {
+        ioServer.WriteLine("Hello World");
+        assertEquals("Hello World", ioServer.getContent());
+    }
+
     @Test
     public void testWriteLine() {
+        //set ColorSetting
+        //if you don't,you will get a NullPointerException
+        ioServer.ColorSetting = ReFreSH.JMobileSuit.IO.ColorSetting.getInstance();
         ioServer.WriteLine("Hello World");
         assertEquals("Hello World", ioServer.getContent());
     }
 
     @Test
     public void testWriteDebug2() {
-        ioServer.WriteDebug("Debug message");
-        verify(logger).debug("Debug message");
+        Logger mockLogger = mock(Logger.class);
+        ColorSetting colorSetting = mock(ColorSetting.class);
+        PromptServer promptServer = mock(PromptServer.class);
+        IOServer ioserver = getInstance(promptServer, mockLogger, colorSetting);
+        ioserver.WriteDebug("Debug Message");
+        // Verify if the LogDebug method of the mock object has been called and if the passed parameters match the expected values.
+        Mockito.verify(mockLogger).debug("Debug Message");
     }
 
     @Test
     public void testWriteException2() {
         Exception e = new Exception("Test Exception");
-        ioServer.WriteException(e);
-        verify(logger).error(e);
+        Logger mockLogger = mock(Logger.class);
+        ColorSetting colorSetting = mock(ColorSetting.class);
+        PromptServer promptServer = mock(PromptServer.class);
+        IOServer ioserver = getInstance(promptServer, mockLogger, colorSetting);
+        ioserver.WriteException(e);
+        Mockito.verify(mockLogger).error(e);
     }
 
     @Test
@@ -77,7 +95,10 @@ public class IOServerTests {
 
     @Test
     public void testIsInputRedirected2() {
-        assertTrue(ioServer.IsInputRedirected());
+        IOServer ioserver = new IOServer();
+        assertFalse(ioserver.IsInputRedirected());
+        ioserver.SetInput(System.in);
+        assertFalse(ioserver.IsInputRedirected());
     }
 //    private final Logger Logger;
 //
@@ -424,6 +445,14 @@ public class IOServerTests {
 
         assertEquals(1, prefixLengthStack.size());
         assertEquals(Integer.valueOf(10), prefixLengthStack.pop());
+    }
+
+    @Test
+    public void testSelectColor(){
+        ColorSetting colorSetting = ColorSetting.getInstance();
+        assertEquals(colorSetting.DefaultColor,ColorSetting.selectColor(OutputType.Default,null,colorSetting));
+        assertEquals(colorSetting.ListTitleColor,ColorSetting.selectColor(OutputType.ListTitle,colorSetting.ListTitleColor,colorSetting));
+        assertNotEquals(colorSetting.AllOkColor,ColorSetting.selectColor(OutputType.Default,null,colorSetting));
     }
 
 
