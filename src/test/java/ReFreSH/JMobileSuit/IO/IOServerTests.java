@@ -425,6 +425,26 @@ public class IOServerTests {
         assertEquals(1, prefixLengthStack.size());
         assertEquals(Integer.valueOf(10), prefixLengthStack.pop());
     }
+    @Test
+    public void testIOServerConstructorWithSuitConfiguration() {
+
+        PromptServer mockPrompt = mock(PromptServer.class);
+        ColorSetting mockColorSetting = mock(ColorSetting.class);
+        Logger mockLogger = mock(Logger.class);
+
+        SuitConfiguration mockConfig = mock(SuitConfiguration.class);
+        when(mockConfig.Prompt()).thenReturn(mockPrompt);
+        when(mockConfig.ColorSetting()).thenReturn(mockColorSetting);
+        when(mockConfig.Logger()).thenReturn(mockLogger);
+
+        IOServer ioserver = new IOServer(mockConfig);
+
+        assertEquals(mockPrompt, ioserver.Prompt);
+        assertEquals(mockColorSetting, ioserver.ColorSetting);
+        assertEquals(System.in, ioserver.GetInput());
+        assertEquals(System.out, ioserver.Output);
+        assertEquals(System.err, ioserver.Error);
+    }
 
 
 }
