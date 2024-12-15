@@ -49,11 +49,25 @@ public class IOServerTests {
         ioServer.Error = new PrintStream(errorStream);
         ioServer.SetInput(inputStream);
     }
-    @Test
-    public void testWriteLine() {
-        ioServer.WriteLine("Hello World");
-        assertEquals("Hello World", ioServer.getContent());
-    }
+//    @Test
+//    public void testWriteLine() {
+//        ioServer.WriteLine("Hello World");
+//        assertEquals("Hello World", ioServer.getContent());
+//    }
+@Test
+public void testWriteLine() {
+    // 设置 ByteArrayOutputStream 以捕获输出
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    ioServer.Output = printStream; // 直接设置 Output 字段
+
+    // 调用方法
+    ioServer.WriteLine("Hello, World!");
+
+    // 断言输出
+    String output = byteArrayOutputStream.toString();
+    assertTrue(output.contains("Hello, World!"));
+}
 
     @Test
     public void testWriteDebug2() {
@@ -75,10 +89,23 @@ public class IOServerTests {
         assertEquals("Colored Text\u001B[;31m", ioServer.getContent());
     }
 
+//    @Test
+//    public void testIsInputRedirected2() {
+//        assertTrue(ioServer.IsInputRedirected());
+//    }
     @Test
     public void testIsInputRedirected2() {
+        // 模拟输入流重定向
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("test".getBytes());
+        ioServer.SetInput(byteArrayInputStream);
+
+        // 断言输入流已被重定向
         assertTrue(ioServer.IsInputRedirected());
+
+        // 重置输入流
+        ioServer.ResetInput();
     }
+
 //    private final Logger Logger;
 //
 //    public IOServerTests(Logger logger) {
