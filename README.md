@@ -2,7 +2,7 @@
     <img src="https://raw.githubusercontent.com/HIT-ReFreSH/JMobileSuit/master/images/logo.svg" width = 30% height = 30%   alt=""/>
 </div>
 
-# ReFreSH.JMobileSuit
+# ReFreSH.JMobileSuit (v2)
 
 ![maven](https://img.shields.io/maven-central/v/io.github.hit-refresh/JMobileSuit?style=flat-square)
 ![license](https://img.shields.io/github/license/HIT-ReFreSH/JMobileSuit?style=flat-square)
@@ -15,6 +15,8 @@
 
 [View Documentation](https://HIT-ReFreSH.github.io/JMobileSuit/index.html) | [查看文档](https://hit-refresh.github.io/JMobileSuit/articles/zh_Hans/index.html)
 
+**NOTICE: The `master` branch is the development branch for v2.0. If you're looking for or stable version source code, please turn to [v1.x branch](https://github.com/HIT-ReFreSH/JMobileSuit/tree/v1.x).**
+
 JMobileSuit is a Light-weight MobileSuit for Java. Migrated from .NET Core.
 
 **Previously named as [PlasticMetal.JMobileSuitLite](https://github.com/Plastic-Metal/JMobileSuitLite).**
@@ -24,9 +26,3 @@ method in your code.
 
 For details of MobileSuit, see: https://github.com/HIT-ReFreSH/MobileSuit
 
-As I'm new to Java, and limited by the JVM, some functions of MobileSuit are not supported in JMobileSuit, Including
-but not limited to:
-
-1. Method Members only
-2. Instance Mode Only
-3. No Async Support

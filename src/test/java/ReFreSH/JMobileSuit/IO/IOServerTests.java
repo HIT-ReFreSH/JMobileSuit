@@ -6,6 +6,7 @@ import org.apache.logging.log4j.core.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.springframework.context.ApplicationContext;
@@ -21,6 +22,89 @@ import static org.mockito.Mockito.*;
 
 
 public class IOServerTests {
+
+
+    private IOServer ioServer = new IOServer();
+    private Logger logger;
+    private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    private ByteArrayOutputStream errorStream;
+    private InputStream inputStream;
+
+
+
+
+    @BeforeEach
+    public void setUp() {
+        // Mock the logger
+        logger = mock(Logger.class);
+
+        // Initialize IOServer with mock dependencies
+        ioServer = new IOServer(null, logger, null);
+
+        // Set up custom output/error streams
+        outputStream = new ByteArrayOutputStream();
+        errorStream = new ByteArrayOutputStream();
+        inputStream = new ByteArrayInputStream("test input\n".getBytes());
+        ioServer.Output = new PrintStream(outputStream);
+        ioServer.Error = new PrintStream(errorStream);
+        ioServer.SetInput(inputStream);
+    }
+//    @Test
+//    public void testWriteLine() {
+//        ioServer.WriteLine("Hello World");
+//        assertEquals("Hello World", ioServer.getContent());
+//    }
+@Test
+public void testWriteLine() {
+    // 设置 ByteArrayOutputStream 以捕获输出
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(byteArrayOutputStream);
+    ioServer.Output = printStream; // 直接设置 Output 字段
+
+    // 调用方法
+    ioServer.WriteLine("Hello, World!");
+
+    // 断言输出
+    String output = byteArrayOutputStream.toString();
+    assertTrue(output.contains("Hello, World!"));
+}
+
+    @Test
+    public void testWriteDebug2() {
+        ioServer.WriteDebug("Debug message");
+        verify(logger).debug("Debug message");
+    }
+
+    @Test
+    public void testWriteException2() {
+        Exception e = new Exception("Test Exception");
+        ioServer.WriteException(e);
+        verify(logger).error(e);
+    }
+
+    @Test
+    public void testWriteWithColor() {
+        ioServer.Write("Colored Text", ConsoleColor.Red);
+        // Assuming ConsoleColor.Red changes the output, we verify the text without the color code
+        assertEquals("Colored Text\u001B[;31m", ioServer.getContent());
+    }
+
+//    @Test
+//    public void testIsInputRedirected2() {
+//        assertTrue(ioServer.IsInputRedirected());
+//    }
+    @Test
+    public void testIsInputRedirected2() {
+        // 模拟输入流重定向
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream("test".getBytes());
+        ioServer.SetInput(byteArrayInputStream);
+
+        // 断言输入流已被重定向
+        assertTrue(ioServer.IsInputRedirected());
+
+        // 重置输入流
+        ioServer.ResetInput();
+    }
 
 //    private final Logger Logger;
 //
@@ -53,7 +137,7 @@ public class IOServerTests {
     public void IOServerTest() {
         IOServer instance = getInstance();
         assertNotNull(instance);
-        // 测试 IOServer 和 ColorSetting 依赖注入
+        // Testing dependency injection of IOServer and ColorSetting
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContextTest.xml");
         ColorSetting colorSetting = context.getBean("colorSetting", ColorSetting.class);
         IOServer ioServer = context.getBean("IOServer", IOServer.class);
@@ -225,8 +309,15 @@ public class IOServerTests {
         assertEquals(testInput, result);
     }
 
-    //TODO: Method Overloading test need to be added
-
+    @Test
+    public void testReadLineWithoutPrompt() {
+        String testInput = "anything";
+        InputStream inputStream = new ByteArrayInputStream(testInput.getBytes());
+        IOServer ioserver = getInstance();
+        ioserver.SetInput(inputStream);
+        String result = ioserver.ReadLine();
+        assertEquals(testInput, result);
+    }
 
     @Test
     public void testRead() throws IOException {

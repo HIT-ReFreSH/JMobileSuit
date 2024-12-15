@@ -1,3 +1,4 @@
+// src/test/java/ReFreSH/JMobileSuit/ObjectModel/Menbers/SuitObjectMemberTest.java
 package ReFreSH.JMobileSuit.ObjectModel.Menbers;
 
 import ReFreSH.JMobileSuit.ObjectModel.Members.MemberAccess;
@@ -16,16 +17,15 @@ public class SuitObjectMemberTest {
 
     @Test
     public void testSuitObjectMemberCreation() {
-        Object instance = new String("TEST");  //  replace  with  actual  instance
+        Object instance = new String("TEST");  // replace with actual instance
         Method method = instance.getClass().getMethods()[0];
 
         SuitObjectMember suitObjectMember = new SuitObjectMember(instance, method);
 
         assertNotNull(suitObjectMember);
-        assertEquals(suitObjectMember.Access(), MemberAccess.VisibleToUser);
-        assertEquals(suitObjectMember.AbsoluteName(), method.getName());
-        assertEquals(suitObjectMember.Instance(), instance);
-
+        assertEquals(MemberAccess.VisibleToUser, suitObjectMember.Access());
+        assertEquals(method.getName(), suitObjectMember.AbsoluteName());
+        assertEquals(instance, suitObjectMember.Instance());
     }
 
     @Test
@@ -36,7 +36,7 @@ public class SuitObjectMemberTest {
         assertNotNull(suitObjectMember.Access());
         assertNotNull(suitObjectMember.Type());
         assertNotNull(suitObjectMember.Information());
-        assertEquals(suitObjectMember.FriendlyNames().get(0), suitObjectMember.AbsoluteName());
+        assertEquals(suitObjectMember.AbsoluteName(), suitObjectMember.FriendlyNames().get(0));
         assertNotNull(suitObjectMember.Instance());
     }
 
@@ -72,9 +72,8 @@ public class SuitObjectMemberTest {
         Object instance = new Object();
         Method method = instance.getClass().getMethods()[0];
         SuitObjectMember suitObjectMember = new SuitObjectMember(instance, method);
-        assertEquals(suitObjectMember.FriendlyNames().get(0), suitObjectMember.AbsoluteName());
+        assertEquals(suitObjectMember.AbsoluteName(), suitObjectMember.FriendlyNames().get(0));
     }
-
 
     @Test
     public void testSuitAliases() {
@@ -90,7 +89,7 @@ public class SuitObjectMemberTest {
         Method method = instance.getClass().getMethods()[0];
         SuitObjectMember suitObjectMember = new SuitObjectMember(instance, method);
         assertNotNull(suitObjectMember.AbsoluteName());
-        assertEquals(suitObjectMember.AbsoluteName(), method.getName());
+        assertEquals(method.getName(), suitObjectMember.AbsoluteName());
     }
 
     @Test

@@ -1,3 +1,4 @@
+// src/test/java/ReFreSH/JMobileSuit/ObjectModel/SuitConfiguratorTest.java
 package ReFreSH.JMobileSuit.ObjectModel;
 
 import ReFreSH.JMobileSuit.IO.ColorSetting;
