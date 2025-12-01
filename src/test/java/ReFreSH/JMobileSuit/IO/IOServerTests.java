@@ -71,15 +71,25 @@ public void testWriteLine() {
 
     @Test
     public void testWriteDebug2() {
+        Logger logger = org.mockito.Mockito.mock(Logger.class);
+        IOServer ioServer = new IOServer(null, logger, null);
+        ioServer.Output = new PrintStream(new ByteArrayOutputStream());
+        ioServer.Error = new PrintStream(new ByteArrayOutputStream());
+
         ioServer.WriteDebug("Debug message");
         verify(logger).debug("Debug message");
     }
 
     @Test
     public void testWriteException2() {
+        Logger logger = org.mockito.Mockito.mock(Logger.class);
+        IOServer ioServer = new IOServer(null, logger, null);
+        ioServer.Output = new PrintStream(new ByteArrayOutputStream());
+        ioServer.Error = new PrintStream(new ByteArrayOutputStream());
+
         Exception e = new Exception("Test Exception");
         ioServer.WriteException(e);
-        verify(logger).error(e);
+        org.mockito.Mockito.verify(logger).error(e);
     }
 
     @Test
